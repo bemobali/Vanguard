@@ -117,12 +117,12 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    accuratePlacement: 1
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: de1c0812f71fc4707bf8e85290ff4b94, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 7ff5fbafbac5c8745898cfbecfb42963, type: 2}
 --- !u!4 &21544671 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 6d01ab68395de604e8468dd7162a5db0, type: 3}
@@ -426,7 +426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9c17d66b88dfce54d99d6710ec954c13, type: 3}
       propertyPath: m_RootOrder
-      value: 106
+      value: 105
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9c17d66b88dfce54d99d6710ec954c13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6439,10 +6439,10 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 46e880d0c30694705ad700c51574ab17, type: 2}
   m_TreeDistance: 139
-  m_TreeBillboardDistance: 995
+  m_TreeBillboardDistance: 70
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 588
-  m_DetailObjectDistance: 250
+  m_DetailObjectDistance: 150
   m_DetailObjectDensity: 0.336
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -8994,7 +8994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9c17d66b88dfce54d99d6710ec954c13, type: 3}
       propertyPath: m_RootOrder
-      value: 105
+      value: 104
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9c17d66b88dfce54d99d6710ec954c13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9643,7 +9643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9c17d66b88dfce54d99d6710ec954c13, type: 3}
       propertyPath: m_RootOrder
-      value: 104
+      value: 103
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9c17d66b88dfce54d99d6710ec954c13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
