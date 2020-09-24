@@ -16,9 +16,10 @@ public class Vanguard : MonoBehaviour
     public float runningSpeed;
     //jump force vertical component
     public float jumpForce;
-
-    Vector3 lateralMovementVector;
-
+    //Left foot and right foot. Pass this to the MyStuff.Controller instance to toggle foot step
+    public GameObject leftFoot, rightFoot;
+    //Jumping and landing sound. Stays here because the collider belongs to the Vanguard unit
+    public AudioSource jumpingSound, landingSound;
     //@todo Constrain from 0 to 1
     public float tiltSensitivity;
     //@todo Constrain from 0 to 1
@@ -31,6 +32,8 @@ public class Vanguard : MonoBehaviour
     //public GameObject ragDoll;
     //Tilt rotation is to be done on the spine.
     GameObject spine;
+    //When initialing jump, the player moves in the direction of the lateralMovementVector. This way, the user cannot swirl the mouse around to change the jump direction.
+    Vector3 lateralMovementVector;
 
     MyStuff.Controller controller;
     MyStuff.AnimationContext animationContext;
@@ -70,16 +73,11 @@ public class Vanguard : MonoBehaviour
     void FixedUpdate()
 	{
         movementContext.FixedUpdate(Time.fixedDeltaTime);
-        //if (controller.jump())
-        //{
-        //    jump();
-        //}
     }
 
     void LateUpdate()
 	{
         //override rig animation transform here.
-        //controller.updateTilt();
         movementContext.LateUpdate();
     }
 
@@ -117,12 +115,14 @@ public class Vanguard : MonoBehaviour
     {
         LateralMove(x, z, runningSpeed);
         animationContext.running();
+        activateFootstepSound();
     }
 
     public void Walk(float x, float z)
     {
         LateralMove(x, z, walkingSpeed);
         animationContext.walking();
+        activateFootstepSound();
     }
 
     public void Stay()
@@ -142,12 +142,20 @@ public class Vanguard : MonoBehaviour
         spine.transform.localRotation *= Quaternion.Euler(-tiltAccum, 0, 0);
     }
 
+    //Jump action by Vanguard unit
     public void Jump()
 	{
-        Debug.Log("Vanguard.Jump");
         rigidBody.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
         //Challenge here is to sync the animation with jumping
         animationContext.Jumping();
+        activateJumpSound();
+	}
+    
+    //Landing action from Jumping
+    public void LandingFromJumping()
+	{
+        //So far this is the only action I need to do.
+        landingSound.Play();
 	}
 
     public bool IsGrounded()
@@ -159,6 +167,20 @@ public class Vanguard : MonoBehaviour
 	{
         return controller;
 	}
+
+    //Activate footstep sound. Deactivate the footsteps when jumping
+    void activateFootstepSound()
+	{
+        leftFoot.GetComponent<Footstep>().walkOrRun();
+        rightFoot.GetComponent<Footstep>().walkOrRun();
+	}
+
+    void activateJumpSound()
+	{
+        leftFoot.GetComponent<Footstep>().jumping();
+        rightFoot.GetComponent<Footstep>().jumping();
+        jumpingSound.Play();
+    }
 }
 
 //Spine manipulation must be done in LateUpdate as an accumulation of a rotation angle. This accumulated value must be continuously applied. 

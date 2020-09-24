@@ -73,6 +73,8 @@ namespace Assets.Vanguard.Script
 				return;
 			}
 
+			//Not jumping anymore. Playable is now in the air
+
 			//This weird logic is necessary because fixedupdate runs faster than IsCollisionEnter and IsCollisionExit. So FixedUpdate can be running n times before one IsCollisionExit
 			//Since we are dependengin on these collision callbacks to tell us if we are levitating or not, I need a second bool flag to tell me that jump force has been applied,
 			//and I am now waiting for the player to actually levitate. Once the player is airborne, then context switch back to lateral movement can be initiated
@@ -81,9 +83,11 @@ namespace Assets.Vanguard.Script
 
 		public void LateUpdate()
 		{
+			//Jus landed
 			if (vanguard.IsGrounded() && !jumping)
 			{
 				//Debug.Log("Landed");
+				vanguard.LandingFromJumping();
 				//basically a context switch. If this gets too expensive then cache the state instances and index it by name
 				movementContext.ContextSwitch(MovementContext.MovementStates.LateralMovement);
 			}
