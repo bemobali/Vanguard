@@ -24,14 +24,15 @@ public class Vanguard : MonoBehaviour
     public float tiltSensitivity;
     //@todo Constrain from 0 to 1
     public float panSensitivity;
+    //Tilt rotation is to be done on the spine.
+    public GameObject spine;
 
     //Vanguard movement animator
     Animator animator;
     Rigidbody rigidBody;
     //Vanguard ragdoll. How is it that GameObject does not have a function to find a child by name, but can find all of its children's components?
     //public GameObject ragDoll;
-    //Tilt rotation is to be done on the spine.
-    GameObject spine;
+    
     //When initialing jump, the player moves in the direction of the lateralMovementVector. This way, the user cannot swirl the mouse around to change the jump direction.
     Vector3 lateralMovementVector;
 
@@ -51,8 +52,6 @@ public class Vanguard : MonoBehaviour
         animationContext = new MyStuff.AnimationContext(animator);
         movementContext = new MyStuff.MovementContext(this);
         lateralMovementVector = new Vector3();
-        //@note this is a hack! Find the spine from the ragDoll object.
-        spine = GameObject.Find("mixamorig:Spine1");
         rigidBody = GetComponent<Rigidbody>();
         groundContact = true;
     }
