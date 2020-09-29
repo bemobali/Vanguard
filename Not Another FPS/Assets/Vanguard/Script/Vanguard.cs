@@ -8,12 +8,16 @@ using MyStuff = Assets.Vanguard.Script;
 //Collaborates with a Controller instance to move the Vanguard character in the game map
 public class Vanguard : MonoBehaviour
 {
-
+    //Tells my editor to collapse the code section between #region/#endregions
+    #region Variables
     //Tweakable object properties
     //Express walking speed in m/s
+    [SerializeField]    //SerializeField must be a Mono think for adding sliders to the variable for tweaking value
     public float walkingSpeed;
+    [SerializeField]
     //runningSpeed is in m/s. Used by the 
     public float runningSpeed;
+    [SerializeField]
     //jump force vertical component
     public float jumpForce;
     //Left foot and right foot. Pass this to the MyStuff.Controller instance to toggle foot step
@@ -26,7 +30,7 @@ public class Vanguard : MonoBehaviour
     public float panSensitivity;
     //Tilt rotation is to be done on the spine.
     public GameObject spine;
-
+    #endregion
     //Vanguard movement animator
     Animator animator;
     Rigidbody rigidBody;
@@ -86,6 +90,7 @@ public class Vanguard : MonoBehaviour
 		{
             //Debug.Log("Contact with terrain");
             groundContact = true;
+            movementContext.OnGroundCollisionEnter();
 		}
 	}
 
@@ -95,6 +100,7 @@ public class Vanguard : MonoBehaviour
 		{
             //Debug.Log("No contact with terrain");
             groundContact = false;
+            movementContext.OnGroundCollisionExit();
 		}
 	}
 

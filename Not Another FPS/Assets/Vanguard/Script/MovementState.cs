@@ -10,6 +10,8 @@ namespace Assets.Vanguard.Script
 		void Update(float deltaT);
 		void FixedUpdate(float deltaT);
 		void LateUpdate();
+		void OnGroundCollisionEnter();
+		void OnGroundCollisionExit();
 	}
 
 	//Manage movement state transitions
@@ -34,6 +36,7 @@ namespace Assets.Vanguard.Script
 			//context switch.
 			if (controller.Jump())
 			{
+				//Debug.Log("User pressed Jump");
 				movementContext.ContextSwitch(MovementContext.MovementStates.VerticalMovement);
 				movementContext.FixedUpdate(deltaT);
 			}
@@ -43,12 +46,23 @@ namespace Assets.Vanguard.Script
 		{
 			controller.UpdateTilt();
 		}
+
+		public void OnGroundCollisionEnter()
+		{
+			//We should be on the ground anyway
+		}
+
+		public void OnGroundCollisionExit()
+		{
+			//Falling down maybe?
+		}
 	}
 
 	class VerticalMovement : IMovementState
 	{
 		MovementContext movementContext;
 		global::Vanguard vanguard;
+		//jumping flag ensures that our impuse applies only once
 		bool jumping;
 		public VerticalMovement(MovementContext context, global::Vanguard ops)
 		{
@@ -65,32 +79,37 @@ namespace Assets.Vanguard.Script
 
 		public void FixedUpdate(float deltaT)
 		{
-			//jump only once
-			if (vanguard.IsGrounded() && !jumping)
+			//Debug.Log("VerticalMovement.FixedUpdate");
+			//Apply impulse only once
+			if (!jumping)
 			{
+				//Debug.Log("Jumping");
 				jumping = true;
 				vanguard.Jump();
 				return;
 			}
+		}
 
-			//Not jumping anymore. Playable is now in the air
+		public void OnGroundCollisionEnter()
+		{
+			//We landed
+			if (jumping)
+			{
+				//Debug.Log("Landed");
+				vanguard.LandingFromJumping();
+				jumping = false;
+				//Back to walking/running state
+				movementContext.ContextSwitch(MovementContext.MovementStates.LateralMovement);
+			}
+		}
 
-			//This weird logic is necessary because fixedupdate runs faster than IsCollisionEnter and IsCollisionExit. So FixedUpdate can be running n times before one IsCollisionExit
-			//Since we are dependengin on these collision callbacks to tell us if we are levitating or not, I need a second bool flag to tell me that jump force has been applied,
-			//and I am now waiting for the player to actually levitate. Once the player is airborne, then context switch back to lateral movement can be initiated
-			if (jumping && !vanguard.IsGrounded()) jumping = false;
+		public void OnGroundCollisionExit()
+		{
+			//Debug.Log("Levitating");
 		}
 
 		public void LateUpdate()
 		{
-			//Jus landed
-			if (vanguard.IsGrounded() && !jumping)
-			{
-				//Debug.Log("Landed");
-				vanguard.LandingFromJumping();
-				//basically a context switch. If this gets too expensive then cache the state instances and index it by name
-				movementContext.ContextSwitch(MovementContext.MovementStates.LateralMovement);
-			}
 		}
 	}
 }
