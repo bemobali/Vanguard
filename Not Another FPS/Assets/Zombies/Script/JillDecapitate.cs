@@ -6,29 +6,18 @@ public class JillDecapitate : MonoBehaviour
 {
     public GameObject m_ragDoll;
     public GameObject m_headDetachedMesh;
+    public GameObject m_head;
+    public GameObject m_headMesh;
+    public GameObject m_hairMesh;
+    [SerializeField]
     public Vector3 shotDirection;
-    GameObject m_head;
-    GameObject m_headMesh;
-    GameObject m_hairMesh;
-    
+    Rigidbody headMass;
     // Start is called before the first frame update
     void Start()
     {
         if (m_ragDoll != null)
         {
-            m_head = GameObject.Find("Head");   //can't use the transform Find function out-of-the-box. I would have to drill down the transform hierarcy using BFS to find Head
-            if (m_head == null)
-            {
-                Debug.Log("Cannot find Head GameObject instance");
-            }
-
-            m_headMesh = GameObject.Find("Jill_HiRes_Head_Geo");
-            if (m_headMesh == null)
-			{
-                Debug.Log("Cannot find Jill_HiRes_Head_Geo GameObject instanace");
-			}
-
-            m_hairMesh = GameObject.Find("Jill_HiRes_Hair_Geo");
+            headMass = m_head.GetComponent<Rigidbody>();
             m_headDetachedMesh.transform.SetParent(m_head.transform);
             m_headDetachedMesh.transform.localPosition = new Vector3(0f, 0f, 0f);
             m_headDetachedMesh.SetActive(false);
@@ -42,21 +31,19 @@ public class JillDecapitate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+       
+    }
+    void FixedUpdate()
+    {
         //Just move Jill
         float z = Time.deltaTime * 0.2f;
         this.transform.position += this.transform.forward * z;
         if (Input.GetAxis("Fire1") > 0f)
         {
-
-            Rigidbody headMass = m_head.GetComponent<Rigidbody>();
-            if (headMass == null)
-            {
-                Debug.Log("Not finding the Head Rigidbody component");
-                return;
-            }
             if (headMass.isKinematic) headMass.isKinematic = false;   //turn off isKinematic so I can break the Head off
             if (!m_headDetachedMesh.activeSelf)
-			{
+            {
                 headMass.AddForce(shotDirection, ForceMode.Impulse);
                 m_head.transform.parent = null;
                 m_headMesh.SetActive(false);
