@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Vanguard.Script;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,8 +29,17 @@ namespace Assets.Zombies.Script
 	//Dead: enter this state once zombie's health drops to below 1. At this state, randomly select either the dead animation or deactivate the ragdoll's Rigidbody IsKinematic to drop the zombie.
 	//Sink the zombie slowly by deactivating the ragdoll, and pull the zombie to the terrain at a pre-determined sink rate. Destroy the zombie object after a pre-determined sink amount.
 	/// </summary>
-	class ZombieStateContext
+	//Interesting C# rule, without the public keyword, this class is a private class of the namespace.
+
+	//This implementation requires that ZombieStateContext transitions the states. Someone needs to keep track of the number of targets in the short-range, medium, and long-range sensors
+	//and the order of checking has to be from short, medium, long, then random walk. Dead depends only on remaining health points. I wish there is a torus-like collider, with hole in the 
+	//middle.
+	//State update and transitions does not have to be done every frame
+	[ObsoleteAttribute("ZombieStateContext has been replaced by ZombieController. DO NOT USE", true)]
+	public class ZombieStateContext
 	{
+		//Number of frames to elapse before refreshing the zombie state. Allows the designer to tweak the AI performance
+		int frameRefreshRate;
 		IZombieState currentState;
 		public enum ZombieState
 		{
@@ -41,14 +51,14 @@ namespace Assets.Zombies.Script
 		};
 		Dictionary<ZombieState, IZombieState> movementStates;
 		UnityEngine.GameObject zombieToControl;
-		public ZombieStateContext(UnityEngine.GameObject zombie)
+
+		//Allow designer to tweak the number of frames to elapse before refreshing the state context
+		public void SetRefreshRate(int refreshRate)
 		{
-			zombieToControl = zombie;
-			movementStates = new Dictionary<ZombieState, IZombieState>();
-			movementStates.Add(ZombieState.RandomWalk, new ZombieRandomWalk(zombieToControl));
-			currentState = movementStates[ZombieState.RandomWalk];
+			frameRefreshRate = refreshRate;
 		}
 
+		#region Builtin Functions
 		//Call this at MonoBehaviour's Start()
 		public void Start()
 		{
@@ -58,13 +68,28 @@ namespace Assets.Zombies.Script
 		//Call this at MonoBehaviour's Update()
 		public void Update(float deltaT)
 		{
+			//Evaluate state switch based on Zombie state
+			//Do nothing if current state is DEAD
 			currentState.Update(deltaT);
 		}
 
 		//Call this at MonoBehaviour's FixedUpdate()
 		public void FixedUpdate(float deltaT)
 		{
+			//Do nothing if current state is DEAD. We could be waiting for the zombie death animation to complete
 			currentState.FixedUpdate(deltaT);
 		}
-	}
+
+		public void LateUpdate()
+		{
+			//do nothing if current state is DEAD. Or deactivate the ZombieController
+			//currentState.LateUpdate();
+		}
+		#endregion
+
+		public void ContextSwitch(ZombieState nextState)
+		{
+			currentState = movementStates[nextState];
+		}
+	};
 }

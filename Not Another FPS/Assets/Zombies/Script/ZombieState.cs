@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Assets.Zombies.Script
 {
 	//Interface for all Zombie states
-	interface IZombieState
+	public interface IZombieState
 	{
 		void Start();
 		void Update(float deltaT);

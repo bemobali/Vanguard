@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Animations;
 using MyStuff = Assets.Vanguard.Script;
 
 //Vanguard implements MonoBehaviour functions and interacts with the game engine.
@@ -11,31 +11,28 @@ public class Vanguard : MonoBehaviour
     #region Public Members
     //Tweakable object properties
     //Express walking speed in m/s
-    [SerializeField]
+    //[SerializeField] //not necessary for public member variables
     public float walkingSpeed;
-    [SerializeField]
     //runningSpeed is in m/s. Used by the 
     public float runningSpeed;
-    [SerializeField]
     //jump force vertical component
     public float jumpForce;
     //Left foot and right foot. Pass this to the MyStuff.Controller instance to toggle foot step
     public GameObject leftFoot, rightFoot;
     //Jumping and landing sound. Stays here because the collider belongs to the Vanguard unit
     public AudioSource jumpingSound, landingSound;
-    [SerializeField]
     public float tiltSensitivity;
-    [SerializeField]
     public float panSensitivity;
-    //Tilt rotation is to be done on the spine.
-    //public GameObject spine;
+    public GameObject spine;
     //Jump direction uses Hip's XZ axis
     public GameObject hips;
     //First person camera object. Need this because during cam swaps, the AudioListener must deactivate also
     public GameObject fpsCameraObj;
-    Camera fpsCamera;
     //Third person camera. Need this because during cam swaps, the AudioListener must deactivate also
     public GameObject tpsCameraObj;
+    //I don't think I need the game object. Just the camera
+    public GameObject deathCamera;
+    public GameObject HUD;
     //Point in space where the head is looking at
     public GameObject headLookAt;
     //Target attach point to IK the left hand
@@ -48,8 +45,13 @@ public class Vanguard : MonoBehaviour
     //Vanguard movement animator
     Animator animator;
     Rigidbody rigidBody;
+    Camera fpsCamera;
     //Vanguard ragdoll. How is it that GameObject does not have a function to find a child by name, but can find all of its children's components?
     //public GameObject ragDoll;
+    //Remaining HP. Transition state to dead when HP drops to 0
+    [SerializeField, Range(0, 100)]
+    //Int or float?
+    int healthPoint;
 
     //When initialing jump, the player moves in the direction of the lateralMovementVector. This way, the user cannot swirl the mouse around to change the jump direction.
     Vector3 lateralMovementVector;
@@ -68,7 +70,7 @@ public class Vanguard : MonoBehaviour
     public GameObject gunBarrelEnd;
     #endregion
 
-    void assignGameComponents()
+    void AssignGameComponents()
     {
         animator = GetComponent<Animator>();
         //establish the observer relationship
@@ -79,12 +81,13 @@ public class Vanguard : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         groundContact = true;
         fpsCamera = fpsCameraObj.GetComponent<Camera>();
+        healthPoint = 100;
     }
     #region BuiltIn Functions
     // Start is called before the first frame update
     void Start()
     {
-        assignGameComponents();
+        AssignGameComponents();
         //@note This is currently debug only. I have not considered adding laser pointer to the shotgun. Might be another can of worms
         laserRenderer = GetComponent<LineRenderer>();
     }
@@ -92,6 +95,11 @@ public class Vanguard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Vanguard is dead, so all bets are off
+        if (healthPoint < 1)
+		{
+            Dead();
+		}
         movementContext.Update(Time.deltaTime);
         // Create a vector at the center of our camera's viewport
         Vector3 lineOrigin = fpsCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
@@ -175,6 +183,34 @@ public class Vanguard : MonoBehaviour
         }
     }
     #endregion
+
+    void Dead()
+	{
+        LookAtConstraint constraint = fpsCamera.GetComponent<LookAtConstraint>();
+        if (constraint != null)
+		{
+            constraint.enabled = false;
+		}
+
+        LookAtConstraint chestLookAt = spine.GetComponent<LookAtConstraint>();
+        if (chestLookAt != null)
+		{
+            chestLookAt.enabled = false;
+		}
+
+        animationContext.Dead();
+        //DestroyObject(this.gameObject);
+        return;
+    }
+
+    //Call this from inside the Dead animation state
+    public void switchToDeathCamera()
+	{
+        HUD.SetActive(false);
+        fpsCameraObj.SetActive(false);
+        deathCamera.SetActive(true);
+    }
+
     private void LateralMove(float sideways, float forward, float movementSpeed, float deltaT)
     {
         //These approaches do not work
@@ -210,7 +246,7 @@ public class Vanguard : MonoBehaviour
 
     public void Stay()
     {
-        animationContext.stay();
+        animationContext.Stay();
 
     }
 

@@ -45,12 +45,17 @@ namespace Assets.Vanguard.Script
 			animator.SetTrigger("Jump");
 		}
 
-		public void stay()
+		public void Stay()
 		{
 			animator.SetFloat("Forward", 0f);
 			animator.SetFloat("Sideway", 0f);
 			if (animator.GetBool("Running")) animator.SetBool("Running", false);
 			if (animator.GetBool("Walking")) animator.SetBool("Walking", false);
+		}
+
+		public void Dead()
+		{
+			if (!animator.GetBool("Dead")) animator.SetBool("Dead", true);
 		}
 	}
 }

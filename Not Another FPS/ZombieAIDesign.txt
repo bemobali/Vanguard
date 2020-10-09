@@ -1,0 +1,68 @@
+Zombie state:
+
+//Collaborate with a specific collider, because the collider script has to call OnTriggerUpdate
+AttackTarget
+targetInRange
+target
+
+Start()
+-target = null
+
+LateUpdate():
+-if targetInRange not empty && target.dead()
+--target = selectHighestPriority(targetInRange)
+-Attack()
+-clear targetInRange
+
+//This one gets updated more ofthen than LateUpdate calls
+OnTriggerUpdate(collision):
+-if isTarget(collision) && !targetInRange.contains(collision)
+--targetInRange.insert(target)
+
+NumTargets(): return targetInRange.size();
+Attack() //Target should be within arm's reach
+-if target== null return;
+-PlayAttackAnimation()
+-target.damage(this.damagePoint);
+
+
+ZombieContext
+
+AttackTarget attackTargetState
+
+Update()
+-if attackTargetState.NumTargets() > 0 && currentState != State.Attack
+--currentContext = attackTargetState;
+
+Lateupdate()
+-currentContext.LateUpdate()
+
+
+[ZombieController]
+	|
+	|
+     <has a >
+	|
+	V
+[ZombieContext]--------------<has a>------|
+				          |
+[COLLIDER]--<updates>--->[STATE]<---------|
+
+
+DeadZombie
+
+zombieToKill;
+ragdoll;
+startToSink;
+sinkDepth;
+Update():
+-if (selectDeathSequence() == animation)
+--PlayDeathAnimation();
+-else
+--ragdoll = ActivateRagDoll();
+-if (startToSink) 
+-- currentDepth = Sink()
+-- if (currentDepth < sinkDepth)
+----Destroy(zombieToKill)
+----Destory(ragdoll)
+

@@ -36,9 +36,6 @@ public class JillDecapitate : MonoBehaviour
     }
     void FixedUpdate()
     {
-        //Just move Jill
-        float z = Time.deltaTime * 0.2f;
-        this.transform.position += this.transform.forward * z;
         if (Input.GetAxis("Fire1") > 0f)
         {
             if (headMass.isKinematic) headMass.isKinematic = false;   //turn off isKinematic so I can break the Head off
