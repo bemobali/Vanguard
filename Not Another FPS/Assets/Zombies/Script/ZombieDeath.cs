@@ -9,6 +9,8 @@ namespace Assets.Zombies.Script
 	//Enter the dead state. Either play a ragdoll death or animated death.
 	//Sink the zombie through the terrain
 	//Combining the ragdoll with the main character really complicates the death sequence
+	//This death sequence works only on Zombies with an active ragdoll. Currently only useful for Jill, because it is the only zombie that can be dismembered, and I need 
+	//the colliders for dismemberment
 	public class ZombieDeath: IZombieState
 	{
 		UnityEngine.GameObject zombieToKill;

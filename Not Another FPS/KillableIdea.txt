@@ -1,0 +1,10 @@
+I am willing to guess that for every types of ballistics, when the bullet reaches a gameobject, the bullet needs to know if the gameobject can be damaged by the bullet. Oh by the way the gameobject also terminates the lifetime of the bullet. So, before the bullet destroys itself, it needs to know if the GameObject has a component that handles battle damage.
+The bullet will provide the hit location properties to the GameObject. Then the GameObject decides what to do with the hit properties and bullet damage properties.
+
+For the zombie fps, I think a class called BattleDamage needs to be a component of the zombie, player, and other damageable GameObjects. The BattleDamage instance  takes a RayCastHit, Collider, or custom hit information, as well as the incurred damage on the BattleDamage.
+
+Character state manager, such as our ZombieController, nees to periodically query BattleDamage for remaining health point, so the state manager can transition to its death animation.
+
+Or BattleDamage collaborate with another instance of type Health that manages the health point of the character. Make state manager, such as the ZombieController, query Health object for remaining total health. Each BattleDamage can be customized to deduct an additional amount of HP from Health per hit.
+
+While the bullet HitPoint simulates varying damage range from a .22 (spray and pray) to a 50 cal (one massive damage per hit), certain body parts incurs critical, or fatal damage. Head shots are always 1 shot 1 kill. If the bullet also provides force information to BattleDamage, in addition to the collider that got hit, the collider's GameObject can be detached from the parent if it is detachable. I intend to try this for the Jill zombies.

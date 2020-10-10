@@ -40,18 +40,21 @@ public class Vanguard : MonoBehaviour
     //Target attach point to IK the right hand
     public GameObject rightHandAttach;
     //public GameObject[] floorRayCast = new GameObject[4];
+    public GameObject activeWeapon;
     #endregion
 
     //Vanguard movement animator
     Animator animator;
     Rigidbody rigidBody;
     Camera fpsCamera;
+    //overall health of the player
+    Health health;
+    //main body battle damage. 
+    BattleDamage bodyDamage;
+    //Weapon interface. @todo standardize the interface
+    M4Shotgun shotgun;
     //Vanguard ragdoll. How is it that GameObject does not have a function to find a child by name, but can find all of its children's components?
     //public GameObject ragDoll;
-    //Remaining HP. Transition state to dead when HP drops to 0
-    [SerializeField, Range(0, 100)]
-    //Int or float?
-    int healthPoint;
 
     //When initialing jump, the player moves in the direction of the lateralMovementVector. This way, the user cannot swirl the mouse around to change the jump direction.
     Vector3 lateralMovementVector;
@@ -64,12 +67,6 @@ public class Vanguard : MonoBehaviour
     //float tiltAccum = 0f;
     bool groundContact;
 
-    #region Raycast Bullshit Ballistics
-    LineRenderer laserRenderer;
-    RaycastHit hitTarget;
-    public GameObject gunBarrelEnd;
-    #endregion
-
     void AssignGameComponents()
     {
         animator = GetComponent<Animator>();
@@ -81,45 +78,32 @@ public class Vanguard : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         groundContact = true;
         fpsCamera = fpsCameraObj.GetComponent<Camera>();
-        healthPoint = 100;
+        health = GetComponent<Health>();
+        bodyDamage = GetComponent<BattleDamage>();
+        shotgun = activeWeapon.GetComponent<M4Shotgun>();
     }
+
     #region BuiltIn Functions
     // Start is called before the first frame update
     void Start()
     {
         AssignGameComponents();
-        //@note This is currently debug only. I have not considered adding laser pointer to the shotgun. Might be another can of worms
-        laserRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //Vanguard is dead, so all bets are off
-        if (healthPoint < 1)
+        if (health.HealthPoint < 1)
 		{
             Dead();
 		}
         movementContext.Update(Time.deltaTime);
-        // Create a vector at the center of our camera's viewport
-        Vector3 lineOrigin = fpsCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
-        //@todo get this from the weapon
-        const float weaponRange = 50;
-        // Draw a line in the Scene View  from the point lineOrigin in the direction of fpsCam.transform.forward * weaponRange, using the color green
-        //Debug.DrawRay(lineOrigin, fpsCamera.transform.forward * weaponRange, Color.green,300, false);
-        Vector3 laserOrigin = gunBarrelEnd.transform.position;
-        laserRenderer.SetPosition(0, laserOrigin);
-        laserRenderer.SetPosition(1, laserOrigin + (gunBarrelEnd.transform.forward * weaponRange));
-
-        // Check if our raycast has hit anything
-        /*if (Physics.Raycast(lineOrigin, fpsCamera.transform.forward, out hitTarget, weaponRange))
-        {
-            laserRenderer.SetPosition(1, hitTarget.point);
-        }
-        else
-        {
-            laserRenderer.SetPosition(1, laserOrigin + (gunBarrelEnd.transform.forward * weaponRange));
-        }*/
+        // Create a vector at the center of our camera's viewportes
+        if (controller.Shoot())
+		{
+            shotgun.Fire();
+		}
     }
 
     void FixedUpdate()

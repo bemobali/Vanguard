@@ -54,6 +54,11 @@ namespace Assets.Vanguard.Script
 			return Input.GetAxis("Jump") > 0f;
 		}
 
+		public bool Shoot()
+		{
+			return Input.GetAxis("Fire1") > 0f;
+		}
+
 		//F1 for first person camera. Seriously this kb mapping needs to be finalized during design
 		void CheckFirstPersonCamera()
 		{ 
