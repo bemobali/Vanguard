@@ -6,9 +6,9 @@ using UnityEngine;
 //M4Shotgun implements the shooting behavior of the shotgun.
 public class M4Shotgun : MonoBehaviour
 {
-    [SerializeField, Range(4,8)]
-    const int maxCapacity = 8;
-    int roundsRemaining = maxCapacity;
+    [SerializeField, Range(4,100)]
+    int maxCapacity;
+    int roundsRemaining;
     //Once I have a generalized firearm class, this range will be applicable
     //[SerializeField, Range(1, 20)]
     const float rateOfFire = 1f;
@@ -30,6 +30,7 @@ public class M4Shotgun : MonoBehaviour
     {
         laserRenderer = GetComponent<LineRenderer>();
         shotgunBallistics = GetComponent<BullshitLaser>();
+        roundsRemaining = maxCapacity;
     }
 
     bool CanShoot()

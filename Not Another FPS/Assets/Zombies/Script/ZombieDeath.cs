@@ -98,7 +98,7 @@ namespace Assets.Zombies.Script
 		}
 
 		//Just pull the zombie down using gravity
-		public void Sink(float deltaT)
+		void Sink(float deltaT)
 		{
 			if (animatedDeath)
 			{

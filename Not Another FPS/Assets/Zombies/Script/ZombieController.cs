@@ -12,11 +12,12 @@ public class ZombieController : MonoBehaviour
 {
 	//public ZombieLongRangeSensor longRangeSensor;
 	public Health health;
+	public ZombieDead zombieDied;
 	//How often should we refresh the current state. Fastest will be 1 for refresh every 1 frame.
 	int frameRefreshRate;
 	//All possible movement states
 	Dictionary<ZombieState, MyZombieStuff.IZombieState> zombieStates;
-	MyZombieStuff.IZombieState zombieDied;
+	
 
 	//Zombie's current state
 	MyZombieStuff.IZombieState currentState;
@@ -32,29 +33,46 @@ public class ZombieController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		zombieDied = null;
 		zombieStates = new Dictionary<ZombieState, MyZombieStuff.IZombieState>();
 		zombieStates.Add(ZombieState.RandomWalk, new MyZombieStuff.ZombieRandomWalk(gameObject));
 		//Death occurs only once, so no point caching this state
 		//zombieStates.Add(ZombieState.Dead, new MyZombieStuff.ZombieDeath(gameObject));
 		currentState = zombieStates[ZombieState.RandomWalk];
 		currentState.Start();
+		//Make sure the initial transition state is RandomWalk. Disable all other state behavior scripts
+		zombieDied.enabled = false;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		currentState.Update(Time.deltaTime);
+		//@todo remove the if statement once we can consolidate all states using a MonoBehavior-derived class/interface, whichever works
+		if (!isDead())
+		{
+			currentState.Update(Time.deltaTime);
+		}
+	}
+
+	bool isDead()
+	{
+		return health.HealthPoint < 1;
 	}
 
 	void LateUpdate()
 	{
-		if ((health.HealthPoint == 0) && (zombieDied == null))
+		//no more state transition allowed
+		if (isDead() && !zombieDied.enabled)
 		{
-			zombieDied = new MyZombieStuff.ZombieDeath(gameObject);
-			//no more state transition allowed
-			currentState = zombieDied;
+			zombieDied.enabled = true;
+			return;
 		}
+		//If we use MonoBehaviour-derived script objects, our state transitions will be activating and deactivating Gameobject
+		/*if (isDead() && (zombieDied == null))
+		{
+			//zombieDied = new ZombieDead();
+			//no more state transition allowed
+			//currentState = zombieDied;
+		}*/
 		//currentState.LateUpdate()
 		//Do state transition checks here
 	}
