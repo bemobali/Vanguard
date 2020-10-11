@@ -26,6 +26,8 @@ namespace Assets.Vanguard.Script
 		{
 			animator.SetFloat("Forward", forward);
 			animator.SetFloat("Sideway", sideways);
+			animator.SetFloat("RunningSpeedMultiplier", 2.5f);
+
 			//@todo Do I transition to a different animation state, or do I just speed up the animation speed?
 			//if (!animator.GetBool("isRunning")) animator.SetBool("isRunning", true);
 			//if (animator.GetBool("isWalking")) animator.SetBool("isWalking", false);
@@ -35,9 +37,11 @@ namespace Assets.Vanguard.Script
 		{
 			animator.SetFloat("Forward", forward);
 			animator.SetFloat("Sideway", sideways);
+			animator.SetFloat("RunningSpeedMultiplier", 1f);
 
 			if (animator.GetBool("Running")) animator.SetBool("Running", false);
 			if (!animator.GetBool("Walking")) animator.SetBool("Walking", true);
+
 		}
 
 		public void Jumping()

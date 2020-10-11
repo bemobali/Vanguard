@@ -168,6 +168,20 @@ public class Vanguard : MonoBehaviour
     }
     #endregion
 
+    void EnableRagdollPhysics()
+	{
+        Rigidbody [] rb = gameObject.GetComponentsInChildren<Rigidbody>();
+        Collider[] col = gameObject.GetComponentsInChildren<Collider>();
+        foreach(Rigidbody rigid in rb)
+		{
+            rigid.isKinematic = false;
+		}
+
+        foreach (Collider collide in col)
+		{
+            collide.isTrigger = false;
+		}
+	}
     void Dead()
 	{
         LookAtConstraint constraint = fpsCamera.GetComponent<LookAtConstraint>();
@@ -181,7 +195,7 @@ public class Vanguard : MonoBehaviour
 		{
             chestLookAt.enabled = false;
 		}
-
+        
         animationContext.Dead();
         //DestroyObject(this.gameObject);
         return;
@@ -193,6 +207,8 @@ public class Vanguard : MonoBehaviour
         HUD.SetActive(false);
         fpsCameraObj.SetActive(false);
         deathCamera.SetActive(true);
+        //Enable physics
+        EnableRagdollPhysics();
     }
 
     private void LateralMove(float sideways, float forward, float movementSpeed, float deltaT)
