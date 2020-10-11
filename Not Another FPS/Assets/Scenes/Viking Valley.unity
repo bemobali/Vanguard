@@ -931,7 +931,7 @@ Transform:
   m_Children:
   - {fileID: 1012338588405804670}
   - {fileID: 817496429}
-  - {fileID: 1257985359}
+  - {fileID: 1199618321}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8090,6 +8090,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185629247}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1199618321 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 368248010068285780, guid: 7e87f30b539fd4345891e2afa76c65b2, type: 3}
+  m_PrefabInstance: {fileID: 2258790410266829526}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1225707086
 GameObject:
   m_ObjectHideFlags: 0
@@ -8345,11 +8350,6 @@ BoxCollider:
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9c17d66b88dfce54d99d6710ec954c13, type: 3}
   m_PrefabInstance: {fileID: 493013655}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1257985359 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -6254323763881329226, guid: 7e87f30b539fd4345891e2afa76c65b2, type: 3}
-  m_PrefabInstance: {fileID: 2258790410266829526}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1263145103 stripped
 Transform:
@@ -11571,67 +11571,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!1001 &1799848593
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8878362807941847341, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_Name
-      value: FemaleZombie Ragdoll
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807941847341, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.024
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.92
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878362807942137101, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
 --- !u!1001 &1802643722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14193,6 +14132,14 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: -189364406913023879, guid: 7e87f30b539fd4345891e2afa76c65b2, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 424691185, guid: 7e87f30b539fd4345891e2afa76c65b2, type: 3}
+      propertyPath: ragdoll
+      value: 
+      objectReference: {fileID: 8878362807941847341, guid: 9fa5fc0dadfa03544b27c925e21004b6, type: 3}
     - target: {fileID: 368248010068116852, guid: 7e87f30b539fd4345891e2afa76c65b2, type: 3}
       propertyPath: m_Name
       value: FemaleZombie Variant
@@ -14240,6 +14187,10 @@ PrefabInstance:
     - target: {fileID: 368248010068285780, guid: 7e87f30b539fd4345891e2afa76c65b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101323208117455572, guid: 7e87f30b539fd4345891e2afa76c65b2, type: 3}
+      propertyPath: extraHealthDeduction
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e87f30b539fd4345891e2afa76c65b2, type: 3}

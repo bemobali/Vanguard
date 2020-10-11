@@ -12,9 +12,9 @@ public class BullshitLaser : MonoBehaviour
     bool targetHit;
     public Camera fpsCamera;
     [SerializeField, Range(0.5f, 1000f)]
-    float weaponRange;
+    float weaponRange = 50f;
     [SerializeField, Range(1, 95)]
-    float damagePoint;
+    float damagePoint = 1f;
     #endregion
 
     // Start is called before the first frame update

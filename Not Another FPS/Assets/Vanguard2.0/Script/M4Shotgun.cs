@@ -7,7 +7,7 @@ using UnityEngine;
 public class M4Shotgun : MonoBehaviour
 {
     [SerializeField, Range(4,100)]
-    int maxCapacity;
+    int maxCapacity = 8;
     int roundsRemaining;
     //Once I have a generalized firearm class, this range will be applicable
     //[SerializeField, Range(1, 20)]

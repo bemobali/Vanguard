@@ -32,7 +32,8 @@ public class ZombieDead : MonoBehaviour
 	//Sink rate in depth unit per seconds. Negative because the roc is against the terrain's Y  axis
 	[SerializeField, Range(-0.5f, -5f)]
 	const float sinkRate = -1f;
-
+	//InvokeRepeating period every 40ms
+	const float invokeRepeatingPeriod = 0.04f;
 	//Update() starts the timer
 	float sinkTimer;
 	//Mini state within a state. Not worth a full state pattern implementation
@@ -54,36 +55,37 @@ public class ZombieDead : MonoBehaviour
 	//I expect this to be done only once. So please have the script disabled initially
 	void OnEnable()
 	{
+		//if (navMeshAgent.enabled) navMeshAgent.enabled = false;
+		if (navMeshAgent) Destroy(navMeshAgent);
 		animatedDeath = UnityEngine.Random.Range(0.0f, 1.0f) < 0.6;
 		if (animatedDeath)
 		{
-			return;
-		}
-		
-		//make sure there is a ragdoll to use
-		if (ragdoll)
-		{
-			zombieToSink = Instantiate(ragdoll);
-			zombieToSink.transform.position = transform.position;
-			zombieToSink.transform.rotation = transform.rotation;
 			return;
 		}
 
 		Joint[] ragdollJoint = gameObject.GetComponents<Joint>();
 		if (ragdollJoint.Length == 0)
 		{
-			//So this is not a ragdoll. Can't do ragdoll animation
-			//Debug.Log("Gameobject " + gameObject.name + " has no joint. Therefore it is not a ragdoll");
-			animatedDeath = true;
+			//So this is not a ragdoll. Can't do ragdoll animation without the ragdoll.
+			if (ragdoll == null)
+			{
+				animatedDeath = true;
+			}
+			else
+			{
+				GameObject ragdollToSink = Instantiate(ragdoll, transform.position, transform.rotation);
+				//InvokeRepeating("SinkManually", startToSink, invokeRepeatingPeriod); //Don't do this
+				//Do this : ragdollToSink.GetComponent<Sink>().enabled = true;
+				//Attach a deactivated sink to the dummy ragdoll.
+				Destroy(gameObject);
+			}
 			return;
+			//This is the part that bugs me because of the Destroy call. Code gets fragile because this same code also caters for animated ragdoll game objects.
 		}
-		//Otherwise, AssignGameComponents should have set zombieToSink to this.
 	}
 
 	void Update()
 	{
-		if (navMeshAgent.enabled) navMeshAgent.enabled = false;
-
 		if (sinkTimer > startToSink)
 		{
 			Sink(Time.deltaTime);
@@ -156,7 +158,25 @@ public class ZombieDead : MonoBehaviour
 		if (zombieToSink.transform.position.y < graveDepth)
 		{
 			zombieToSink.SetActive(false);
-			UnityEngine.Object.Destroy(zombieToSink);
+			Destroy(zombieToSink);
+		}
+	}
+
+	//@todo Attach a script to the zombie ragdoll to sink it manually once activated
+	//Use this for InvokeRepeating for the explicitly attached ragdoll. Maybe I now need 2 separate state handlers
+	void SinkManually()
+	{
+		if (ragdollColliders == null)
+		{
+			DisableAllColliders();
+		}
+		//This works because sink keeps getting repeated calls from Update() The ragdoll position is not the same as the gameobject position because of gravity
+		zombieToSink.transform.Translate(0f, sinkRate * invokeRepeatingPeriod, 0f);
+		if (zombieToSink.transform.position.y < graveDepth)
+		{
+			zombieToSink.SetActive(false);
+			Destroy(zombieToSink);
+			CancelInvoke("SinkManually");
 		}
 	}
 }
