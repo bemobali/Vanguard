@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 //ZombieDead defines the zombie's death sequence. Zombie can die using the pre-defined animation, or it can die as a ragdoll
+//Cannot mix ragdoll animation with a physics-based animation. As soon as this script activates, either the Zombie dies as a ragdoll, or using animation
 public class ZombieDead : MonoBehaviour
 {
 	//Some zombies are already ragdolls.
@@ -23,28 +24,13 @@ public class ZombieDead : MonoBehaviour
 	Rigidbody[] ragdollRB;
 	#endregion 
 	
-	//Call Destroy on zombie once it is under graveDepth
-	[SerializeField, Range(-2f, -6f)]
-	const float graveDepth = -2f;
-	//How many seconds to wait before sinking ragdoll. Leave enough time to visually cue the player that the target is dead
-	[SerializeField, Range(1f, 5f)]
-	const float startToSink = 3.0f;
-	//Sink rate in depth unit per seconds. Negative because the roc is against the terrain's Y  axis
-	[SerializeField, Range(-0.5f, -5f)]
-	const float sinkRate = -1f;
-	//InvokeRepeating period every 40ms
-	const float invokeRepeatingPeriod = 0.04f;
-	//Update() starts the timer
-	float sinkTimer;
 	//Mini state within a state. Not worth a full state pattern implementation
 	bool animatedDeath;
 
 	void AssignGameComponents()
 	{
-		animator = gameObject.GetComponent<Animator>();
-		navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-		sinkTimer = 0f;
-		zombieToSink = this.gameObject;
+		if (animator == null) animator = gameObject.GetComponent<Animator>();
+		if (navMeshAgent == null) navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
 	}
 
 	void Start()
@@ -55,43 +41,23 @@ public class ZombieDead : MonoBehaviour
 	//I expect this to be done only once. So please have the script disabled initially
 	void OnEnable()
 	{
-		//@todo restore
-		/*if (navMeshAgent) Destroy(navMeshAgent);
-		animatedDeath = UnityEngine.Random.Range(0.0f, 1.0f) < 0.6;
-		if (animatedDeath)
-		{
-			return;
-		}*/
-		animatedDeath = false;	//@todo remove
+		AssignGameComponents();
+		if (navMeshAgent) Destroy(navMeshAgent);
 		Joint[] ragdollJoint = gameObject.GetComponents<Joint>();
 		if (ragdollJoint.Length == 0)
 		{
-			//So this is not a ragdoll. Can't do ragdoll animation without the ragdoll.
+			//So this is not a ragdoll. Can't do ragdoll animation without the ragdoll. So animation is a must
 			if (ragdoll == null)
 			{
 				animatedDeath = true;
 			}
-			else
-			{
-				//ragdollToSink should already have a behavior script that sinks the ragdoll within a pre-determined time.
-				GameObject ragdollToSink = Instantiate(ragdoll, transform.position, transform.rotation);
-				Destroy(gameObject);
-			}
-			return;
-			//This is the part that bugs me because of the Destroy call. Code gets fragile because this same code also caters for animated ragdoll game objects.
-		}
-	}
-
-	void Update()
-	{
-		if (sinkTimer > startToSink)
-		{
-			Sink(Time.deltaTime);
 		}
 		else
 		{
-			sinkTimer += Time.deltaTime;
+			animatedDeath = UnityEngine.Random.Range(0.0f, 1.0f) < 0.6;
 		}
+
+		ActivateSink();
 
 		if (animatedDeath)
 		{
@@ -101,21 +67,32 @@ public class ZombieDead : MonoBehaviour
 			if (!animator.GetBool("isDead")) animator.SetBool("isDead", true);
 			return;
 		}
-
-
-		if (ragdollRB == null)
+		
+		if (ragdoll != null)
 		{
-			EnableRigidBodyPhysics();
+			//ragdoll to sink should already have a behavior script that sinks the ragdoll within a pre-determined time.
+			Instantiate(ragdoll, transform.position, transform.rotation);
+			Destroy(gameObject);
+			return;
 		}
+		EnableRigidBodyPhysics();
+	}
+
+	void Update()
+	{
+		//When should we activate sink?
 	}
 
 	void FixedUpdate() { }
 
+	//If the gameObject is a kinematic ragdoll, this can be called as an event from the animation to enable the ragdoll rigidbodies
+	//Another call 
 	void EnableRigidBodyPhysics()
 	{
+		if (ragdollRB != null) return;
 		//Let the ragdoll physics takes over
 		animator.enabled = false;
-		ragdollRB = zombieToSink.GetComponentsInChildren<UnityEngine.Rigidbody>();
+		ragdollRB = gameObject.GetComponentsInChildren<UnityEngine.Rigidbody>();
 		if (ragdollRB != null)
 		{
 			foreach (UnityEngine.Rigidbody rb in ragdollRB)
@@ -126,38 +103,13 @@ public class ZombieDead : MonoBehaviour
 		}
 	}
 
-	void DisableAllColliders()
+	//Should I activate sink in the animator, or
+	void ActivateSink()
 	{
-		ragdollColliders = zombieToSink.GetComponentsInChildren<UnityEngine.Collider>();
-		if (ragdollColliders != null)
+		ZombieSink sink = GetComponent<ZombieSink>();
+		if (sink != null)
 		{
-			foreach (UnityEngine.Collider collider in ragdollColliders)
-			{
-				//Kill the colliders so we can sink the object
-				collider.enabled = false;
-			}
-		}
-	}
-
-	//@todo put this in a separate script and activate to sink the gameObject.
-	//Just pull the zombie down using gravity
-	void Sink(float deltaT)
-	{
-		if (animatedDeath)
-		{
-			EnableRigidBodyPhysics();
-		}
-
-		if (ragdollColliders == null)
-		{
-			DisableAllColliders();
-		}
-		//This works because sink keeps getting repeated calls from Update() The ragdoll position is not the same as the gameobject position because of gravity
-		zombieToSink.transform.Translate(0f, sinkRate * deltaT, 0f);
-		if (zombieToSink.transform.position.y < graveDepth)
-		{
-			zombieToSink.SetActive(false);
-			Destroy(zombieToSink);
+			sink.enabled = true;
 		}
 	}
 }

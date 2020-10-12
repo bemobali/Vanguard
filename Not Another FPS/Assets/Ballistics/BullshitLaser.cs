@@ -16,7 +16,8 @@ public class BullshitLaser : MonoBehaviour
     [SerializeField, Range(1, 95)]
     float damagePoint = 1f;
     #endregion
-
+    //Target layer is layer 9.
+    const int ballisticLayer = 1 << 9;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +56,6 @@ public class BullshitLaser : MonoBehaviour
 	{
         Vector3 lineOrigin = fpsCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
         // Check if our raycast has hit anything
-        targetHit = Physics.Raycast(lineOrigin, fpsCamera.transform.forward, out hitTarget, weaponRange);
+        targetHit = Physics.Raycast(lineOrigin, fpsCamera.transform.forward, out hitTarget, weaponRange, ballisticLayer);
 	}
 }

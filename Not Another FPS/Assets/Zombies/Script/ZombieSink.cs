@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Sink a GameObject using gravity. Play with the RigidBody drag to vary the sink speed of the avatar.
 public class ZombieSink : MonoBehaviour
 {
 	//Call Destroy on zombie once it is under graveDepth
@@ -9,19 +10,23 @@ public class ZombieSink : MonoBehaviour
 	const float graveDepth = -2f;
 	//How many seconds to wait before sinking ragdoll. Leave enough time to visually cue the player that the target is dead
 	[SerializeField, Range(1f, 5f)]
-	const float startToSink = 3.0f;
+	const float startToSink = 5.0f;
 	//Sink rate in depth unit per seconds. Negative because the roc is against the terrain's Y  axis
+	//I need this because the sinking avatar does not drag its GameObject. So I still need to manually sink the Gameobject behind the avatar
 	[SerializeField, Range(-0.5f, -5f)]
 	const float sinkRate = -1f;
 	//Update() starts the timer
 	float sinkTimer;
-	Collider[] ragdollColliders;
+	Collider[] childrenColliders;
+	Collider [] parentCollider;
 
 	// Start is called before the first frame update
 	void Start()
     {
 		sinkTimer = 0;
-    }
+		parentCollider = gameObject.GetComponents<Collider>();
+		childrenColliders = gameObject.GetComponentsInChildren<Collider>();
+	}
 
     // Update is called once per frame
     void Update()
@@ -42,24 +47,28 @@ public class ZombieSink : MonoBehaviour
 		if (gameObject.transform.position.y < graveDepth)
 		{
 			gameObject.SetActive(false);
+			Debug.Log("Destroying game object " + gameObject.name);
 			Destroy(gameObject);
 		}
 	}
 
 	void DisableAllColliders()
 	{
-		if (ragdollColliders == null)
+		if (parentCollider != null)
 		{
-			ragdollColliders = gameObject.GetComponentsInChildren<Collider>();
-			if (ragdollColliders != null)
+			foreach(Collider col in parentCollider)
 			{
-				foreach (Collider collider in ragdollColliders)
-				{
-					//Kill the colliders so we can sink the object
-					collider.enabled = false;
-				}
+				col.enabled = false;
 			}
 		}
 		
+		if (childrenColliders != null)
+		{
+			foreach (Collider collider in childrenColliders)
+			{
+				//Kill the colliders so we can sink the object
+				collider.enabled = false;
+			}
+		}
 	}
 }
