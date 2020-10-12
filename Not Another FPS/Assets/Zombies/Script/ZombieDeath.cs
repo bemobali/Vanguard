@@ -11,6 +11,7 @@ namespace Assets.Zombies.Script
 	//Combining the ragdoll with the main character really complicates the death sequence
 	//This death sequence works only on Zombies with an active ragdoll. Currently only useful for Jill, because it is the only zombie that can be dismembered, and I need 
 	//the colliders for dismemberment
+	[Obsolete("class Assets.Zombies.Script.ZombieDeath is obsolete. Use the newer ZombieDead class", false)]
 	public class ZombieDeath: IZombieState
 	{
 		UnityEngine.GameObject zombieToKill;

@@ -55,14 +55,14 @@ public class ZombieDead : MonoBehaviour
 	//I expect this to be done only once. So please have the script disabled initially
 	void OnEnable()
 	{
-		//if (navMeshAgent.enabled) navMeshAgent.enabled = false;
-		if (navMeshAgent) Destroy(navMeshAgent);
+		//@todo restore
+		/*if (navMeshAgent) Destroy(navMeshAgent);
 		animatedDeath = UnityEngine.Random.Range(0.0f, 1.0f) < 0.6;
 		if (animatedDeath)
 		{
 			return;
-		}
-
+		}*/
+		animatedDeath = false;	//@todo remove
 		Joint[] ragdollJoint = gameObject.GetComponents<Joint>();
 		if (ragdollJoint.Length == 0)
 		{
@@ -73,10 +73,8 @@ public class ZombieDead : MonoBehaviour
 			}
 			else
 			{
+				//ragdollToSink should already have a behavior script that sinks the ragdoll within a pre-determined time.
 				GameObject ragdollToSink = Instantiate(ragdoll, transform.position, transform.rotation);
-				//InvokeRepeating("SinkManually", startToSink, invokeRepeatingPeriod); //Don't do this
-				//Do this : ragdollToSink.GetComponent<Sink>().enabled = true;
-				//Attach a deactivated sink to the dummy ragdoll.
 				Destroy(gameObject);
 			}
 			return;
@@ -141,6 +139,7 @@ public class ZombieDead : MonoBehaviour
 		}
 	}
 
+	//@todo put this in a separate script and activate to sink the gameObject.
 	//Just pull the zombie down using gravity
 	void Sink(float deltaT)
 	{
@@ -159,24 +158,6 @@ public class ZombieDead : MonoBehaviour
 		{
 			zombieToSink.SetActive(false);
 			Destroy(zombieToSink);
-		}
-	}
-
-	//@todo Attach a script to the zombie ragdoll to sink it manually once activated
-	//Use this for InvokeRepeating for the explicitly attached ragdoll. Maybe I now need 2 separate state handlers
-	void SinkManually()
-	{
-		if (ragdollColliders == null)
-		{
-			DisableAllColliders();
-		}
-		//This works because sink keeps getting repeated calls from Update() The ragdoll position is not the same as the gameobject position because of gravity
-		zombieToSink.transform.Translate(0f, sinkRate * invokeRepeatingPeriod, 0f);
-		if (zombieToSink.transform.position.y < graveDepth)
-		{
-			zombieToSink.SetActive(false);
-			Destroy(zombieToSink);
-			CancelInvoke("SinkManually");
 		}
 	}
 }
