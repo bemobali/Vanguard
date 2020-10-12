@@ -6,19 +6,17 @@ using MyZombieStuff = Assets.Zombies.Script;
 
 public class ZombieLongRangeSensor : MonoBehaviour
 {
-	#region BuiltIn Functions
-	void OnCollisionEnter(Collision target)
+	void OnTriggerEnter(Collider target)
 	{
 		
 	}
 
-	void OnCollisionStay(Collision target)
+	void OnTriggerStay(Collider target)
 	{
 		//collision remains
 	}
 
-	void OnCollisionExit(Collision target)
+	void OnTriggerExit(Collider target)
 	{
 	}
-	#endregion
 }
