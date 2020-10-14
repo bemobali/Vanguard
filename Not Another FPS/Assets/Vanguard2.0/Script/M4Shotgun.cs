@@ -75,8 +75,8 @@ public class M4Shotgun : MonoBehaviour
         
         // Draw a line in the Scene View  from the point lineOrigin in the direction of fpsCam.transform.forward * weaponRange, using the color green
         //Debug.DrawRay(lineOrigin, fpsCamera.transform.forward * weaponRange, Color.green,300, false);
-        Vector3 laserOrigin = laserPointerBase.transform.position;
-        laserRenderer.SetPosition(0, laserOrigin);
-        laserRenderer.SetPosition(1, laserOrigin + (laserPointerBase.transform.forward * laserPointerRange));
+        //Vector3 laserOrigin = laserPointerBase.transform.position;
+        //laserRenderer.SetPosition(0, laserOrigin);
+        //laserRenderer.SetPosition(1, laserOrigin + (laserPointerBase.transform.forward * laserPointerRange));
     }
 }

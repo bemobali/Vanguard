@@ -11,13 +11,18 @@ using MyZombieStuff = Assets.Zombies.Script;
 public class ZombieController : MonoBehaviour
 {
 	//public ZombieLongRangeSensor longRangeSensor;
+	//The overall health of the zombie. Maybe not the optimal place to put this.
+	//public because this needs to be accessed by multiple BattleDamage instances
 	public Health health;
-	public ZombieDead zombieDied;
+	[SerializeField]
+	ZombieDead zombieDied;
+	//Zombie is walking to a particular target
+	[SerializeField]
+	ZombieWalkToTarget zombieWalkToTarget;
 	//How often should we refresh the current state. Fastest will be 1 for refresh every 1 frame.
 	int frameRefreshRate;
 	//All possible movement states
 	Dictionary<ZombieState, MyZombieStuff.IZombieState> zombieStates;
-	
 
 	//Zombie's current state
 	MyZombieStuff.IZombieState currentState;
@@ -49,6 +54,7 @@ public class ZombieController : MonoBehaviour
 		//@todo remove the if statement once we can consolidate all states using a MonoBehavior-derived class/interface, whichever works
 		if (!isDead())
 		{
+
 			currentState.Update(Time.deltaTime);
 		}
 	}

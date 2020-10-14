@@ -11,6 +11,8 @@ public class ZombieAttackSensor : MonoBehaviour
 	float refreshRate = 0.25f;
 	float refreshTimer;
 	bool refreshTarget;
+	[SerializeField]
+	ZombieAttackTarget stateToModify = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,25 +32,21 @@ public class ZombieAttackSensor : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter(Collider target)
-	{
-		
-	}
-
 	//This is the workhorse for updating the target list
 	void OnTriggerStay(Collider target)
 	{
-		if (refreshTarget)
+		//if (refreshTarget)
 		{
-			Debug.Log("Collider in range " + target.gameObject.tag + " position " + target.transform.position.ToString() + " of GameObject " + target.gameObject.tag);
-			//@todo add target into the target list
-			
+			Debug.Log(ToString() + " attacking collider in range " + target.gameObject.tag + " position " + target.transform.position.ToString() + " of GameObject " + target.gameObject.name);
+			stateToModify.ProcessContact(target.gameObject);
 		}
 		
 	}
 
 	void OnTriggerExit(Collider target)
-	{ }
+	{
+		stateToModify.RemoveContact(target.gameObject);
+	}
 
 	void LateUpdate()
 	{

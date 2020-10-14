@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Viking Valley.unity
+- path: Assets/Scenes/Zombie AI Test Scene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

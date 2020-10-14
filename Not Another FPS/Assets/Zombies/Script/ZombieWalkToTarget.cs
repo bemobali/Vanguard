@@ -1,108 +1,97 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 
-namespace Assets.Zombies.Script
+//This state stees the zombie to walk to a particular target. The zombie is not committed to the current target yet.
+//If a new, higher priority target pops up, the zombie will switch to that target
+//Targets are ranked by tags. See targetRank function to rank the target
+class ZombieWalkToTarget : MonoBehaviour
 {
-	//This state stees the zombie to walk to a particular target. The zombie is not committed to the current target yet.
-	//If a new, higher priority target pops up, the zombie will switch to that target
-	//Targets are ranked by tags. See targetRank function to rank the target
-	class ZombieWalkToTarget : IZombieState
+	NavMeshAgent agent;
+	//The current game object in SensorTarget layer
+	GameObject currentTarget;
+	Animator animator;
+
+	#region Built In function
+	void Start()
 	{
-		#region From constructor parameter
-		//The zombie game object to control
-		UnityEngine.GameObject zombie;
-		#endregion
+		agent = gameObject.GetComponent<NavMeshAgent>();
+		animator = gameObject.GetComponent<Animator>();
+	}
 
-		UnityEngine.AI.NavMeshAgent navMeshAgent;
-		UnityEngine.GameObject currentTarget;
+	void Update()
+	{
+		if (!animator.GetBool("isWalking"))
+		{ 
+			animator.SetBool("isWalking", true);
+		}
+		agent.SetDestination(currentTarget.transform.position);
+	}
 
-		int rankTarget(string tag)
+	void LateUpdate()
+	{ 
+		//I think it is possible to signal the ZombieController that a state change probably needs to happen. At this point collisions should have been resolved
+		//if the last collider has left then the currentTarget == null. So time for a state change
+		//The question is: am I correct to deduce that Update won't be called in the next cycle after handling OnDeactivate
+		if (currentTarget == null && this.enabled)
 		{
-			if (tag == "Player") return 0;
-			if (tag == "OrganicFood") return 1;
-			return Int32.MaxValue;
+			//this.enabled = false;
+			//The transition can only go upward in the sensor state hierarchy
+			//controller.ContextSwitch(ZombieController.ZombieState.RandomWalk);
+		}
+	}
+	#endregion
+
+	int rankTarget(string tag)
+	{
+		if (tag == "Player") return 0;
+		if (tag == "OrganicFood") return 1;
+		return Int32.MaxValue;
+	}
+
+	bool higherPriority(UnityEngine.GameObject lhs, UnityEngine.GameObject rhs)
+	{
+		return rankTarget(lhs.tag) < rankTarget(rhs.tag);
+	}
+
+	void SetTarget(GameObject target)
+	{
+		currentTarget = target;
+	}
+
+	//Call this to deal with contacts from the colliders, or any other form of target detection
+	public void ProcessContact(GameObject target)
+	{
+		//Don't reverse the evaluation order
+		if ((currentTarget == null) || higherPriority(target, currentTarget))
+		{
+			SetTarget(target);
+			Debug.Log("Switching target to " + currentTarget.name);
+			return;
 		}
 
-		bool higherPriority(UnityEngine.GameObject lhs, UnityEngine.GameObject rhs)
-		{
-			return rankTarget(lhs.tag) < rankTarget(rhs.tag);
-		}
+		if (target.gameObject.GetInstanceID() == currentTarget.GetInstanceID()) return;
 
-		public void Start() 
-		{ }
-		
-		public void Update(float deltaT)
+		if (rankTarget(currentTarget.tag) == rankTarget(target.tag))
 		{
-			//navMeshAgent.SetDestination(currentTarget.transform.position);
-		}
-
-		public void FixedUpdate(float deltaT)
-		{ }
-
-		//Call this to deal with contacts from the colliders, or any other form of target detection
-		public void AddLongRangeContact(UnityEngine.GameObject target)
-		{
-			//Don't reverse the evaluation order
-			if ((currentTarget == null) || higherPriority(target, currentTarget))
+			//Targets can be moving around
+			float distanceToNewTarget = (target.transform.position - gameObject.transform.position).magnitude;
+			float distanceToCurrentTarget = (currentTarget.transform.position - gameObject.transform.position).magnitude;
+			if (distanceToNewTarget < distanceToCurrentTarget)
 			{
-				currentTarget = target;
+				SetTarget(target);
+				Debug.Log("Switching target to " + currentTarget.name);
 			}
 		}
+	}
 
-		public void UpdateLongRangeContact(UnityEngine.GameObject target)
+	public void RemoveContact(GameObject target)
+	{ 
+		//Yes I need to be this specific
+		if (target.GetInstanceID() == currentTarget.GetInstanceID())
 		{
-			//Find closest target.
-			if (higherPriority(currentTarget, target)) return;
-
-			UnityEngine.Vector3 toTarget = target.transform.position - zombie.transform.position;
-			UnityEngine.Vector3 toCurrentTarget = currentTarget.transform.position - zombie.transform.position;
-			if (toTarget.magnitude < toCurrentTarget.magnitude)
-			{
-				currentTarget = target;
-			}
+			Debug.Log("Removing target " + currentTarget.name);
+			currentTarget = null;
 		}
-
-		public void RemoveLongRangeContact(UnityEngine.GameObject target)
-		{ 
-			//Yes I need to be this specific
-			if (target.GetInstanceID() == currentTarget.GetInstanceID())
-			{
-				currentTarget = null;
-			}
-		}
-
-		public void AddMidRangeContact(UnityEngine.GameObject contact) 
-		{
-			//Transition to run
-		}
-
-		public void UpdateMidRangeContact(UnityEngine.GameObject contact)
-		{ 
-			//don't care
-		}
-
-		public void RemoveMidRangeContact(UnityEngine.GameObject contact)
-		{ 
-			//don't care
-		}
-
-		public void AddShortRangeContact(UnityEngine.GameObject contact)
-		{ 
-			//transition to attack
-		}
-
-		public void UpdateShortRangeContact(UnityEngine.GameObject contact)
-		{ 
-			//don't care
-		}
-
-		public void RemoveShortRangeContact(UnityEngine.GameObject contact)
-		{ 
-			//don't care
-		}
-	};
-}
+	}
+};

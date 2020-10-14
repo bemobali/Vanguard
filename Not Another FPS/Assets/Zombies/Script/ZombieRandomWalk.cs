@@ -21,7 +21,7 @@ namespace Assets.Zombies.Script
 		#endregion
 
 		//@todo get range from zombie
-		const float walkRange = 30f;
+		const float walkRange = 50f;
 		UnityEngine.AI.NavMeshAgent navMeshAgent;
 		UnityEngine.Vector3 walkDestination;
 
