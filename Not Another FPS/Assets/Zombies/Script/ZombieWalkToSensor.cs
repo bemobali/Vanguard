@@ -24,7 +24,7 @@ public class ZombieWalkToSensor : MonoBehaviour
 	{
 		//if (refreshTarget)
 		{
-			Debug.Log(ToString() + " detects collider in range " + target.gameObject.tag + " position " + target.transform.position.ToString() + " of GameObject " + target.gameObject.name);
+			//Debug.Log(ToString() + " detects collider in range " + target.gameObject.tag + " position " + target.transform.position.ToString() + " of GameObject " + target.gameObject.name);
 			stateToUpdate.ProcessContact(target.gameObject);
 		}
 

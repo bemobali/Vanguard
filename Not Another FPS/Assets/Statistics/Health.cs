@@ -16,4 +16,8 @@ public class Health : MonoBehaviour
 		set { healthPoint = value; }
 	}
 
+	public bool IsDead()
+	{
+		return healthPoint < 1;
+	}
 }

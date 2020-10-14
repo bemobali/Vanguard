@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 //ZombieAttackTarget attacks the target.
 //@todo need a better way to detect a dead target. Maybe deactivate the GameObject, since the currentTarget is actually a GameObject in the SensorTarget layer?
 public class ZombieAttackTarget : MonoBehaviour
 {
 	GameObject currentTarget;
+	Health targetHealth;
 	NavMeshAgent agent;
 	Animator animator;
 	// Start is called before the first frame update
@@ -20,7 +22,7 @@ public class ZombieAttackTarget : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (currentTarget != null)
+		if (HasTarget())
 		{
 			agent.SetDestination(currentTarget.transform.position);
 			if (!animator.GetBool("isAttacking"))
@@ -32,11 +34,18 @@ public class ZombieAttackTarget : MonoBehaviour
 
 	void LateUpdate()
 	{
+		//Disengage from target if it is dead. Don't wait for the GameObject to be removed
+		if (targetHealth && targetHealth.IsDead())
+		{
+			currentTarget = null;
+			targetHealth = null;
+		}
 		//I think it is possible to signal the ZombieController that a state change probably needs to happen. At this point collisions should have been resolved
 		//if the last collider has left then the currentTarget == null. So time for a state change
 		if (currentTarget == null && this.enabled)
 		{
-			//this.enabled = false;
+			this.enabled = false;
+			animator.SetBool("isAttacking", false);
 			//controller.ContextSwitch();
 		}
 	}
@@ -47,23 +56,27 @@ public class ZombieAttackTarget : MonoBehaviour
 		if (currentTarget == null)
 		{
 			currentTarget = target;
+			targetHealth = currentTarget.GetComponent<Health>();
 			Debug.Log("Engaging target " + currentTarget.name);
 			return;
 		}
 	}
 
+	public bool HasTarget()
+	{
+		return currentTarget != null;
+	}
+
 	public void RemoveContact(GameObject target)
 	{
+		if (!HasTarget()) return;
 		//A dead target will be eventually destroyed.
 		//Yes I need to be this specific
-		if (currentTarget == null || (target.GetInstanceID() == currentTarget.GetInstanceID()))
+		if (target.GetInstanceID() == currentTarget.GetInstanceID())
 		{
-			Debug.Log("Removing target " + currentTarget.name);
+			Debug.Log(ToString() + "Removing target " + currentTarget.name);
 			currentTarget = null;
-			if (animator && animator.GetBool("isAttacking"))
-			{
-				animator.SetBool("isAttacking", false);
-			}
+			animator.SetBool("isAttacking", false);
 		}
 	}
 }

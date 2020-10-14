@@ -2922,6 +2922,10 @@ PrefabInstance:
       propertyPath: zombieWalkToTarget
       value: 
       objectReference: {fileID: 1177451852}
+    - target: {fileID: 5243201517403683990, guid: ed457280dd91ef94cbdd42d407819904, type: 3}
+      propertyPath: walkToTarget
+      value: 
+      objectReference: {fileID: 1177451852}
     - target: {fileID: 6225771819147134326, guid: ed457280dd91ef94cbdd42d407819904, type: 3}
       propertyPath: m_IsTrigger
       value: 1

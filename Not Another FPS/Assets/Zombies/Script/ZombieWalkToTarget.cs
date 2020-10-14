@@ -21,11 +21,14 @@ class ZombieWalkToTarget : MonoBehaviour
 
 	void Update()
 	{
-		if (!animator.GetBool("isWalking"))
-		{ 
-			animator.SetBool("isWalking", true);
+		if (HasTarget())
+		{
+			if (!animator.GetBool("isWalking"))
+			{
+				animator.SetBool("isWalking", true);
+			}
+			agent.SetDestination(currentTarget.transform.position);
 		}
-		agent.SetDestination(currentTarget.transform.position);
 	}
 
 	void LateUpdate()
@@ -35,7 +38,7 @@ class ZombieWalkToTarget : MonoBehaviour
 		//The question is: am I correct to deduce that Update won't be called in the next cycle after handling OnDeactivate
 		if (currentTarget == null && this.enabled)
 		{
-			//this.enabled = false;
+			this.enabled = false;
 			//The transition can only go upward in the sensor state hierarchy
 			//controller.ContextSwitch(ZombieController.ZombieState.RandomWalk);
 		}
@@ -57,6 +60,7 @@ class ZombieWalkToTarget : MonoBehaviour
 	void SetTarget(GameObject target)
 	{
 		currentTarget = target;
+		Debug.Log("Switching target to " + currentTarget.name);
 	}
 
 	//Call this to deal with contacts from the colliders, or any other form of target detection
@@ -66,7 +70,6 @@ class ZombieWalkToTarget : MonoBehaviour
 		if ((currentTarget == null) || higherPriority(target, currentTarget))
 		{
 			SetTarget(target);
-			Debug.Log("Switching target to " + currentTarget.name);
 			return;
 		}
 
@@ -80,17 +83,21 @@ class ZombieWalkToTarget : MonoBehaviour
 			if (distanceToNewTarget < distanceToCurrentTarget)
 			{
 				SetTarget(target);
-				Debug.Log("Switching target to " + currentTarget.name);
 			}
 		}
 	}
 
+	public bool HasTarget()
+	{
+		return currentTarget != null;
+	}
 	public void RemoveContact(GameObject target)
-	{ 
+	{
+		if (!HasTarget()) return;
 		//Yes I need to be this specific
 		if (target.GetInstanceID() == currentTarget.GetInstanceID())
 		{
-			Debug.Log("Removing target " + currentTarget.name);
+			Debug.Log(ToString() + "Removing target " + currentTarget.name);
 			currentTarget = null;
 		}
 	}

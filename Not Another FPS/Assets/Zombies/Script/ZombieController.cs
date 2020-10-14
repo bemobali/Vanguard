@@ -18,14 +18,13 @@ public class ZombieController : MonoBehaviour
 	ZombieDead zombieDied;
 	//Zombie is walking to a particular target
 	[SerializeField]
-	ZombieWalkToTarget zombieWalkToTarget;
-	//How often should we refresh the current state. Fastest will be 1 for refresh every 1 frame.
-	int frameRefreshRate;
-	//All possible movement states
-	Dictionary<ZombieState, MyZombieStuff.IZombieState> zombieStates;
-
-	//Zombie's current state
-	MyZombieStuff.IZombieState currentState;
+	ZombieWalkToTarget walkToTarget;
+	[SerializeField]
+	ZombieRandomWalk randomWalk;
+	[SerializeField]
+	ZombieRunToTarget runToTarget;
+	[SerializeField]
+	ZombieAttackTarget attackTarget;
 	
 	public enum ZombieState
 	{
@@ -38,48 +37,87 @@ public class ZombieController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		zombieStates = new Dictionary<ZombieState, MyZombieStuff.IZombieState>();
-		zombieStates.Add(ZombieState.RandomWalk, new MyZombieStuff.ZombieRandomWalk(gameObject));
 		//Death occurs only once, so no point caching this state
-		//zombieStates.Add(ZombieState.Dead, new MyZombieStuff.ZombieDeath(gameObject));
-		currentState = zombieStates[ZombieState.RandomWalk];
-		currentState.Start();
 		//Make sure the initial transition state is RandomWalk. Disable all other state behavior scripts
 		zombieDied.enabled = false;
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-		//@todo remove the if statement once we can consolidate all states using a MonoBehavior-derived class/interface, whichever works
-		if (!isDead())
-		{
-
-			currentState.Update(Time.deltaTime);
-		}
-	}
-
-	bool isDead()
+	bool IsDead()
 	{
 		return health.HealthPoint < 1;
+	}
+
+	void Update()
+	{
 	}
 
 	void LateUpdate()
 	{
 		//no more state transition allowed
-		if (isDead() && !zombieDied.enabled)
+		if (IsDead())
 		{
-			zombieDied.enabled = true;
+			if (!zombieDied.enabled)
+			{
+				Debug.Log("State transition to " + zombieDied.ToString());
+				walkToTarget.enabled = false;
+				runToTarget.enabled = false;
+				attackTarget.enabled = false;
+				randomWalk.enabled = false;
+				zombieDied.enabled = true;
+			}
 			return;
 		}
-		//If we use MonoBehaviour-derived script objects, our state transitions will be activating and deactivating Gameobject
-		/*if (isDead() && (zombieDied == null))
+		//This enforces the activation sequence from attack, run, walk, then random walk
+		//Relies on the state script deactivating itself once it has no target
+		if (attackTarget.HasTarget())
 		{
-			//zombieDied = new ZombieDead();
-			//no more state transition allowed
-			//currentState = zombieDied;
-		}*/
-		//currentState.LateUpdate()
-		//Do state transition checks here
+			if (!attackTarget.enabled)
+			{
+				Debug.Log("State transition to " + attackTarget.ToString());
+				walkToTarget.enabled = false;
+				runToTarget.enabled = false;
+				randomWalk.enabled = false;
+				attackTarget.enabled = true;
+			}
+			return;
+		}
+
+		if (runToTarget.HasTarget())
+		{ 
+			if (!runToTarget.enabled)
+			{
+				Debug.Log("State transition to " + runToTarget.ToString());
+				walkToTarget.enabled = false;
+				runToTarget.enabled = true;
+				randomWalk.enabled = false;
+				attackTarget.enabled = false;
+			}
+			return;
+		}
+
+		if (walkToTarget.HasTarget())
+		{
+			if (!walkToTarget.enabled)
+			{
+				Debug.Log("State transition to " + walkToTarget.ToString());
+				walkToTarget.enabled = true;
+				runToTarget.enabled = false;
+				randomWalk.enabled = false;
+				attackTarget.enabled = false;
+			}
+			return;
+		}
+		
+		if (!randomWalk.enabled)
+		{
+			Debug.Log("State transition to " + randomWalk.ToString());
+			//Finally enable random walk
+			walkToTarget.enabled = false;
+			runToTarget.enabled = false;
+			attackTarget.enabled = false;
+			randomWalk.enabled = true;
+		}
 	}
+
+	//@note I may still need the ContextSwitch() function, because each state actually knows where to transition to if it has no target
 }

@@ -20,7 +20,7 @@ public class ZombieRunToTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (currentTarget != null)
+		if (HasTarget())
 		{
 			agent.SetDestination(currentTarget.transform.position);
 			if (!animator.GetBool("isRunning"))
@@ -35,7 +35,8 @@ public class ZombieRunToTarget : MonoBehaviour
 		//if the last collider has left then the currentTarget == null. So time for a state change
 		if (currentTarget == null && this.enabled)
 		{
-			//this.enabled = false;
+			this.enabled = false;
+			animator.SetBool("isRunning", false);
 			//controller.ContextSwitch();
 		}
 	}
@@ -50,17 +51,20 @@ public class ZombieRunToTarget : MonoBehaviour
 		}
 	}
 
+	public bool HasTarget()
+	{
+		return currentTarget != null;
+	}
+
 	public void RemoveContact(GameObject target)
 	{
+		if (!HasTarget()) return;
 		//A dead target will be eventually destroyed.
 		//Yes I need to be this specific
-		if (currentTarget == null || (target.GetInstanceID() == currentTarget.GetInstanceID()))
+		if (target.GetInstanceID() == currentTarget.GetInstanceID())
 		{
-			Debug.Log("Removing target " + currentTarget.name);
+			Debug.Log(ToString() + "Removing target " + currentTarget.name);
 			currentTarget = null;
-		}
-		if (animator && animator.GetBool("isRunning"))
-		{
 			animator.SetBool("isRunning", false);
 		}
 	}

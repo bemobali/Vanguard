@@ -3588,6 +3588,8 @@ GameObject:
   - component: {fileID: 6894992446144279420}
   - component: {fileID: 6889330411637207139}
   - component: {fileID: 9028572251235683002}
+  - component: {fileID: 605828982325488746}
+  - component: {fileID: 4643388191258818464}
   m_Layer: 9
   m_Name: Jill Zombie
   m_TagString: PeonZombie
@@ -3608,6 +3610,7 @@ Transform:
   m_Children:
   - {fileID: 566580070450500088}
   - {fileID: 7681242247810061773}
+  - {fileID: 5922336785952198883}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3684,6 +3687,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 5243201517403683991}
   zombieDied: {fileID: 5243201517403683989}
+  walkToTarget: {fileID: 6894992446144279420}
+  randomWalk: {fileID: 605828982325488746}
+  runToTarget: {fileID: 6889330411637207139}
+  attackTarget: {fileID: 9028572251235683002}
 --- !u!114 &5243201517403683991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3790,6 +3797,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2932d89b2f446ec4c815f57d0c3b52d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &605828982325488746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5243201517403683979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787747394242f6a43a9397d8809bc9b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &4643388191258818464
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5243201517403683979}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5400420331710472952
 GameObject:
   m_ObjectHideFlags: 0
@@ -4443,13 +4478,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7056968103418154358}
-  m_LocalRotation: {x: -5.3235417e-18, y: 0.0000000018959878, z: -0.00000006033633, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1775266, z: 8.391488}
+  m_LocalRotation: {x: -5.204145e-18, y: -0, z: 2.263746e-28, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1874009, z: 8.412834}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children:
   - {fileID: 1847592700083240133}
-  m_Father: {fileID: 566580070450500088}
-  m_RootOrder: 3
+  m_Father: {fileID: 9122254182809882264}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6090438502127733143
 MeshFilter:
@@ -5527,7 +5562,6 @@ GameObject:
   - component: {fileID: 566580070450500088}
   - component: {fileID: 4315140131458346262}
   - component: {fileID: 4315140131458346263}
-  - component: {fileID: 4278300821981075524}
   m_Layer: 9
   m_Name: Hips
   m_TagString: Untagged
@@ -5549,7 +5583,6 @@ Transform:
   - {fileID: 7970888685095852676}
   - {fileID: 6894669881330705673}
   - {fileID: 3919117669692226278}
-  - {fileID: 5922336785952198883}
   m_Father: {fileID: 9122254182809882264}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5582,19 +5615,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.32972205, y: 0.14610411, z: 0.24422753}
   m_Center: {x: 0.000000029802322, y: 0.02221059, z: -0.021127075}
---- !u!135 &4278300821981075524
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8387978245815454872}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 10
-  m_Center: {x: 0, y: 0, z: 9}
 --- !u!1 &8395124296843328494
 GameObject:
   m_ObjectHideFlags: 0
