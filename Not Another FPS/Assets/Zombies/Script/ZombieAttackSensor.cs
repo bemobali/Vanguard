@@ -23,13 +23,13 @@ public class ZombieAttackSensor : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-		refreshTimer += Time.fixedDeltaTime;
+		/*refreshTimer += Time.fixedDeltaTime;
 		//Commit the target list to the listener after a specific refresh rate
 		if (refreshTimer > 1/refreshRate)
 		{
 			//turn on target recording. 
 			refreshTarget = true;
-		}
+		}*/
 	}
 
 	//This is the workhorse for updating the target list
@@ -37,7 +37,7 @@ public class ZombieAttackSensor : MonoBehaviour
 	{
 		//if (refreshTarget)
 		{
-			//Debug.Log(ToString() + " attacking collider in range " + target.gameObject.tag + " position " + target.transform.position.ToString() + " of GameObject " + target.gameObject.name);
+			Debug.Log(ToString() + " attacking collider in range " + target.gameObject.tag + " position " + target.transform.position.ToString() + " of GameObject " + target.gameObject.name);
 			stateToModify.ProcessContact(target.gameObject);
 		}
 		

@@ -65,7 +65,7 @@ public class ZombieRunToTarget : MonoBehaviour
 		{
 			Debug.Log(ToString() + "Removing target " + currentTarget.name);
 			currentTarget = null;
-			animator.SetBool("isRunning", false);
+			if (animator) animator.SetBool("isRunning", false);
 		}
 	}
 }

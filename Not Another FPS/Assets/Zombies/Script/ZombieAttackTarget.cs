@@ -9,7 +9,6 @@ using UnityEngine.Rendering;
 public class ZombieAttackTarget : MonoBehaviour
 {
 	GameObject currentTarget;
-	Health targetHealth;
 	NavMeshAgent agent;
 	Animator animator;
 	// Start is called before the first frame update
@@ -24,7 +23,8 @@ public class ZombieAttackTarget : MonoBehaviour
 	{
 		if (HasTarget())
 		{
-			agent.SetDestination(currentTarget.transform.position);
+			//incorrect. agent has to stop
+			//agent.SetDestination(currentTarget.transform.position);	
 			if (!animator.GetBool("isAttacking"))
 			{
 				animator.SetBool("isAttacking", true);
@@ -32,21 +32,28 @@ public class ZombieAttackTarget : MonoBehaviour
 		}
 	}
 
+	void FixedUpdate()
+	{
+		if (HasTarget())
+		{
+			agent.isStopped = true;
+			if (!animator.applyRootMotion)
+			{
+				//This is giving a weird behaviour on rooted animation. Almost like a numeric instability. 
+				//Took me 2 hours to figure this out
+				gameObject.transform.LookAt(currentTarget.transform);   
+			}
+			
+		}
+	}
 	void LateUpdate()
 	{
-		//Disengage from target if it is dead. Don't wait for the GameObject to be removed
-		if (targetHealth && targetHealth.IsDead())
-		{
-			currentTarget = null;
-			targetHealth = null;
-		}
 		//I think it is possible to signal the ZombieController that a state change probably needs to happen. At this point collisions should have been resolved
 		//if the last collider has left then the currentTarget == null. So time for a state change
 		if (currentTarget == null && this.enabled)
 		{
 			this.enabled = false;
 			animator.SetBool("isAttacking", false);
-			//controller.ContextSwitch();
 		}
 	}
 
@@ -56,7 +63,6 @@ public class ZombieAttackTarget : MonoBehaviour
 		if (currentTarget == null)
 		{
 			currentTarget = target;
-			targetHealth = currentTarget.GetComponent<Health>();
 			Debug.Log("Engaging target " + currentTarget.name);
 			return;
 		}
@@ -76,7 +82,8 @@ public class ZombieAttackTarget : MonoBehaviour
 		{
 			Debug.Log(ToString() + "Removing target " + currentTarget.name);
 			currentTarget = null;
-			animator.SetBool("isAttacking", false);
+			if (animator) animator.SetBool("isAttacking", false);
+			agent.isStopped = false;
 		}
 	}
 }
