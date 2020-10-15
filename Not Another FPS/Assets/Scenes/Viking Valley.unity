@@ -289,7 +289,7 @@ PrefabInstance:
     - target: {fileID: 6965281779871540686, guid: 8bdf7d37cc135384fa609d861a07af17, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9000000, guid: 4e8f05cdfc3814ac9bd04c5baae12e38, type: 3}
     - target: {fileID: 6965281779871540686, guid: 8bdf7d37cc135384fa609d861a07af17, type: 3}
       propertyPath: m_Controller
       value: 
@@ -298,7 +298,8 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6965281779871540691, guid: 8bdf7d37cc135384fa609d861a07af17, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8bdf7d37cc135384fa609d861a07af17, type: 3}
 --- !u!4 &2622523 stripped
 Transform:
@@ -13920,6 +13921,10 @@ PrefabInstance:
     - target: {fileID: 4315140131911431712, guid: ed457280dd91ef94cbdd42d407819904, type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: -0.058702007
+      objectReference: {fileID: 0}
+    - target: {fileID: 5243201517403683977, guid: ed457280dd91ef94cbdd42d407819904, type: 3}
+      propertyPath: m_Speed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5243201517403683979, guid: ed457280dd91ef94cbdd42d407819904, type: 3}
       propertyPath: m_Name

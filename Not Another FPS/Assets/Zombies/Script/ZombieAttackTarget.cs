@@ -36,7 +36,7 @@ public class ZombieAttackTarget : MonoBehaviour
 	{
 		if (HasTarget())
 		{
-			agent.isStopped = true;
+			//if (agent.enabled) agent.isStopped = true; //does not work
 			if (!animator.applyRootMotion)
 			{
 				//This is giving a weird behaviour on rooted animation. Almost like a numeric instability. 
@@ -63,7 +63,7 @@ public class ZombieAttackTarget : MonoBehaviour
 		if (currentTarget == null)
 		{
 			currentTarget = target;
-			Debug.Log("Engaging target " + currentTarget.name);
+			Debug.Log(ToString() + "Engaging target " + currentTarget.name);
 			return;
 		}
 	}
@@ -83,7 +83,7 @@ public class ZombieAttackTarget : MonoBehaviour
 			Debug.Log(ToString() + "Removing target " + currentTarget.name);
 			currentTarget = null;
 			if (animator) animator.SetBool("isAttacking", false);
-			agent.isStopped = false;
+			//if (agent.enabled) agent.isStopped = false;	//does not work
 		}
 	}
 }

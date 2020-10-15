@@ -43,7 +43,7 @@ Transform:
   - {fileID: 6414805233389037015}
   - {fileID: 6414805233389037009}
   - {fileID: 6414805233389037011}
-  - {fileID: 6132236588139110594}
+  - {fileID: 11777398761357036}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2484,7 +2484,7 @@ Transform:
   m_Father: {fileID: 6414805233389036957}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1049942665840562389
+--- !u!1001 &6602812095532044027
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2501,12 +2501,8 @@ PrefabInstance:
       objectReference: {fileID: 5389691714697462439}
     - target: {fileID: 2038827642806041996, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
       propertyPath: m_Name
-      value: ZombieSensor
+      value: WalkToSensor
       objectReference: {fileID: 0}
-    - target: {fileID: 4961125301948642249, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
-      propertyPath: stateToModify
-      value: 
-      objectReference: {fileID: 5593428479428041054}
     - target: {fileID: 6595576515870289943, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2551,10 +2547,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7866435656174296499, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
+      propertyPath: stateToModify
+      value: 
+      objectReference: {fileID: 5593428479428041054}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
---- !u!4 &6132236588139110594 stripped
+--- !u!4 &11777398761357036 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6595576515870289943, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
-  m_PrefabInstance: {fileID: 1049942665840562389}
+  m_PrefabInstance: {fileID: 6602812095532044027}
   m_PrefabAsset: {fileID: 0}

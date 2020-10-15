@@ -7,6 +7,7 @@ using UnityEngine.AI;
 //ZombieController is responsible for state transitions.
 //Not responsible for prioritizing the target.
 //Collaborate with the animator to set the correct zombie animation state
+//@todo What should the zombie do when it cannot decide where to go?
 class ZombieRandomWalk: MonoBehaviour
 {
 	[SerializeField]
@@ -32,6 +33,7 @@ class ZombieRandomWalk: MonoBehaviour
 			}
 		}
 		result = Vector3.zero;
+		
 		return false;
 	}
 
@@ -43,6 +45,7 @@ class ZombieRandomWalk: MonoBehaviour
 			navMeshAgent.SetDestination(walkDestination);
 		}
 		//or not
+		Debug.Log(ToString() + " Failed to get a random walk destination");
 	}
 	public void Start() 
 	{

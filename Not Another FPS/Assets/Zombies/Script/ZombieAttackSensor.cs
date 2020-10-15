@@ -37,7 +37,7 @@ public class ZombieAttackSensor : MonoBehaviour
 	{
 		//if (refreshTarget)
 		{
-			Debug.Log(ToString() + " attacking collider in range " + target.gameObject.tag + " position " + target.transform.position.ToString() + " of GameObject " + target.gameObject.name);
+			//Debug.Log(ToString() + " attacking collider in range " + target.gameObject.tag + " position " + target.transform.position.ToString() + " of GameObject " + target.gameObject.name);
 			stateToModify.ProcessContact(target.gameObject);
 		}
 		

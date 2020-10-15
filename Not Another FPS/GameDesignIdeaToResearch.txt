@@ -43,3 +43,5 @@ With regards to colliders: having colliders inside colliders, unless if they are
 
 There is something about navmesh agent and root animation that causes the zombie to run in circles.
 Turns out the function transform.LookAt is the culprit to the whole instability. This function and root animation does not seem to work well when moving to a nav destination.
+
+Full physics, non-kinematic rigid body + animation without root motion. What can we do with this combination?

@@ -60,7 +60,7 @@ class ZombieWalkToTarget : MonoBehaviour
 	void SetTarget(GameObject target)
 	{
 		currentTarget = target;
-		Debug.Log("Switching target to " + currentTarget.name);
+		Debug.Log(ToString() + "Switching target to " + currentTarget.name);
 	}
 
 	//Call this to deal with contacts from the colliders, or any other form of target detection

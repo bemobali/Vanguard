@@ -42,7 +42,7 @@ public class ZombieDead : MonoBehaviour
 	void OnEnable()
 	{
 		AssignGameComponents();
-		if (navMeshAgent) Destroy(navMeshAgent);
+		if (navMeshAgent) navMeshAgent.enabled = false;
 		Joint[] ragdollJoint = gameObject.GetComponents<Joint>();
 		if (ragdollJoint.Length == 0)
 		{
@@ -57,6 +57,7 @@ public class ZombieDead : MonoBehaviour
 			animatedDeath = UnityEngine.Random.Range(0.0f, 1.0f) < 0.6;
 		}
 
+		animatedDeath = false;
 		ActivateSink();
 
 		if (animatedDeath)
@@ -83,7 +84,9 @@ public class ZombieDead : MonoBehaviour
 		//When should we activate sink?
 	}
 
-	void FixedUpdate() { }
+	void FixedUpdate() 
+	{
+	}
 
 	//If the gameObject is a kinematic ragdoll, this can be called as an event from the animation to enable the ragdoll rigidbodies
 	//Another call 

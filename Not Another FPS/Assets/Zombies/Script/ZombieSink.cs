@@ -19,6 +19,7 @@ public class ZombieSink : MonoBehaviour
 	float sinkTimer;
 	Collider[] childrenColliders;
 	Collider [] parentCollider;
+	UnityEngine.AI.NavMeshAgent agent;
 
 	// Start is called before the first frame update
 	void Start()
@@ -26,6 +27,7 @@ public class ZombieSink : MonoBehaviour
 		sinkTimer = 0;
 		parentCollider = gameObject.GetComponents<Collider>();
 		childrenColliders = gameObject.GetComponentsInChildren<Collider>();
+		agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
 	}
 
     // Update is called once per frame
@@ -42,6 +44,7 @@ public class ZombieSink : MonoBehaviour
 	void Sink(float deltaT)
 	{
 		DisableAllColliders();
+		if (agent) Destroy(agent);
 		//This works because sink keeps getting repeated calls from Update() The ragdoll position is not the same as the gameobject position because of gravity
 		gameObject.transform.Translate(0f, sinkRate * deltaT, 0f);
 		if (gameObject.transform.position.y < graveDepth)
