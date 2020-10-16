@@ -14,8 +14,8 @@ public class ZombieDead : MonoBehaviour
 	public GameObject ragdoll;
 	Animator animator;
 	NavMeshAgent navMeshAgent;
-	//Select which zombie to kill, this or a ragdoll clone
-	GameObject zombieToSink;
+	//Need to turn this off to prevent built-in ragdoll from resolving, and fling itself uncontrollably
+	CharacterController charController;
 
 	#region Ragdoll Specific Variables
 	//Need to disable the colliders so we can sink the ragdoll
@@ -57,7 +57,6 @@ public class ZombieDead : MonoBehaviour
 			animatedDeath = UnityEngine.Random.Range(0.0f, 1.0f) < 0.6;
 		}
 
-		animatedDeath = false;
 		ActivateSink();
 
 		if (animatedDeath)
@@ -93,6 +92,17 @@ public class ZombieDead : MonoBehaviour
 	void EnableRigidBodyPhysics()
 	{
 		if (ragdollRB != null) return;
+
+		//The collider here conflicts with the built-in ragdoll colliders.
+		if (charController == null)
+		{
+			charController = gameObject.GetComponent<CharacterController>();
+			if (charController)
+			{
+				charController.enabled = false;
+			}
+		}
+
 		//Let the ragdoll physics takes over
 		animator.enabled = false;
 		ragdollRB = gameObject.GetComponentsInChildren<UnityEngine.Rigidbody>();
