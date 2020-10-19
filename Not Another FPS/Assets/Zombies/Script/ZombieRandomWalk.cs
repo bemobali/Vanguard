@@ -10,10 +10,11 @@ using UnityEngine.AI;
 //@todo What should the zombie do when it cannot decide where to go?
 class ZombieRandomWalk: MonoBehaviour
 {
-	[SerializeField]
-	readonly float walkRange = 50f;
+	[SerializeField, Range(10,50)]
+	float walkRange = 10f;
 	//How many times should the zombie try to recalculate its next destination
-	const int numAttempts = 30;
+	[SerializeField, Range(1,100)]
+	int numAttempts = 30;
 	NavMeshAgent navMeshAgent;
 	Vector3 walkDestination;
 
@@ -21,9 +22,11 @@ class ZombieRandomWalk: MonoBehaviour
 	{
 		const float maxSampleDistance = 1f;
 		//Is 30 attempts too many?
-		for (int i = 0; i < numAttempts; i++)
+		for (int i = 0; i < numAttempts; ++i)
 		{
-			Vector3 randomPoint = center + UnityEngine.Random.insideUnitSphere * range;
+			Vector2 point2D = UnityEngine.Random.insideUnitCircle * range;
+			Vector3 randomPoint = center + new Vector3(point2D.x, 0 , point2D.y);
+			randomPoint.y = Terrain.activeTerrain.SampleHeight(randomPoint);
 			NavMeshHit hit;
 			//@todo Use navmesh distance to obstacles as max distance
 			if (UnityEngine.AI.NavMesh.SamplePosition(randomPoint, out hit, maxSampleDistance, UnityEngine.AI.NavMesh.AllAreas))
@@ -31,9 +34,11 @@ class ZombieRandomWalk: MonoBehaviour
 				result = hit.position;
 				return true;
 			}
+			Debug.Log(ToString() + " failed to sample navmesh at position " + randomPoint.ToString());
 		}
 		result = Vector3.zero;
-		
+		//or not
+		Debug.Log(ToString() + " failed to get a random walk destination");
 		return false;
 	}
 
@@ -44,8 +49,6 @@ class ZombieRandomWalk: MonoBehaviour
 		{
 			navMeshAgent.SetDestination(walkDestination);
 		}
-		//or not
-		Debug.Log(ToString() + " Failed to get a random walk destination");
 	}
 	public void Start() 
 	{

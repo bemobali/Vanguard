@@ -22,7 +22,7 @@ public class ZombieBitchSlap : MonoBehaviour
 
     void OnCollisionEnter(Collision target)
 	{
-        Debug.Log(ToString() + " bitch slapping collision target " + target.gameObject.ToString() + " with impulse " + target.impulse.ToString() + " and relative velocity " + target.relativeVelocity.ToString());
+        //Debug.Log(ToString() + " bitch slapping collision target " + target.gameObject.ToString() + " with impulse " + target.impulse.ToString() + " and relative velocity " + target.relativeVelocity.ToString());
         BattleDamage damage = target.gameObject.GetComponent<BattleDamage>();
         if (damage)
 		{

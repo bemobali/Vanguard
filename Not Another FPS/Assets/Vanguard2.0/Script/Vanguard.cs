@@ -55,6 +55,7 @@ public class Vanguard : MonoBehaviour
     M4Shotgun shotgun;
     //Vanguard ragdoll. How is it that GameObject does not have a function to find a child by name, but can find all of its children's components?
     //public GameObject ragDoll;
+    Dead deathSequence;
 
     //When initialing jump, the player moves in the direction of the lateralMovementVector. This way, the user cannot swirl the mouse around to change the jump direction.
     Vector3 lateralMovementVector;
@@ -81,6 +82,7 @@ public class Vanguard : MonoBehaviour
         health = GetComponent<Health>();
         bodyDamage = GetComponent<BattleDamage>();
         shotgun = activeWeapon.GetComponent<M4Shotgun>();
+        deathSequence = GetComponent<Dead>();
     }
 
     #region BuiltIn Functions
@@ -94,10 +96,13 @@ public class Vanguard : MonoBehaviour
     void Update()
     {
         //Vanguard is dead, so all bets are off
-        if (health.HealthPoint < 1)
-		{
-            Dead();
-		}
+        if (health.HealthPoint < 1f)
+        {
+            Debug.Log("Killing the player");
+            this.enabled = false;
+            deathSequence.enabled = true;
+            return;
+        }
         movementContext.Update(Time.deltaTime);
         // Create a vector at the center of our camera's viewportes
         if (controller.Shoot())
@@ -167,7 +172,7 @@ public class Vanguard : MonoBehaviour
         }
     }
     #endregion
-
+    /*
     void EnableRagdollPhysics()
 	{
         Rigidbody [] rb = gameObject.GetComponentsInChildren<Rigidbody>();
@@ -197,8 +202,6 @@ public class Vanguard : MonoBehaviour
 		}
         
         animationContext.Dead();
-        //DestroyObject(this.gameObject);
-        return;
     }
 
     //Call this from inside the Dead animation state
@@ -210,7 +213,7 @@ public class Vanguard : MonoBehaviour
         //Enable physics
         EnableRagdollPhysics();
     }
-
+    */
     private void LateralMove(float sideways, float forward, float movementSpeed, float deltaT)
     {
         //These approaches do not work

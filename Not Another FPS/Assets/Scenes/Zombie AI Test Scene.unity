@@ -4852,6 +4852,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6414805233389533197, guid: 60963b7d9753c73498eb724886dcd228, type: 3}
+      propertyPath: m_TagString
+      value: PeonZombie
+      objectReference: {fileID: 0}
     - target: {fileID: 6789012300970458755, guid: 60963b7d9753c73498eb724886dcd228, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -6141,6 +6145,14 @@ PrefabInstance:
       propertyPath: stateToUpdate
       value: 
       objectReference: {fileID: 1059943175}
+    - target: {fileID: 7300108062473947644, guid: 8bdf7d37cc135384fa609d861a07af17, type: 3}
+      propertyPath: numAttempts
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7300108062473947644, guid: 8bdf7d37cc135384fa609d861a07af17, type: 3}
+      propertyPath: walkRange
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8376138481586148849, guid: 8bdf7d37cc135384fa609d861a07af17, type: 3}
       propertyPath: m_IsActive
       value: 1

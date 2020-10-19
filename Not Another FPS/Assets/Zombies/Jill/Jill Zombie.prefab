@@ -1637,6 +1637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26b3a9de924c764da294b754bf14b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitDamage: 1
 --- !u!1 &2218426686111142127
 GameObject:
   m_ObjectHideFlags: 0
@@ -2153,6 +2154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26b3a9de924c764da294b754bf14b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitDamage: 1
 --- !u!1 &3243933782019020639
 GameObject:
   m_ObjectHideFlags: 0
@@ -3648,7 +3650,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5243201517403683979}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: add58c7261cfc4f2585c71fa80d2ca51, type: 3}
   m_Controller: {fileID: 9100000, guid: ff8aa828718b44d39908e897862f5a2b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -3834,6 +3836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787747394242f6a43a9397d8809bc9b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkRange: 10
+  numAttempts: 30
 --- !u!1 &5443272918221387505
 GameObject:
   m_ObjectHideFlags: 0
