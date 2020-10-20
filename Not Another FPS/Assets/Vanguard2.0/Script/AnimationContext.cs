@@ -61,5 +61,10 @@ namespace Assets.Vanguard.Script
 		{
 			if (!animator.GetBool("Dead")) animator.SetBool("Dead", true);
 		}
+
+		public void Firing()
+		{
+			animator.SetTrigger("Firing");
+		}
 	}
 }

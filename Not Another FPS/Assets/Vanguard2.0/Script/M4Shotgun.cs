@@ -9,8 +9,8 @@ public class M4Shotgun : MonoBehaviour
     [SerializeField, Range(4,100)]
     int maxCapacity = 8;
     int roundsRemaining;
-    //Once I have a generalized firearm class, this range will be applicable
-    //[SerializeField, Range(1, 20)]
+    //Rate of fire in rounds per second
+    [SerializeField, Range(1, 20)]
     const float rateOfFire = 1f;
     const float shotPeriod = 1 / rateOfFire;
     //Use this to limit the rate of fire
@@ -37,21 +37,21 @@ public class M4Shotgun : MonoBehaviour
 	{
         return (roundsRemaining > 0) && (shotTimer > shotPeriod);
     }
-    public void Fire()
+    public bool Fire()
 	{
+        if (!CanShoot()) return false;
+
         //@todo Respect rate of fire
-        if (CanShoot())
+        if (boom.isPlaying) boom.Stop();
+        boom.Play();
+        roundsRemaining -= 1;
+        shotgunBallistics.Shoot();
+        if (roundsRemaining == 0)    //click
 		{
-            if (boom.isPlaying) boom.Stop();
-            boom.Play();
-            roundsRemaining -= 1;
-            shotgunBallistics.Shoot();
-            if (roundsRemaining == 0)    //click
-			{
-                click.Play();
-			}
-            shotTimer = 0;  //restart the timer
-        }
+            click.Play();
+		}
+        shotTimer = 0;  //restart the timer
+        return true;
 	}
 
     public int RoundsRemaining()

@@ -90,6 +90,7 @@ public class Vanguard : MonoBehaviour
     void Start()
     {
         AssignGameComponents();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -107,7 +108,13 @@ public class Vanguard : MonoBehaviour
         // Create a vector at the center of our camera's viewportes
         if (controller.Shoot())
 		{
-            shotgun.Fire();
+            if (shotgun.Fire()) animationContext.Firing();
+		}
+
+        if (controller.Esc())
+		{
+            if (Cursor.lockState != CursorLockMode.Locked) Cursor.lockState = CursorLockMode.Locked;
+            else Cursor.lockState = CursorLockMode.None;
 		}
     }
 
