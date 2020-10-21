@@ -248,9 +248,12 @@ public class Vanguard : MonoBehaviour
 
     public void Walk(float sideways, float forward, float deltaT)
     {
+        float z = 0.75f;    //based on experimental observation
+        float x = 0.75f;    //based on experimental observation
         //@note using the root animation motion
+        //@todo Fix jump. Learn the proper way to jump
         LateralMove(sideways, forward, walkingSpeed, deltaT);
-        animationContext.walking(sideways, forward);
+        animationContext.walking(x, z);
         ActivateFootstepSound();
     }
 

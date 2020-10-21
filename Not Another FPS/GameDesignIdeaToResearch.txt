@@ -47,3 +47,8 @@ Turns out the function transform.LookAt is the culprit to the whole instability.
 Full physics, non-kinematic rigid body + animation without root motion. What can we do with this combination?
 
 Be careful with Animator Multiplier values. If you have the value set to 0, Animator state may transition, but the animation transition does not happen.
+
+Gameobject.SendMessage may be the way to inform on other game objects without creating a common base class to communicate. All I have to do is to make sure that the target script in the game object has the function in the SendMessage.
+So for the camera swap, Controller sends a message to the active weapon game object that camera has changed. Active weapon, if it has a ballistic script that cares about camera swap, will pass the message to all of its script. If the player changes weapon, then the player send a message to itself that the active weapon has changed. To do this I need to make controller a subclass of MonoBehaviour. I guess design patterns looks different in Unity.
+
+Vanguard can simulate running in the blend tree using XZ scaling. So set the animation time multiplier to 2. When walking, scale XZ to 0.5. Pass XZ unscaled when running. Of course, getting a suitable run animation, with root motion, is always the best solution.
