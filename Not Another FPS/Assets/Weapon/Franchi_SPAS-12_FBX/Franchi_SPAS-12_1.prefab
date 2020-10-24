@@ -692,7 +692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ejectionPort: {fileID: 5863838147945187257}
   m_shell: {fileID: 4160485012727492334, guid: 4abd821ab31928243943573896e33e09, type: 3}
-  m_impulse: {x: 0, y: 0, z: 50}
+  m_impulse: {x: 2, y: 2, z: 0}
 --- !u!1 &5863838147945187257
 GameObject:
   m_ObjectHideFlags: 0

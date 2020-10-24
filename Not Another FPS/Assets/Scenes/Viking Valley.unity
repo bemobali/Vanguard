@@ -12659,6 +12659,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3169210240191518240, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
+      propertyPath: m_impulse.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169210240191518240, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
+      propertyPath: m_impulse.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3169210240191518240, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
+      propertyPath: m_impulse.x
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6999851799361380127, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
       propertyPath: m_Name
       value: Vanguard2.1 1
