@@ -15,6 +15,8 @@ public class M4Shotgun : MonoBehaviour
     const float shotPeriod = 1 / rateOfFire;
     //Use this to limit the rate of fire
     float shotTimer;
+    [SerializeField]
+    EjectShell m_shellEjector;
     public AudioSource boom;
     public AudioSource click;
 
@@ -46,6 +48,7 @@ public class M4Shotgun : MonoBehaviour
         boom.Play();
         roundsRemaining -= 1;
         shotgunBallistics.Shoot();
+        m_shellEjector.Eject();
         if (roundsRemaining == 0)    //click
 		{
             click.Play();
