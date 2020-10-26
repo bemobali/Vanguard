@@ -47,6 +47,8 @@ public class Vanguard : MonoBehaviour
     Animator animator;
     Rigidbody rigidBody;
     Camera fpsCamera;
+    //Camera that is currently rendering. Can be fpsCameraObj, tpsCameraObj, and deathCamera if necessary
+    GameObject activeCamera;
     //overall health of the player
     Health health;
     //main body battle damage. 
@@ -83,6 +85,7 @@ public class Vanguard : MonoBehaviour
         bodyDamage = GetComponent<BattleDamage>();
         shotgun = activeWeapon.GetComponent<M4Shotgun>();
         deathSequence = GetComponent<Dead>();
+        SwitchToFirstPersonCamera();
     }
 
     #region BuiltIn Functions
@@ -115,6 +118,11 @@ public class Vanguard : MonoBehaviour
 		{
             if (Cursor.lockState != CursorLockMode.Locked) Cursor.lockState = CursorLockMode.Locked;
             else Cursor.lockState = CursorLockMode.None;
+		}
+
+        if (controller.PickUpWeapon())
+		{
+            PickUpWeapon();
 		}
     }
 
@@ -179,48 +187,7 @@ public class Vanguard : MonoBehaviour
         }
     }
     #endregion
-    /*
-    void EnableRagdollPhysics()
-	{
-        Rigidbody [] rb = gameObject.GetComponentsInChildren<Rigidbody>();
-        Collider[] col = gameObject.GetComponentsInChildren<Collider>();
-        foreach(Rigidbody rigid in rb)
-		{
-            rigid.isKinematic = false;
-		}
-
-        foreach (Collider collide in col)
-		{
-            collide.isTrigger = false;
-		}
-	}
-    void Dead()
-	{
-        LookAtConstraint constraint = fpsCamera.GetComponent<LookAtConstraint>();
-        if (constraint != null)
-		{
-            constraint.enabled = false;
-		}
-
-        LookAtConstraint chestLookAt = spine.GetComponent<LookAtConstraint>();
-        if (chestLookAt != null)
-		{
-            chestLookAt.enabled = false;
-		}
-        
-        animationContext.Dead();
-    }
-
-    //Call this from inside the Dead animation state
-    public void switchToDeathCamera()
-	{
-        HUD.SetActive(false);
-        fpsCameraObj.SetActive(false);
-        deathCamera.SetActive(true);
-        //Enable physics
-        EnableRagdollPhysics();
-    }
-    */
+    
     private void LateralMove(float sideways, float forward, float movementSpeed, float deltaT)
     {
         //These approaches do not work
@@ -304,14 +271,23 @@ public class Vanguard : MonoBehaviour
 
     public void SwitchToFirstPersonCamera()
 	{
-        if (!fpsCameraObj.activeSelf) fpsCameraObj.SetActive(true);
+        if (!fpsCameraObj.activeSelf)
+        {
+            fpsCameraObj.SetActive(true);
+        }
         if (tpsCameraObj.activeSelf) tpsCameraObj.SetActive(false);
-	}
+        activeCamera = fpsCameraObj;
+
+    }
 
     public void SwitchToThirdPersonCamera()
 	{
         if (fpsCameraObj.activeSelf) fpsCameraObj.SetActive(false);
-        if (!tpsCameraObj.activeSelf) tpsCameraObj.SetActive(true);
+        if (!tpsCameraObj.activeSelf)
+        {
+            tpsCameraObj.SetActive(true);
+        }
+        activeCamera = tpsCameraObj;
     }
 
     public MyStuff.Controller Controller()
@@ -331,6 +307,42 @@ public class Vanguard : MonoBehaviour
         leftFoot.GetComponent<Footstep>().jumping();
         rightFoot.GetComponent<Footstep>().jumping();
         if (!jumpingSound.isPlaying) jumpingSound.Play();
+    }
+
+    void PickUpWeapon()
+	{
+        Camera currentCam = activeCamera.GetComponent<Camera>();
+        Vector3 lineOrigin = currentCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        RaycastHit hitTarget;
+        //This is unreal, but maybe aesthetically OK?
+        const float pickupRange = 1.5f;
+        // Check if our raycast has hit anything
+        bool hasPickup = Physics.Raycast(lineOrigin, activeCamera.transform.forward, out hitTarget, pickupRange);
+        if (hasPickup && (hitTarget.collider.gameObject.tag == "Weapon"))
+		{
+            GameObject attachPoint = hitTarget.transform.parent.gameObject;            
+            Transform dropSpot = attachPoint.transform;
+            //@todo make this a function call somewhere in the weapon script
+            GameObject weaponToDrop = activeWeapon.transform.gameObject;
+            GameObject hand = weaponToDrop.transform.parent.gameObject;
+
+            //swap weapon
+            weaponToDrop.transform.parent = null;
+            weaponToDrop.transform.position = dropSpot.position;
+            weaponToDrop.transform.rotation = dropSpot.rotation;
+
+            attachPoint.transform.SetParent(hand.transform,false);
+            attachPoint.transform.position = hand.transform.position;
+            attachPoint.transform.rotation = hand.transform.rotation;
+            attachPoint.transform.localPosition.Set(0f, 0f, 0f);
+            attachPoint.transform.localRotation.eulerAngles.Set(0f, 0f, 0f);
+            
+            activeWeapon = attachPoint;
+            shotgun = activeWeapon.GetComponentInChildren<M4Shotgun>();
+            //@todo derive from a weapon script
+            rightHandAttach = attachPoint.transform.GetChild(1).gameObject;
+            leftHandAttach = attachPoint.transform.GetChild(2).gameObject;
+		}
     }
 }
 

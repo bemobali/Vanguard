@@ -7,6 +7,7 @@ TagManager:
   - PeonZombie
   - OrganicFood
   - ZombieTarget
+  - Weapon
   layers:
   - Default
   - TransparentFX
