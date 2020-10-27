@@ -66,5 +66,10 @@ namespace Assets.Vanguard.Script
 		{
 			animator.SetTrigger("Firing");
 		}
+
+		public void Reload()
+		{
+			animator.SetTrigger("Reload");
+		}
 	}
 }

@@ -66,6 +66,11 @@ namespace Assets.Vanguard.Script
 
 		public bool PickUpWeapon()
 		{
+			return Input.GetKeyDown(KeyCode.F);
+		}
+
+		public bool Reload()
+		{
 			return Input.GetKeyDown(KeyCode.R);
 		}
 		//F1 for first person camera. Seriously this kb mapping needs to be finalized during design

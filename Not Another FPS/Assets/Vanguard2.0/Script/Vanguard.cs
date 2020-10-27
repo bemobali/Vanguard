@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
 using MyStuff = Assets.Vanguard.Script;
@@ -59,7 +60,13 @@ public class Vanguard : MonoBehaviour
     GameObject leftHandAttach;
     //Target attach point to IK the right hand
     GameObject rightHandAttach;
-
+    //If true, hand IK will be active. False otherwise
+    bool m_enableIK;
+    public bool EnableIK
+	{
+		get { return m_enableIK; }
+        set { m_enableIK = value; }
+	}
     //When initialing jump, the player moves in the direction of the lateralMovementVector. This way, the user cannot swirl the mouse around to change the jump direction.
     Vector3 lateralMovementVector;
 
@@ -86,6 +93,7 @@ public class Vanguard : MonoBehaviour
         bodyDamage = GetComponent<BattleDamage>();
         AssignWeapon();
         deathSequence = GetComponent<Dead>();
+        m_enableIK = true;
     }
 
     #region BuiltIn Functions
@@ -123,6 +131,11 @@ public class Vanguard : MonoBehaviour
         if (controller.PickUpWeapon())
 		{
             PickUpWeapon();
+		}
+
+        if (controller.Reload())
+		{
+            ReloadWeapon();
 		}
     }
 
@@ -167,6 +180,7 @@ public class Vanguard : MonoBehaviour
             //This turns the head
             animator.SetLookAtPosition(headLookAt.transform.position);
         }
+
         if (rightHandAttach != null)
         {
             //The IKGoal is limited to feet and hand. So how do I IK turn the whole spine?
@@ -176,6 +190,8 @@ public class Vanguard : MonoBehaviour
             animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandAttach.transform.rotation);
             //animator.MatchTarget(rightHandAttach.transform.position, rightHandAttach.transform.rotation, AvatarTarget.RightHand, new MatchTargetWeightMask(Vector3.one, 1f), 0f, 1f);
         }
+
+        if (!m_enableIK) return;
         //Do this only on animations that require the left hand on the weapon. Do not do this while reloading
         if (leftHandAttach != null)
         {
@@ -356,6 +372,14 @@ public class Vanguard : MonoBehaviour
             AssignWeapon();
 		}
     }
+
+    public void ReloadWeapon()
+	{
+        //Disable inverse kinematics
+        m_enableIK = false;
+        animationContext.Reload();
+        //@todo set an event to re-enable IK. Although I think the IK should be on, but the left hand attach should go to the magazine
+	}
 }
 
 //Spine manipulation must be done in LateUpdate as an accumulation of a rotation angle. This accumulated value must be continuously applied. 
