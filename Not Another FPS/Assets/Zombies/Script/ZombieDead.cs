@@ -22,8 +22,8 @@ public class ZombieDead : MonoBehaviour
 	Collider[] ragdollColliders;
 	//Need to turn off isKinematic so gravity will take hold
 	Rigidbody[] ragdollRB;
-	#endregion 
-	
+	#endregion
+
 	//Mini state within a state. Not worth a full state pattern implementation
 	bool animatedDeath;
 
@@ -31,6 +31,7 @@ public class ZombieDead : MonoBehaviour
 	{
 		if (animator == null) animator = gameObject.GetComponent<Animator>();
 		if (navMeshAgent == null) navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+		animatedDeath = true;
 	}
 
 	void Start()
@@ -44,17 +45,13 @@ public class ZombieDead : MonoBehaviour
 		AssignGameComponents();
 		if (navMeshAgent) navMeshAgent.enabled = false;
 		Joint[] ragdollJoint = gameObject.GetComponents<Joint>();
-		if (ragdollJoint.Length == 0)
+		if (ragdoll || ragdollJoint.Length > 0)
 		{
-			//So this is not a ragdoll. Can't do ragdoll animation without the ragdoll. So animation is a must
-			if (ragdoll == null)
-			{
-				animatedDeath = true;
-			}
+			animatedDeath = UnityEngine.Random.Range(0.0f, 1.0f) < 0.6f;
 		}
-		else
+		else //no way to do ragdoll animation
 		{
-			animatedDeath = UnityEngine.Random.Range(0.0f, 1.0f) < 0.6;
+			animatedDeath = true;
 		}
 
 		ActivateSink();
