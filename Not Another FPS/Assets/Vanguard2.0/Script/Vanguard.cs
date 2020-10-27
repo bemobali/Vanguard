@@ -35,10 +35,6 @@ public class Vanguard : MonoBehaviour
     public GameObject HUD;
     //Point in space where the head is looking at
     public GameObject headLookAt;
-    //Target attach point to IK the left hand
-    public GameObject leftHandAttach;
-    //Target attach point to IK the right hand
-    public GameObject rightHandAttach;
     //public GameObject[] floorRayCast = new GameObject[4];
     public GameObject activeWeapon;
     #endregion
@@ -48,6 +44,7 @@ public class Vanguard : MonoBehaviour
     Rigidbody rigidBody;
     Camera fpsCamera;
     //Camera that is currently rendering. Can be fpsCameraObj, tpsCameraObj, and deathCamera if necessary
+    [SerializeField]
     GameObject activeCamera;
     //overall health of the player
     Health health;
@@ -58,6 +55,10 @@ public class Vanguard : MonoBehaviour
     //Vanguard ragdoll. How is it that GameObject does not have a function to find a child by name, but can find all of its children's components?
     //public GameObject ragDoll;
     Dead deathSequence;
+    //Target attach point to IK the left hand
+    GameObject leftHandAttach;
+    //Target attach point to IK the right hand
+    GameObject rightHandAttach;
 
     //When initialing jump, the player moves in the direction of the lateralMovementVector. This way, the user cannot swirl the mouse around to change the jump direction.
     Vector3 lateralMovementVector;
@@ -83,9 +84,8 @@ public class Vanguard : MonoBehaviour
         fpsCamera = fpsCameraObj.GetComponent<Camera>();
         health = GetComponent<Health>();
         bodyDamage = GetComponent<BattleDamage>();
-        shotgun = activeWeapon.GetComponent<M4Shotgun>();
+        AssignWeapon();
         deathSequence = GetComponent<Dead>();
-        SwitchToFirstPersonCamera();
     }
 
     #region BuiltIn Functions
@@ -277,6 +277,8 @@ public class Vanguard : MonoBehaviour
         }
         if (tpsCameraObj.activeSelf) tpsCameraObj.SetActive(false);
         activeCamera = fpsCameraObj;
+        //This should reach shotgun
+        SendMessage("SetActiveCamera", activeCamera);
 
     }
 
@@ -288,6 +290,7 @@ public class Vanguard : MonoBehaviour
             tpsCameraObj.SetActive(true);
         }
         activeCamera = tpsCameraObj;
+        SendMessage("SetActiveCamera", activeCamera);
     }
 
     public MyStuff.Controller Controller()
@@ -309,18 +312,29 @@ public class Vanguard : MonoBehaviour
         if (!jumpingSound.isPlaying) jumpingSound.Play();
     }
 
+    void AssignWeapon()
+	{
+        shotgun = activeWeapon.GetComponentInChildren<M4Shotgun>();
+        shotgun.SetActiveCamera(activeCamera.GetComponent<Camera>());
+        shotgun.SetEnableBallistics(true);
+        Weapon weaponScript = activeWeapon.GetComponent<Weapon>();
+        rightHandAttach = weaponScript.RightHandAttach;
+        leftHandAttach = weaponScript.LeftHandAttach;
+    }
+
     void PickUpWeapon()
 	{
         Camera currentCam = activeCamera.GetComponent<Camera>();
         Vector3 lineOrigin = currentCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
         RaycastHit hitTarget;
         //This is unreal, but maybe aesthetically OK?
-        const float pickupRange = 1.5f;
+        const float pickupRange = 2.5f;
         // Check if our raycast has hit anything
         bool hasPickup = Physics.Raycast(lineOrigin, activeCamera.transform.forward, out hitTarget, pickupRange);
         if (hasPickup && (hitTarget.collider.gameObject.tag == "Weapon"))
 		{
-            GameObject attachPoint = hitTarget.transform.parent.gameObject;            
+            Debug.Log("Picking up weapon " + hitTarget.collider.gameObject.ToString());
+            GameObject attachPoint = hitTarget.collider.gameObject.transform.parent.gameObject;            
             Transform dropSpot = attachPoint.transform;
             //@todo make this a function call somewhere in the weapon script
             GameObject weaponToDrop = activeWeapon.transform.gameObject;
@@ -330,6 +344,7 @@ public class Vanguard : MonoBehaviour
             weaponToDrop.transform.parent = null;
             weaponToDrop.transform.position = dropSpot.position;
             weaponToDrop.transform.rotation = dropSpot.rotation;
+            shotgun.SetEnableBallistics(false);
 
             attachPoint.transform.SetParent(hand.transform,false);
             attachPoint.transform.position = hand.transform.position;
@@ -338,10 +353,7 @@ public class Vanguard : MonoBehaviour
             attachPoint.transform.localRotation.eulerAngles.Set(0f, 0f, 0f);
             
             activeWeapon = attachPoint;
-            shotgun = activeWeapon.GetComponentInChildren<M4Shotgun>();
-            //@todo derive from a weapon script
-            rightHandAttach = attachPoint.transform.GetChild(1).gameObject;
-            leftHandAttach = attachPoint.transform.GetChild(2).gameObject;
+            AssignWeapon();
 		}
     }
 }

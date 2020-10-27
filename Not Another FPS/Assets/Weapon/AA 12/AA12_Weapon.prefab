@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 2411949255301427812}
   - component: {fileID: 2411949255301427810}
   - component: {fileID: 2411949255301427813}
+  - component: {fileID: -1624659967868754648}
   m_Layer: 0
   m_Name: AA12_Weapon
   m_TagString: Untagged
@@ -97,6 +98,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-1624659967868754648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2411949255301427815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9999f7a235185234788da0928ba2ece9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rightHandAttach: {fileID: 2411949255789905784}
+  m_leftHandAttach: {fileID: 2411949256844396953}
 --- !u!1 &2411949255789905784
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,6 +281,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2411949255301427812}
     m_Modifications:
+    - target: {fileID: -4712864545110736323, guid: f440d1176f6f440469335fd90639954a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2472282876324861653, guid: f440d1176f6f440469335fd90639954a, type: 3}
       propertyPath: m_TagString
       value: Weapon

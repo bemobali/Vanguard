@@ -10,11 +10,7 @@ public class BullshitLaser : MonoBehaviour
     #region Raycast Bullshit Ballistics
     RaycastHit hitTarget;
     bool targetHit;
-    [SerializeField]
-    GameObject fpsCam;
-    [SerializeField]
-    GameObject tpsCam;
-    public Camera activeCamera;
+    Camera activeCamera;
     [SerializeField, Range(0.5f, 1000f)]
     float weaponRange = 50f;
     [SerializeField, Range(1, 95)]
@@ -26,7 +22,6 @@ public class BullshitLaser : MonoBehaviour
     void Start()
     {
         targetHit = false;
-        activeCamera = fpsCam.GetComponent<Camera>();
     }
 
     //Shoot calculates the initial ballistics direction
@@ -59,15 +54,14 @@ public class BullshitLaser : MonoBehaviour
     //This is why I call this bullshit laser ballistics. I basically play camera tag with the zombies 
     void FixedUpdate()
 	{
-        //This is reaaallyyy bad. Please create a parent class that allows the generic modification of the active camera. Works for now, but super lame.
-        if (fpsCam.activeInHierarchy)
-        {
-            activeCamera = fpsCam.GetComponent<Camera>();
-        }
-        else activeCamera = tpsCam.GetComponent<Camera>();
-
         Vector3 lineOrigin = activeCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
         // Check if our raycast has hit anything
         targetHit = Physics.Raycast(lineOrigin, activeCamera.transform.forward, out hitTarget, weaponRange, ballisticLayer);
+	}
+
+    public Camera ActiveCamera
+	{
+        get { return activeCamera; }
+        set { activeCamera = value; }
 	}
 }

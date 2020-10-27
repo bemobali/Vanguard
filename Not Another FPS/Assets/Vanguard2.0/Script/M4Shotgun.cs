@@ -37,7 +37,7 @@ public class M4Shotgun : MonoBehaviour
 
     bool CanShoot()
 	{
-        return (roundsRemaining > 0) && (shotTimer > shotPeriod);
+        return (roundsRemaining > 0) && (shotTimer > shotPeriod) && shotgunBallistics.enabled;
     }
     public bool Fire()
 	{
@@ -82,4 +82,18 @@ public class M4Shotgun : MonoBehaviour
         //laserRenderer.SetPosition(0, laserOrigin);
         //laserRenderer.SetPosition(1, laserOrigin + (laserPointerBase.transform.forward * laserPointerRange));
     }
+
+    //Set the active camera of the shotgun for calculating laserline ballistic. Perhaps other ballistics need it too. Set this to null if the viewer's active camera is not
+    //needed
+    public void SetActiveCamera(Camera camera)
+	{
+        shotgunBallistics.ActiveCamera = camera;
+    }
+
+    //enable/disable shotgun ballistics. A shotgun with a disabled ballistics cannot shoot
+    //This should be a time saving measure so a shotgun is not continuously calculating ballistics.
+    public void SetEnableBallistics(bool enable)
+	{
+        shotgunBallistics.enabled = enable;
+	}
 }
