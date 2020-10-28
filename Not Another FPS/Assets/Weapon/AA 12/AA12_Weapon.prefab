@@ -8,8 +8,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756286355167646104}
   m_Material: {fileID: 13400000, guid: 7b8d7494fc1d0544aa3e7d0cd5aff55a, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0078001, y: 0.22016747, z: 0.044079717}
   m_Center: {x: -0.082240574, y: -0.029543616, z: -0.0022866852}
@@ -289,6 +289,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 2545058627940508060, guid: f440d1176f6f440469335fd90639954a, type: 3}
+      propertyPath: m_weaponImage
+      value: 
+      objectReference: {fileID: 2800000, guid: a41631710a22383469046b2b1e1c5cb9, type: 3}
+    - target: {fileID: 2545058627940508060, guid: f440d1176f6f440469335fd90639954a, type: 3}
+      propertyPath: m_hud
+      value: 
+      objectReference: {fileID: 2824946577460934526, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
     - target: {fileID: 3768998105248010428, guid: f440d1176f6f440469335fd90639954a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.218

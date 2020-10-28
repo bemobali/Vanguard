@@ -7,8 +7,8 @@ using UnityEngine;
 public class M4Shotgun : MonoBehaviour
 {
     [SerializeField, Range(4,100)]
-    int maxCapacity = 8;
-    int roundsRemaining;
+    int m_maxCapacity = 8;
+    int m_roundsRemaining;
     //Rate of fire in rounds per second
     [SerializeField, Range(1, 20)]
     const float rateOfFire = 1f;
@@ -17,6 +17,12 @@ public class M4Shotgun : MonoBehaviour
     float shotTimer;
     [SerializeField]
     EjectShell m_shellEjector;
+    //HUD to interact with. Particularly the ammo counter and the weapon static image
+    [SerializeField]
+    HUD m_hud;
+    //Weapon image to display to HUD
+    [SerializeField]
+    Texture2D m_weaponImage;
     public AudioSource boom;
     public AudioSource click;
 
@@ -32,12 +38,12 @@ public class M4Shotgun : MonoBehaviour
     {
         laserRenderer = GetComponent<LineRenderer>();
         shotgunBallistics = GetComponent<BullshitLaser>();
-        roundsRemaining = maxCapacity;
+        m_roundsRemaining = m_maxCapacity;
     }
 
     bool CanShoot()
 	{
-        return (roundsRemaining > 0) && (shotTimer > shotPeriod) && shotgunBallistics.enabled;
+        return (m_roundsRemaining > 0) && (shotTimer > shotPeriod) && shotgunBallistics.enabled;
     }
     public bool Fire()
 	{
@@ -46,10 +52,11 @@ public class M4Shotgun : MonoBehaviour
         //@todo Respect rate of fire
         if (boom.isPlaying) boom.Stop();
         boom.Play();
-        roundsRemaining -= 1;
+        m_roundsRemaining -= 1;
+        m_hud.BulletCounter.Shoot();
         shotgunBallistics.Shoot();
         m_shellEjector.Eject();
-        if (roundsRemaining == 0)    //click
+        if (m_roundsRemaining == 0)    //click
 		{
             click.Play();
 		}
@@ -57,9 +64,21 @@ public class M4Shotgun : MonoBehaviour
         return true;
 	}
 
+    public void Reload()
+	{
+        m_roundsRemaining = m_maxCapacity;
+        m_hud.BulletCounter.Reload(m_maxCapacity);
+	}
+    //Update HUD with the current weapon's bullet count. Use this during weapon swaps
+    public void RefreshHUD()
+	{
+        m_hud.BulletCounter.Reload(m_roundsRemaining);
+        m_hud.ChangeWeaponImage(m_weaponImage);
+	}
+
     public int RoundsRemaining()
 	{
-        return roundsRemaining;
+        return m_roundsRemaining;
 	}
 
     public float RateOfFire()

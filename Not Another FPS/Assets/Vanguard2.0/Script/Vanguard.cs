@@ -52,7 +52,7 @@ public class Vanguard : MonoBehaviour
     //main body battle damage. 
     BattleDamage bodyDamage;
     //Weapon interface. @todo standardize the interface
-    M4Shotgun shotgun;
+    M4Shotgun m_shotgun;
     //Vanguard ragdoll. How is it that GameObject does not have a function to find a child by name, but can find all of its children's components?
     //public GameObject ragDoll;
     Dead deathSequence;
@@ -119,7 +119,7 @@ public class Vanguard : MonoBehaviour
         // Create a vector at the center of our camera's viewportes
         if (controller.Shoot())
 		{
-            if (shotgun.Fire()) animationContext.Firing();
+            if (m_shotgun.Fire()) animationContext.Firing();
 		}
 
         if (controller.Esc())
@@ -293,7 +293,7 @@ public class Vanguard : MonoBehaviour
         }
         if (tpsCameraObj.activeSelf) tpsCameraObj.SetActive(false);
         activeCamera = fpsCameraObj;
-        //This should reach shotgun
+        //This should reach m_shotgun
         SendMessage("SetActiveCamera", activeCamera);
 
     }
@@ -330,9 +330,10 @@ public class Vanguard : MonoBehaviour
 
     void AssignWeapon()
 	{
-        shotgun = activeWeapon.GetComponentInChildren<M4Shotgun>();
-        shotgun.SetActiveCamera(activeCamera.GetComponent<Camera>());
-        shotgun.SetEnableBallistics(true);
+        m_shotgun = activeWeapon.GetComponentInChildren<M4Shotgun>();
+        m_shotgun.SetActiveCamera(activeCamera.GetComponent<Camera>());
+        m_shotgun.SetEnableBallistics(true);
+        m_shotgun.RefreshHUD();
         Weapon weaponScript = activeWeapon.GetComponent<Weapon>();
         rightHandAttach = weaponScript.RightHandAttach;
         leftHandAttach = weaponScript.LeftHandAttach;
@@ -360,7 +361,7 @@ public class Vanguard : MonoBehaviour
             weaponToDrop.transform.parent = null;
             weaponToDrop.transform.position = dropSpot.position;
             weaponToDrop.transform.rotation = dropSpot.rotation;
-            shotgun.SetEnableBallistics(false);
+            m_shotgun.SetEnableBallistics(false);
 
             attachPoint.transform.SetParent(hand.transform,false);
             attachPoint.transform.position = hand.transform.position;
@@ -373,12 +374,21 @@ public class Vanguard : MonoBehaviour
 		}
     }
 
-    public void ReloadWeapon()
+    //Begin the reload animation. There are quite a number of IK to be done during the sequence, and I will be using events in the reload animation to change the
+    //firearm magazine using IK. So the start sequence is called here, and event handles will be defined elsewhere
+    public void StartReloadAnimation()
 	{
         //Disable inverse kinematics
+        //@note still in progress
         m_enableIK = false;
         animationContext.Reload();
         //@todo set an event to re-enable IK. Although I think the IK should be on, but the left hand attach should go to the magazine
+    }
+
+    //Max the bullet in the current active weapon. In this case, currently just a m_shotgun
+    public void ReloadWeapon()
+	{
+        m_shotgun.Reload();
 	}
 }
 
