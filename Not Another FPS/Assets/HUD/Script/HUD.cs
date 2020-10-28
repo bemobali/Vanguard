@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     //AmmoCounter encapsulates the UI widget used to display ammo count to the user
+    [SerializeField]
     AmmoCounter m_ammoCounter;
     [SerializeField]
     RawImage m_currentWeaponImage;
     // Start is called before the first frame update
     void Start()
     {
-        m_ammoCounter = gameObject.GetComponentInChildren<AmmoCounter>();
     }
 
     public AmmoCounter BulletCounter

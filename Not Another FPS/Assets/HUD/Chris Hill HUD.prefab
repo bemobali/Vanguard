@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8584906, g: 0.46569067, b: 0.46569067, a: 1}
+  m_Color: {r: 0.83137256, g: 0.54509807, b: 0.16078432, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -87,6 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34db7e3088e9c0c4bbb0f461cdd071d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ammoCounter: {fileID: 7576340229564109084}
   m_currentWeaponImage: {fileID: 3671558748297724780}
 --- !u!1 &3653092031545772236
 GameObject:

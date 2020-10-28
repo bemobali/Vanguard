@@ -33,7 +33,6 @@ public class Vanguard : MonoBehaviour
     public GameObject tpsCameraObj;
     //I don't think I need the game object. Just the camera
     public GameObject deathCamera;
-    public GameObject HUD;
     //Point in space where the head is looking at
     public GameObject headLookAt;
     //public GameObject[] floorRayCast = new GameObject[4];
