@@ -49,8 +49,11 @@ public class Vanguard : MonoBehaviour
     //overall health of the player
     Health health;
     //@note use uint for the shotgun shell for now. Convert to a shotgun shell class once I figure out how to swap sprites.
-    [SerializeField, Range(1,999)]
+    //Carry only 4 boxes
+    const uint m_maxShotgunShellToCarry = 100;
+    [SerializeField, Range(1, m_maxShotgunShellToCarry)]
     uint m_shotgunShellInventory = 1;
+   
     //At some point the player script needs to update the HUD. So the HUD here is an observer
     [SerializeField]
     HUD m_hud;
@@ -399,12 +402,25 @@ public class Vanguard : MonoBehaviour
 	{
         //For now. Later this will be called as an animation event.
         if (m_shotgunShellInventory == 0) return;
-        uint numBullets = System.Math.Min(m_shotgunShellInventory, m_shotgun.MaxCapacity);
+        uint numBullets = System.Math.Min(m_shotgunShellInventory, m_shotgun.MaxCapacity - m_shotgun.RoundsRemaining);
         m_shotgun.Reload(numBullets);
         m_shotgunShellInventory -= numBullets;
         m_hud.SetAmmoInventory(m_shotgunShellInventory);
        
 	}
+
+    //GrabAmmo returns how much unconsumed ammo left. Definitely move this job over to an inventory system
+    public uint GrabAmmo(uint available)
+	{
+        //This should bottom out to 0 without underflowing
+        uint howManytoGrab = System.Math.Min(available, m_maxShotgunShellToCarry - m_shotgunShellInventory);
+        Debug.Log("Player grabbing " + howManytoGrab.ToString() + " ammo");
+        if (howManytoGrab == 0) return available;
+
+        m_shotgunShellInventory += howManytoGrab;
+        m_hud.SetAmmoInventory(m_shotgunShellInventory);
+        return available - howManytoGrab;
+    }
 }
 
 //Spine manipulation must be done in LateUpdate as an accumulation of a rotation angle. This accumulated value must be continuously applied. 

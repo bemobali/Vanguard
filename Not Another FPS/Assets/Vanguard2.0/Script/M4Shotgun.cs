@@ -65,10 +65,11 @@ public class M4Shotgun : MonoBehaviour
         return true;
 	}
 
+    //Add numBullets to remaining rounds
     //numBullets is not always m_maxCapacity because of inventory supply limit
     public void Reload(uint numBullets)
 	{
-        m_roundsRemaining = numBullets;
+        m_roundsRemaining += numBullets;
         m_hud.BulletCounter.Reload(m_roundsRemaining);
 	}
     //Update HUD with the current weapon's bullet count. Use this during weapon swaps

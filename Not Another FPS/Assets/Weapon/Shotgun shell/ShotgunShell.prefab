@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7817381486418271041}
   - component: {fileID: 658384330127053370}
   - component: {fileID: 4129265787857705449}
-  - component: {fileID: 7217888210250724896}
   - component: {fileID: 4086782093270902300}
-  m_Layer: 0
+  - component: {fileID: -8410890007894479523}
+  m_Layer: 11
   m_Name: ShotgunShell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7217888210250724896
+--- !u!136 &4086782093270902300
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4160485012727492334}
+  m_Material: {fileID: 13400000, guid: 8627608510331df4aa7dacb3a277b22f, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.100000106
+  m_Height: 0.67
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-8410890007894479523
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,24 +127,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4160485012727492334}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9312c3db163ddf4b82784cdb4177c60, type: 3}
+  m_Script: {fileID: 11500000, guid: 0997f6421856f0a469b36b9e6efe71a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_timeToDie: 1
---- !u!136 &4086782093270902300
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4160485012727492334}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.100000106
-  m_Height: 0.67
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8585653889089923189
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 5717037275699748274}
   - component: {fileID: 8419003025672299530}
   - component: {fileID: 2086390992413981228}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ImpulsePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

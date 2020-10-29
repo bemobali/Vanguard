@@ -4,23 +4,34 @@ using UnityEngine;
 using UnityEngine.AI;
 
 //Spawn a number of game objects in a circular fashion. The object will be placed on a walkable nav mesh point
+//The number to spawn is pre-determined during design
 public class CircularSpawn : MonoBehaviour
 {
     //In game units
-    [SerializeField, Range(1f, 50f)]
-    float m_radius = 1f;
+    [SerializeField, Range(0.1f, 50f)]
+    float m_radius = 0.1f;
     //How many game objects are we spawning
     [SerializeField, Range(1, 20)]
     int m_totalToSpawn = 1;
     //What game object are we spawning
     [SerializeField]
-    GameObject m_spawnObject;
+    GameObject m_spawnObject = null;
+    //Allow the spawn point to randomize how many to spawn. It will be 1 to current m_totalToSpawn
+    [SerializeField]
+    bool m_randomizeTotalToSpawn = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (m_spawnObject == null) return;  //Unity should have issued a warning about the null object
+
+        if (m_randomizeTotalToSpawn)
+		{
+            m_totalToSpawn = Random.Range(1, m_totalToSpawn);
+		}
+
         //Number of position sample tries
         const int numTries = 6;
-        if (m_spawnObject == null) return;  //Unity should have issued a warning about the null object
         for (int numSpawn=0; numSpawn < m_totalToSpawn; ++numSpawn)
 	    {
             Vector3 pos = gameObject.transform.position;
@@ -51,4 +62,10 @@ public class CircularSpawn : MonoBehaviour
         result = gameObject.transform.position;
         return false;
     }
+
+    //UGH because someone outside will modify the m_spawnObject behavior.
+    public GameObject SpawnObject
+	{
+        get { return m_spawnObject; }
+	}
 }
