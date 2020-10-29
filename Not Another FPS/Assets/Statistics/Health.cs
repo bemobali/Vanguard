@@ -9,10 +9,17 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
 	[SerializeField, Range(0, 100)]
-	float healthPoint;
+	float m_healthPoint;
+	[SerializeField]
+	HUD m_hud = null;	//Optional HUD to update
 	public float HealthPoint
 	{
-		get { return healthPoint; }
-		set { healthPoint = value; }
+		get { return m_healthPoint; }
+		set { m_healthPoint = value; }
+	}
+
+	public void Update()
+	{
+		if (m_hud) m_hud.SetHealth(m_healthPoint);
 	}
 }

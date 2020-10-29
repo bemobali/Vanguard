@@ -11,8 +11,8 @@ public class M4Shotgun : MonoBehaviour
     int m_roundsRemaining;
     //Rate of fire in rounds per second
     [SerializeField, Range(1, 20)]
-    const float rateOfFire = 1f;
-    const float shotPeriod = 1 / rateOfFire;
+    float rateOfFire = 1f;
+    float shotPeriod;
     //Use this to limit the rate of fire
     float shotTimer;
     [SerializeField]
@@ -39,6 +39,7 @@ public class M4Shotgun : MonoBehaviour
         laserRenderer = GetComponent<LineRenderer>();
         shotgunBallistics = GetComponent<BullshitLaser>();
         m_roundsRemaining = m_maxCapacity;
+        shotPeriod = 1 / rateOfFire;
     }
 
     bool CanShoot()
