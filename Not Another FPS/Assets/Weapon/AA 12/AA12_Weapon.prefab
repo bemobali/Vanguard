@@ -301,6 +301,10 @@ PrefabInstance:
       propertyPath: rateOfFire
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2545058627940508060, guid: f440d1176f6f440469335fd90639954a, type: 3}
+      propertyPath: m_rateOfFire
+      value: 3.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3768998105248010428, guid: f440d1176f6f440469335fd90639954a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.218

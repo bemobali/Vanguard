@@ -48,6 +48,13 @@ public class Vanguard : MonoBehaviour
     GameObject activeCamera;
     //overall health of the player
     Health health;
+    //@note use uint for the shotgun shell for now. Convert to a shotgun shell class once I figure out how to swap sprites.
+    [SerializeField, Range(1,999)]
+    uint m_shotgunShellInventory = 1;
+    //At some point the player script needs to update the HUD. So the HUD here is an observer
+    [SerializeField]
+    HUD m_hud;
+
     //main body battle damage. 
     BattleDamage bodyDamage;
     //Weapon interface. @todo standardize the interface
@@ -93,6 +100,7 @@ public class Vanguard : MonoBehaviour
         AssignWeapon();
         deathSequence = GetComponent<Dead>();
         m_enableIK = true;
+        m_hud.SetAmmoInventory(m_shotgunShellInventory);
     }
 
     #region BuiltIn Functions
@@ -377,6 +385,8 @@ public class Vanguard : MonoBehaviour
     //firearm magazine using IK. So the start sequence is called here, and event handles will be defined elsewhere
     public void StartReloadAnimation()
 	{
+        //dont bother starting the reload sequence if there is nothing to reload 
+        if (m_shotgunShellInventory == 0) return;
         //Disable inverse kinematics
         //@note still in progress
         m_enableIK = false;
@@ -387,7 +397,13 @@ public class Vanguard : MonoBehaviour
     //Max the bullet in the current active weapon. In this case, currently just a m_shotgun
     public void ReloadWeapon()
 	{
-        m_shotgun.Reload();
+        //For now. Later this will be called as an animation event.
+        if (m_shotgunShellInventory == 0) return;
+        uint numBullets = System.Math.Min(m_shotgunShellInventory, m_shotgun.MaxCapacity);
+        m_shotgun.Reload(numBullets);
+        m_shotgunShellInventory -= numBullets;
+        m_hud.SetAmmoInventory(m_shotgunShellInventory);
+       
 	}
 }
 

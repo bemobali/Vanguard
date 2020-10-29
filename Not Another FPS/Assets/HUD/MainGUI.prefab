@@ -194,6 +194,22 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2824946577460934526, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
+      propertyPath: m_ammoInventoryDisplay
+      value: 
+      objectReference: {fileID: 7294584473959643376}
+    - target: {fileID: 2824946577460934526, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
+      propertyPath: m_healthSlider
+      value: 
+      objectReference: {fileID: 2713215977318758943}
+    - target: {fileID: 3648651485508228360, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 402.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3648651485508228360, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 311.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3653092032785545323, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
@@ -213,3 +229,25 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1027773901982014997, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
   m_PrefabInstance: {fileID: 4936686967666840844}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2713215977318758943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7000253166212787987, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
+  m_PrefabInstance: {fileID: 4936686967666840844}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7294584473959643376 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2430029868766113276, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
+  m_PrefabInstance: {fileID: 4936686967666840844}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32544fb7a6f9f4d4f87fbed86189b899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

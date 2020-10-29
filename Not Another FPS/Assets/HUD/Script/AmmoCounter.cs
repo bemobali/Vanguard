@@ -11,7 +11,7 @@ public class AmmoCounter : MonoBehaviour
     
     //Reload sets the counter value to the maxLoad. Observer function
     //Call this to reload to max count, or when refreshing the m_counter slider after a weapon swap
-    public void Reload(int maxLoad)
+    public void Reload(uint maxLoad)
 	{
         m_counter.value = maxLoad;
 	}

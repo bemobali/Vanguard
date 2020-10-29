@@ -9,6 +9,8 @@ public class HUD : MonoBehaviour
     [SerializeField]
     AmmoCounter m_ammoCounter;
     [SerializeField]
+    AmmoInventoryDisplay m_ammoInventoryDisplay;
+    [SerializeField]
     RawImage m_currentWeaponImage;
     [SerializeField]
     Image m_healthSlider;
@@ -20,6 +22,7 @@ public class HUD : MonoBehaviour
     {
     }
 
+    //@note I am beginning to think that this leads to confusions. The HUD should act as the facade for the game components. HUD then manages the information display
     public AmmoCounter BulletCounter
     {
         get { return m_ammoCounter; }
@@ -49,6 +52,13 @@ public class HUD : MonoBehaviour
 		}
 
         m_healthSlider.color = m_healthy;
+	}
+
+    //Right now I have a generalized shotgun shell as the only ammo. Later I will have to add 9mm for the side arm
+    //Definitely not responsible for limiting the amount of ammo to add. 
+    public void SetAmmoInventory(uint howMany)
+	{
+        m_ammoInventoryDisplay.SetAmmoCount(howMany);
 	}
 
 }

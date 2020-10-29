@@ -2966,6 +2966,8 @@ MonoBehaviour:
   headLookAt: {fileID: 1543396203075982624}
   activeWeapon: {fileID: 1037289750334241493}
   activeCamera: {fileID: 7918755098218526159}
+  m_shotgunShellInventory: 12
+  m_hud: {fileID: 0}
 --- !u!136 &5000122283922019340
 CapsuleCollider:
   m_ObjectHideFlags: 0

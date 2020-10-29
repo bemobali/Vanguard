@@ -7,11 +7,11 @@ using UnityEngine;
 public class M4Shotgun : MonoBehaviour
 {
     [SerializeField, Range(4,100)]
-    int m_maxCapacity = 8;
-    int m_roundsRemaining;
+    uint m_maxCapacity = 8;
+    uint m_roundsRemaining;
     //Rate of fire in rounds per second
     [SerializeField, Range(1, 20)]
-    float rateOfFire = 1f;
+    float m_rateOfFire = 1f;
     float shotPeriod;
     //Use this to limit the rate of fire
     float shotTimer;
@@ -39,7 +39,7 @@ public class M4Shotgun : MonoBehaviour
         laserRenderer = GetComponent<LineRenderer>();
         shotgunBallistics = GetComponent<BullshitLaser>();
         m_roundsRemaining = m_maxCapacity;
-        shotPeriod = 1 / rateOfFire;
+        shotPeriod = 1 / m_rateOfFire;
     }
 
     bool CanShoot()
@@ -65,10 +65,11 @@ public class M4Shotgun : MonoBehaviour
         return true;
 	}
 
-    public void Reload()
+    //numBullets is not always m_maxCapacity because of inventory supply limit
+    public void Reload(uint numBullets)
 	{
-        m_roundsRemaining = m_maxCapacity;
-        m_hud.BulletCounter.Reload(m_maxCapacity);
+        m_roundsRemaining = numBullets;
+        m_hud.BulletCounter.Reload(m_roundsRemaining);
 	}
     //Update HUD with the current weapon's bullet count. Use this during weapon swaps
     public void RefreshHUD()
@@ -77,14 +78,19 @@ public class M4Shotgun : MonoBehaviour
         m_hud.ChangeWeaponImage(m_weaponImage);
 	}
 
-    public int RoundsRemaining()
+    public uint MaxCapacity
 	{
-        return m_roundsRemaining;
+        get { return m_maxCapacity; }
 	}
 
-    public float RateOfFire()
+    public uint RoundsRemaining
 	{
-        return rateOfFire;
+        get { return m_roundsRemaining; }
+	}
+
+    public float RateOfFire
+	{
+        get { return m_rateOfFire; }
 	}
     // Update is called once per frame
     void Update()

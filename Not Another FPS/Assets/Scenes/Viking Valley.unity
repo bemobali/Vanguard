@@ -12734,6 +12734,10 @@ PrefabInstance:
       propertyPath: HUD
       value: 
       objectReference: {fileID: 1441419489}
+    - target: {fileID: 1543396202734884156, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
+      propertyPath: m_hud
+      value: 
+      objectReference: {fileID: 2096248723}
     - target: {fileID: 4122832992485585584, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
       propertyPath: m_hud
       value: 

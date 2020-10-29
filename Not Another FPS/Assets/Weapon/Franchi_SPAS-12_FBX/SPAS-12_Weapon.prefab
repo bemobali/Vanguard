@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxCapacity: 8
-  rateOfFire: 3.5
+  m_rateOfFire: 3.5
   m_shellEjector: {fileID: 3513512628667564669}
   m_hud: {fileID: 0}
   m_weaponImage: {fileID: 2800000, guid: ff2db57e49895bb42921fee747894444, type: 3}
