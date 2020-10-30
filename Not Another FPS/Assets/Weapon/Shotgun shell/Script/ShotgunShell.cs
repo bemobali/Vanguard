@@ -69,7 +69,5 @@ public class ShotgunShell : MonoBehaviour
 		}
 
         m_numShell = player.GrabAmmo(m_numShell);
-        if (m_numShell == 0) Debug.Log(ToString() + " will be destroyed in the next update");
-        //now attach itself
 	}
 }

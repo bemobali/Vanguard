@@ -103,7 +103,7 @@ public class Vanguard : MonoBehaviour
         AssignWeapon();
         deathSequence = GetComponent<Dead>();
         m_enableIK = true;
-        m_hud.SetAmmoInventory(m_shotgunShellInventory);
+        //m_hud.SetAmmoInventory(m_shotgunShellInventory);
     }
 
     #region BuiltIn Functions
@@ -147,6 +147,9 @@ public class Vanguard : MonoBehaviour
 		{
             ReloadWeapon();
 		}
+        //update HUD
+        m_hud.SetHealth(health.HealthPoint);
+        m_hud.SetAmmoInventory(m_shotgunShellInventory);
     }
 
     void FixedUpdate()
@@ -241,8 +244,6 @@ public class Vanguard : MonoBehaviour
 
     public void Walk(float sideways, float forward, float deltaT)
     {
-        //float z = 0.75f;    //based on experimental observation
-        //float x = 0.75f;    //based on experimental observation
         //@note using the root animation motion
         //@todo Fix jump. Learn the proper way to jump
         LateralMove(sideways, forward, walkingSpeed, deltaT);
@@ -303,9 +304,9 @@ public class Vanguard : MonoBehaviour
         }
         if (tpsCameraObj.activeSelf) tpsCameraObj.SetActive(false);
         activeCamera = fpsCameraObj;
+        m_shotgun.SetActiveCamera(activeCamera.GetComponent<Camera>());
         //This should reach m_shotgun
-        SendMessage("SetActiveCamera", activeCamera);
-
+        //BroadcastMessage("SetActiveCamera", activeCamera.GetComponent<Camera>(), SendMessageOptions.DontRequireReceiver);
     }
 
     public void SwitchToThirdPersonCamera()
@@ -316,7 +317,7 @@ public class Vanguard : MonoBehaviour
             tpsCameraObj.SetActive(true);
         }
         activeCamera = tpsCameraObj;
-        SendMessage("SetActiveCamera", activeCamera);
+        m_shotgun.SetActiveCamera(activeCamera.GetComponent<Camera>());
     }
 
     public MyStuff.Controller Controller()
@@ -405,7 +406,7 @@ public class Vanguard : MonoBehaviour
         uint numBullets = System.Math.Min(m_shotgunShellInventory, m_shotgun.MaxCapacity - m_shotgun.RoundsRemaining);
         m_shotgun.Reload(numBullets);
         m_shotgunShellInventory -= numBullets;
-        m_hud.SetAmmoInventory(m_shotgunShellInventory);
+        //m_hud.SetAmmoInventory(m_shotgunShellInventory);
        
 	}
 
@@ -414,11 +415,10 @@ public class Vanguard : MonoBehaviour
 	{
         //This should bottom out to 0 without underflowing
         uint howManytoGrab = System.Math.Min(available, m_maxShotgunShellToCarry - m_shotgunShellInventory);
-        Debug.Log("Player grabbing " + howManytoGrab.ToString() + " ammo");
         if (howManytoGrab == 0) return available;
 
         m_shotgunShellInventory += howManytoGrab;
-        m_hud.SetAmmoInventory(m_shotgunShellInventory);
+        //m_hud.SetAmmoInventory(m_shotgunShellInventory);
         return available - howManytoGrab;
     }
 }

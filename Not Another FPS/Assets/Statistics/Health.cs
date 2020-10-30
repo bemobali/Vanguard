@@ -8,16 +8,21 @@ using UnityEngine;
 //Inspired by Mech Commander, where a battle mech can be destroyed with several body parts intact.
 public class Health : MonoBehaviour
 {
+	const float MAX_HEALTH_POINT = 100f;
 	[SerializeField, Range(0, 100)]
 	float m_healthPoint;
 	[SerializeField]
-	HUD m_hud = null;	//Optional HUD to update
+	HUD m_hud = null;   //Optional HUD to update
 	public float HealthPoint
 	{
 		get { return m_healthPoint; }
-		set { m_healthPoint = value; }
+		set { m_healthPoint = System.Math.Min(value, MAX_HEALTH_POINT); }
 	}
 
+	public float MaxHealthPoint
+	{
+		get { return MAX_HEALTH_POINT;}
+	}
 	public void Update()
 	{
 		if (m_hud) m_hud.SetHealth(m_healthPoint);
