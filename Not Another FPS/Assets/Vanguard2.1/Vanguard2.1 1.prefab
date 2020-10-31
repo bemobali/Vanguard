@@ -305,6 +305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6698896488849192167}
   - component: {fileID: 7489289766396845331}
+  - component: {fileID: 8532907843958457852}
   m_Layer: 12
   m_Name: vanguard_Mesh
   m_TagString: Untagged
@@ -443,6 +444,19 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0017001629, y: -0.14558595, z: -0.014357321}
     m_Extent: {x: 0.92397296, y: 0.9161112, z: 0.22193623}
   m_DirtyAABB: 0
+--- !u!135 &8532907843958457852
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635909852109433482}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.923973
+  m_Center: {x: 0.00008655363, y: 0.03, z: -0.0032412931}
 --- !u!1 &766254404420641066
 GameObject:
   m_ObjectHideFlags: 0
@@ -3923,14 +3937,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17b7eafc7fe224a4b82d08ef6dcce750, type: 3}
---- !u!4 &1037289750334241494 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2411949255301427812, guid: 17b7eafc7fe224a4b82d08ef6dcce750, type: 3}
-  m_PrefabInstance: {fileID: 3395088057413732530}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1037289750334241493 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2411949255301427815, guid: 17b7eafc7fe224a4b82d08ef6dcce750, type: 3}
+  m_PrefabInstance: {fileID: 3395088057413732530}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1037289750334241494 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2411949255301427812, guid: 17b7eafc7fe224a4b82d08ef6dcce750, type: 3}
   m_PrefabInstance: {fileID: 3395088057413732530}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4803531628838100709

@@ -358,7 +358,7 @@ public class Vanguard : MonoBehaviour
         //This is unreal, but maybe aesthetically OK?
         const float pickupRange = 2.5f;
         // Check if our raycast has hit anything
-        bool hasPickup = Physics.Raycast(lineOrigin, activeCamera.transform.forward, out hitTarget, pickupRange);
+        bool hasPickup = Physics.Raycast(lineOrigin, activeCamera.transform.forward, out hitTarget, pickupRange, LayerMask.GetMask("Pickup Items"));
         if (hasPickup && (hitTarget.collider.gameObject.tag == "Weapon"))
 		{
             Debug.Log("Picking up weapon " + hitTarget.collider.gameObject.ToString());

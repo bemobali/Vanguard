@@ -17,7 +17,7 @@ public class BullshitLaser : MonoBehaviour
     float damagePoint = 1f;
     #endregion
     //Target layer is layer 9.
-    const int ballisticLayer = 1 << 9;
+    const int ballisticLayer = 1 << 9;//LayerMask.GetMask("Weapon Targets"); //I don't want to lose this compile-time const.
     // Start is called before the first frame update
     void Start()
     {
