@@ -11,6 +11,21 @@ public class ZombieAttackTarget : MonoBehaviour
 	GameObject currentTarget;
 	NavMeshAgent agent;
 	Animator animator;
+	[SerializeField]
+	AudioSource m_angryZombie;
+
+	void OnEnable()
+	{
+		m_angryZombie.enabled = true;
+		m_angryZombie.Play();
+	}
+
+	void OnDisable()
+	{
+		m_angryZombie.Stop();
+		m_angryZombie.enabled = false;
+	}
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -36,13 +51,15 @@ public class ZombieAttackTarget : MonoBehaviour
 	{
 		if (HasTarget())
 		{
-			//if (agent.enabled) agent.isStopped = true; //does not work
+			gameObject.transform.LookAt(currentTarget.transform);
+			if (agent.enabled) agent.isStopped = true; //does not work
+			/*
 			if (!animator.applyRootMotion)
 			{
 				//This is giving a weird behaviour on rooted animation. Almost like a numeric instability. 
 				//Took me 2 hours to figure this out
 				gameObject.transform.LookAt(currentTarget.transform);   
-			}
+			}*/
 			
 		}
 	}

@@ -62,6 +62,8 @@ public class ZombieDead : MonoBehaviour
 			//@todo abstract the walking and dead concept. This is too much detail for the death because I have 3 more zombie types with their own animations
 			if (animator.GetBool("isWalking")) animator.SetBool("isWalking", false);
 			if (!animator.GetBool("isDead")) animator.SetBool("isDead", true);
+			Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+			if (rb) rb.isKinematic = true;
 			return;
 		}
 		

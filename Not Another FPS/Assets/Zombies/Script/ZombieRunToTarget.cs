@@ -10,15 +10,39 @@ public class ZombieRunToTarget : MonoBehaviour
 	GameObject currentTarget;
 	NavMeshAgent agent;
 	Animator animator;
-    // Start is called before the first frame update
+	[SerializeField]
+	AudioSource m_zombieMoan;
+
+	void OnEnable()
+	{
+		m_zombieMoan.enabled = true;
+		m_zombieMoan.Play();
+	}
+
+	void OnDisable()
+	{
+		m_zombieMoan.Stop();
+		m_zombieMoan.enabled = false;
+	}
+
+	// Start is called before the first frame update
     void Start()
     {
 		agent = gameObject.GetComponent<NavMeshAgent>();
+		agent.updatePosition = false;
 		animator = gameObject.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+	void OnAnimatorMove()
+	{
+		// Update position based on animation movement using navigation surface height
+		Vector3 position = animator.rootPosition;
+		position.y = agent.nextPosition.y;
+		transform.position = position;
+	}
+
+	// Update is called once per frame
+	void Update()
     {
 		if (HasTarget())
 		{
@@ -27,6 +51,10 @@ public class ZombieRunToTarget : MonoBehaviour
 			{
 				animator.SetBool("isRunning", true);
 			}
+			Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
+			// Pull agent towards character
+			if (worldDeltaPosition.magnitude > agent.radius)
+				agent.nextPosition = transform.position + 0.9f * worldDeltaPosition;
 		}
     }
 	void LateUpdate()

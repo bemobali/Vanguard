@@ -15,7 +15,8 @@ class ZombieRandomWalk: MonoBehaviour
 	//How many times should the zombie try to recalculate its next destination
 	[SerializeField, Range(1,100)]
 	int numAttempts = 30;
-	NavMeshAgent navMeshAgent;
+	NavMeshAgent agent;
+	Animator animator;
 	Vector3 walkDestination;
 
 	bool RandomPoint(Vector3 center, float range, out Vector3 result)
@@ -47,21 +48,35 @@ class ZombieRandomWalk: MonoBehaviour
 		//Select a target
 		if (RandomPoint(gameObject.transform.position, walkRange, out walkDestination))
 		{
-			navMeshAgent.SetDestination(walkDestination);
+			agent.SetDestination(walkDestination);
 		}
 	}
 	public void Start() 
 	{
-		navMeshAgent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+		animator = gameObject.GetComponent<Animator>();
+		agent = gameObject.GetComponent<NavMeshAgent>();
 		walkDestination = new Vector3();
+		agent.updatePosition = false;
 		RandomWalk();
 	}
 	public void Update() 
 	{
 		//Set a new random destination
-		if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
+		if (agent.remainingDistance < agent.stoppingDistance)
 		{
 			RandomWalk();
 		}
+		Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
+		// Pull agent towards character
+		if (worldDeltaPosition.magnitude > agent.radius)
+			agent.nextPosition = transform.position + 0.9f * worldDeltaPosition;
+	}
+
+	void OnAnimatorMove()
+	{
+		// Update position based on animation movement using navigation surface height
+		Vector3 position = animator.rootPosition;
+		position.y = agent.nextPosition.y;
+		transform.position = position;
 	}
 }

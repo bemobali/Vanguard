@@ -25,6 +25,10 @@ public class ZombieController : MonoBehaviour
 	ZombieRunToTarget runToTarget;
 	[SerializeField]
 	ZombieAttackTarget attackTarget;
+	[SerializeField]
+	ZombieBitchSlap m_leftSlap;
+	[SerializeField]
+	ZombieBitchSlap m_rightSlap;
 	
 	public enum ZombieState
 	{
@@ -64,6 +68,8 @@ public class ZombieController : MonoBehaviour
 				attackTarget.enabled = false;
 				randomWalk.enabled = false;
 				zombieDied.enabled = true;
+				m_leftSlap.enabled = false;
+				m_rightSlap.enabled = false;
 			}
 			return;
 		}
