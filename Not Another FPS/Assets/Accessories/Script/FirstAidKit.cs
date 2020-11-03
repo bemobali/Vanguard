@@ -20,9 +20,9 @@ public class FirstAidKit : MonoBehaviour
 		}
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
 	{
-        GameObject collider = col.collider.gameObject;
+        GameObject collider = col.gameObject;
         //Layer 12 is player. Got to be a way to dispatch this using a string!
         if (collider.layer != 12) return;
         Health playerHealth = collider.GetComponent<Health>();

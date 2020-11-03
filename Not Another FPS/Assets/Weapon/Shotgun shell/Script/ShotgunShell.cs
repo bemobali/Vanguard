@@ -16,58 +16,66 @@ public class ShotgunShell : MonoBehaviour
     //If true, the shell will self destruct on a timer. Otherwise it will self-destruct after m_numShell reaches 0;
     //Timer takes precedence over m_numShell. Ideally I would have 2 self-destruct instances using a common interface. Meh. Only 2 cases to consider
     bool m_useTimerSelfDestruct = false;
+    [SerializeField]
+    AudioSource m_pickUp;
 
     public bool UserTimerSelfDestruct
-	{
+    {
         get { return m_useTimerSelfDestruct; }
         set { m_useTimerSelfDestruct = value; }
-	}
+    }
 
     void Start()
-    { 
+    {
     }
 
     void Update()
     {
         if (m_useTimerSelfDestruct)
-		{
+        {
             m_selfDestructTimer += Time.deltaTime;
             if (m_selfDestructTimer > m_timeToDie)
             {
                 Destroy(gameObject);
             }
             return;
-		}
+        }
 
-        if (m_numShell == 0)
-		{
+        if (m_numShell == 0 && !m_pickUp.isPlaying)
+        {
             Destroy(gameObject);
             return;
-		}
+        }
     }
 
     //Player needs a standardized way to reduce the number of shell. Destroy object when m_numShell drops to 0
     uint NumShellRemaining
-	{
+    {
         get { return m_numShell; }
         set { m_numShell = value; }
-	}
+    }
 
-    void OnCollisionEnter(Collision collider)
-	{
+    /*void OnCollisionEnter(Collision collider)
+    {
         //Magic numbers : 0 is default layer, 11 is resupply layer
         if (m_useTimerSelfDestruct || (collider.gameObject.layer == 0) || (collider.gameObject.layer == 11)) return;
+        GrabAmmo(collider.gameObject.GetComponent<Vanguard>());
+    }*/
 
+    public void GrabAmmo(Vanguard player)
+	{
+        //This is the result of waiting for the sound to stop playing
+        if (m_numShell == 0) return;
         //I won't bother checking tags here. The Resupply layer collides only with a player layer. I don't care if the zombies can overrun the resupply stuff.
         //Besides, if they occupy the space, the resupply object is practically unusable anyway.
         //@todo Maybe I want to come up with an inventory script. Use Vanguard fornow
-        Vanguard player = collider.gameObject.GetComponent<Vanguard>();
         if (player == null)
-		{
+        {
             Debug.Log("Check Resupply layer, make sure it collides with the Player layer");
             return;
-		}
+        }
 
         m_numShell = player.GrabAmmo(m_numShell);
-	}
+        if (m_pickUp) m_pickUp.Play();
+    }
 }
