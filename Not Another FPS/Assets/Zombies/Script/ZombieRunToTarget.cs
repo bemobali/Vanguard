@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 //ZombieRunToTarget engages the zombie to a specific target. Disengage when contact must be removed
+//@note Look at Unity's manual again on contolling animation using nav mesh agent.
 public class ZombieRunToTarget : MonoBehaviour
 {
 	GameObject currentTarget;
@@ -12,7 +13,7 @@ public class ZombieRunToTarget : MonoBehaviour
 	Animator animator;
 	[SerializeField]
 	AudioSource m_zombieMoan;
-
+	
 	void OnEnable()
 	{
 		m_zombieMoan.enabled = true;
@@ -29,17 +30,8 @@ public class ZombieRunToTarget : MonoBehaviour
     void Start()
     {
 		agent = gameObject.GetComponent<NavMeshAgent>();
-		agent.updatePosition = false;
 		animator = gameObject.GetComponent<Animator>();
     }
-
-	void OnAnimatorMove()
-	{
-		// Update position based on animation movement using navigation surface height
-		Vector3 position = animator.rootPosition;
-		position.y = agent.nextPosition.y;
-		transform.position = position;
-	}
 
 	// Update is called once per frame
 	void Update()
@@ -51,10 +43,6 @@ public class ZombieRunToTarget : MonoBehaviour
 			{
 				animator.SetBool("isRunning", true);
 			}
-			Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
-			// Pull agent towards character
-			if (worldDeltaPosition.magnitude > agent.radius)
-				agent.nextPosition = transform.position + 0.9f * worldDeltaPosition;
 		}
     }
 	void LateUpdate()

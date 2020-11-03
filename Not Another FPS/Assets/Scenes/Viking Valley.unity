@@ -1063,6 +1063,7 @@ GameObject:
   - component: {fileID: 157963166}
   - component: {fileID: 157963165}
   - component: {fileID: 157963164}
+  - component: {fileID: 157963168}
   m_Layer: 0
   m_Name: Zombie Spawn 1
   m_TagString: Untagged
@@ -1083,7 +1084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_radius: 10
-  m_totalToSpawn: 20
+  m_totalToSpawn: 5
   m_spawnObject: {fileID: 6414805233389533197, guid: 60963b7d9753c73498eb724886dcd228, type: 3}
   m_randomizeTotalToSpawn: 0
 --- !u!23 &157963165
@@ -1152,6 +1153,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &157963168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157963163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f129d713673f1b3479739f080b287d17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_radius: 5
+  m_totalToSpawn: 5
+  m_spawnObject: {fileID: 5243201517403683979, guid: ed457280dd91ef94cbdd42d407819904, type: 3}
+  m_randomizeTotalToSpawn: 0
 --- !u!1001 &163143789
 PrefabInstance:
   m_ObjectHideFlags: 0

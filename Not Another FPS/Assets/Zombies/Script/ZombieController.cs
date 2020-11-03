@@ -68,8 +68,8 @@ public class ZombieController : MonoBehaviour
 				attackTarget.enabled = false;
 				randomWalk.enabled = false;
 				zombieDied.enabled = true;
-				m_leftSlap.enabled = false;
-				m_rightSlap.enabled = false;
+				if (m_leftSlap) m_leftSlap.enabled = false;
+				if (m_rightSlap) m_rightSlap.enabled = false;
 			}
 			return;
 		}

@@ -16,18 +16,10 @@ class ZombieWalkToTarget : MonoBehaviour
 	void Start()
 	{
 		agent = gameObject.GetComponent<NavMeshAgent>();
-		agent.updatePosition = false;
 		animator = gameObject.GetComponent<Animator>();
 	}
 
-	void OnAnimatorMove()
-	{
-		// Update position based on animation movement using navigation surface height
-		Vector3 position = animator.rootPosition;
-		position.y = agent.nextPosition.y;
-		transform.position = position;
-	}
-
+	
 	void Update()
 	{
 		if (HasTarget())
@@ -37,10 +29,6 @@ class ZombieWalkToTarget : MonoBehaviour
 				animator.SetBool("isWalking", true);
 			}
 			agent.SetDestination(currentTarget.transform.position);
-			Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
-			// Pull agent towards character
-			if (worldDeltaPosition.magnitude > agent.radius)
-				agent.nextPosition = transform.position + 0.9f * worldDeltaPosition;
 		}
 	}
 

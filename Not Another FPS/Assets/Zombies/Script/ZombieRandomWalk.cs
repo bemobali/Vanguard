@@ -56,9 +56,9 @@ class ZombieRandomWalk: MonoBehaviour
 		animator = gameObject.GetComponent<Animator>();
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		walkDestination = new Vector3();
-		agent.updatePosition = false;
 		RandomWalk();
 	}
+
 	public void Update() 
 	{
 		//Set a new random destination
@@ -66,17 +66,5 @@ class ZombieRandomWalk: MonoBehaviour
 		{
 			RandomWalk();
 		}
-		Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
-		// Pull agent towards character
-		if (worldDeltaPosition.magnitude > agent.radius)
-			agent.nextPosition = transform.position + 0.9f * worldDeltaPosition;
-	}
-
-	void OnAnimatorMove()
-	{
-		// Update position based on animation movement using navigation surface height
-		Vector3 position = animator.rootPosition;
-		position.y = agent.nextPosition.y;
-		transform.position = position;
 	}
 }

@@ -14,14 +14,23 @@ public class ZombieAttackTarget : MonoBehaviour
 	[SerializeField]
 	AudioSource m_angryZombie;
 
+	//During the attack phase, use manual movement control, because I don't want the character controller to swipe away the player's rigidbody
+	CharacterController m_controller;
+	Rigidbody m_rb;
+	CapsuleCollider m_collider;
+
 	void OnEnable()
 	{
+		if (m_controller) m_controller.enabled = false;
+		if (m_collider) m_collider.enabled = true;
 		m_angryZombie.enabled = true;
 		m_angryZombie.Play();
 	}
 
 	void OnDisable()
 	{
+		m_controller.enabled = true;
+		m_collider.enabled = false;
 		m_angryZombie.Stop();
 		m_angryZombie.enabled = false;
 	}
@@ -31,6 +40,11 @@ public class ZombieAttackTarget : MonoBehaviour
 	{
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		animator = gameObject.GetComponent<Animator>();
+		m_controller = gameObject.GetComponent<CharacterController>();
+		m_rb = gameObject.GetComponent<Rigidbody>();
+		m_collider = gameObject.GetComponent<CapsuleCollider>();
+		m_controller.enabled = false;
+		m_collider.enabled = true;
 	}
 
 	// Update is called once per frame
@@ -80,7 +94,7 @@ public class ZombieAttackTarget : MonoBehaviour
 		if (currentTarget == null)
 		{
 			currentTarget = target;
-			Debug.Log(ToString() + "Engaging target " + currentTarget.name);
+			//Debug.Log(ToString() + "Engaging target " + currentTarget.name);
 			return;
 		}
 	}
