@@ -110,6 +110,7 @@ namespace Assets.Vanguard.Script
 			
 			UpdateLateralInput(sideways, forward, leftShiftPressed, deltaT);
 			Pan();
+			Tilt();
 		}
 	}
 }

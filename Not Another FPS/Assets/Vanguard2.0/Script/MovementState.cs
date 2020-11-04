@@ -48,7 +48,10 @@ namespace Assets.Vanguard.Script
 		public void LateUpdate()
 		{
 			//Maybe this should be in fixed update
-			controller.Tilt();
+			//This was in LateUpdate because I needed to do some post IK skeletal movement.
+			//The correct way to do this is to respond to the mouse tilt in the player's LateUpdate. Not here.
+			//Put this in FixedUpdate so pause freezes all player control
+			//controller.Tilt();
 		}
 
 		public void OnGroundCollisionEnter()

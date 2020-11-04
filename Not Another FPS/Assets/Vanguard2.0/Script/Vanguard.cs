@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.EventSystems;
 using MyStuff = Assets.Vanguard.Script;
 
 //Vanguard implements MonoBehaviour functions and interacts with the game engine.
@@ -134,7 +135,10 @@ public class Vanguard : MonoBehaviour
 
         if (controller.Esc())
 		{
-            if (Cursor.lockState != CursorLockMode.Locked) Cursor.lockState = CursorLockMode.Locked;
+            if ((Cursor.lockState != CursorLockMode.Locked) && (!EventSystem.current.IsPointerOverGameObject()))
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             else Cursor.lockState = CursorLockMode.None;
 		}
 
