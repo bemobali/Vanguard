@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 //ScenePause pauses the game and allows the user to either quit or continue the game
+//This script is initially disabled. It needs to be activated and deactivated with the game object because right now, during editing, it does a super annoying
+//mouse cursor lock. Somehow OnDisabled gets called during build, and locks the cursor to the middle of the Game Screen.
 public class ScenePause : MonoBehaviour
 {
    public void QuitScene()

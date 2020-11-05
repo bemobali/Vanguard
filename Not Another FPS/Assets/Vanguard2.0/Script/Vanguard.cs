@@ -104,7 +104,6 @@ public class Vanguard : MonoBehaviour
         AssignWeapon();
         deathSequence = GetComponent<Dead>();
         m_enableIK = true;
-        //m_hud.SetAmmoInventory(m_shotgunShellInventory);
     }
 
     #region BuiltIn Functions
@@ -309,6 +308,7 @@ public class Vanguard : MonoBehaviour
         if (tpsCameraObj.activeSelf) tpsCameraObj.SetActive(false);
         activeCamera = fpsCameraObj;
         m_shotgun.SetActiveCamera(activeCamera.GetComponent<Camera>());
+        m_hud.SetActiveCamera(activeCamera.GetComponent<Camera>());
         //This should reach m_shotgun
         //BroadcastMessage("SetActiveCamera", activeCamera.GetComponent<Camera>(), SendMessageOptions.DontRequireReceiver);
     }
@@ -322,6 +322,7 @@ public class Vanguard : MonoBehaviour
         }
         activeCamera = tpsCameraObj;
         m_shotgun.SetActiveCamera(activeCamera.GetComponent<Camera>());
+        m_hud.SetActiveCamera(activeCamera.GetComponent<Camera>());
     }
 
     public MyStuff.Controller Controller()

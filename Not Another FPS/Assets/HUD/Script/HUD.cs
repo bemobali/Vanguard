@@ -61,4 +61,14 @@ public class HUD : MonoBehaviour
         m_ammoInventoryDisplay.SetAmmoCount(howMany);
 	}
 
+    public void SetActiveCamera(Camera activeCamera)
+	{
+        GoalPointer goalPointer = GetComponentInChildren<GoalPointer>();
+        if (goalPointer == null)
+		{
+            Debug.Log("Goal pointer is not supposed to be null");
+            return;
+		}
+        goalPointer.ActiveCamera = activeCamera.transform;
+	}
 }

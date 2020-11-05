@@ -315,6 +315,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7918755098218526159, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
   m_PrefabInstance: {fileID: 2016897154}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &55743333 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7918755098218526154, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
+  m_PrefabInstance: {fileID: 2016897154}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &58536755 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 54c5a00fc75fc854ca53900fe513f638, type: 3}
@@ -12823,6 +12828,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
+--- !u!4 &2016897155 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7669534179199026597, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
+  m_PrefabInstance: {fileID: 2016897154}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2019744089
 GameObject:
   m_ObjectHideFlags: 0
@@ -14089,6 +14099,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6887984149822212092, guid: 3923dcddb3274404fbbfb61c2fe337fa, type: 3}
+      propertyPath: m_target
+      value: 
+      objectReference: {fileID: 1458409788}
+    - target: {fileID: 6887984149822212092, guid: 3923dcddb3274404fbbfb61c2fe337fa, type: 3}
+      propertyPath: m_player
+      value: 
+      objectReference: {fileID: 2016897155}
+    - target: {fileID: 6887984149822212092, guid: 3923dcddb3274404fbbfb61c2fe337fa, type: 3}
+      propertyPath: m_activeCamera
+      value: 
+      objectReference: {fileID: 55743333}
     - target: {fileID: 7185101048516092530, guid: 3923dcddb3274404fbbfb61c2fe337fa, type: 3}
       propertyPath: m_healthSlider
       value: 
