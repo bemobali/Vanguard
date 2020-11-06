@@ -17,9 +17,13 @@ public class HUD : MonoBehaviour
     Color m_healthy = new Color(0f, 1f, 0.2013595f, 0.5f);
     Color m_healthCaution = new Color(1f, 0.9398658f, 0.240566f, 0.70f);
     Color m_healthCritical = new Color(0.7735849f, 0.174f, 0.08392668f, 0.9f);
+
+    RadarScreen m_radarScreen;
     // Start is called before the first frame update
     void Start()
     {
+        //Currently there is only 1 screen. Multiple screen requires call to GetComponentsInChildren. OK in this case English wins. The plural form is more concise
+        m_radarScreen = GetComponentInChildren<RadarScreen>();
     }
 
     //@note I am beginning to think that this leads to confusions. The HUD should act as the facade for the game components. HUD then manages the information display

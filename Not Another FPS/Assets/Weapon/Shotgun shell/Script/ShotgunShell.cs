@@ -66,12 +66,11 @@ public class ShotgunShell : MonoBehaviour
 	{
         //This is the result of waiting for the sound to stop playing
         if (m_numShell == 0) return;
-        //I won't bother checking tags here. The Resupply layer collides only with a player layer. I don't care if the zombies can overrun the resupply stuff.
+        //I won't bother checking tags here. The Resupply layer collides a player and radar layer. I don't care if the zombies can overrun the resupply stuff.
         //Besides, if they occupy the space, the resupply object is practically unusable anyway.
         //@todo Maybe I want to come up with an inventory script. Use Vanguard fornow
         if (player == null)
         {
-            Debug.Log("Check Resupply layer, make sure it collides with the Player layer");
             return;
         }
 

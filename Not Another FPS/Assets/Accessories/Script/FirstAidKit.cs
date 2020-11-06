@@ -19,7 +19,7 @@ public class FirstAidKit : MonoBehaviour
             return;
 		}
     }
-
+    //Radar layer can also trigger this collision, so keep the null check, but don't issue a log statement
     void OnTriggerEnter(Collider col)
 	{
         GameObject collider = col.gameObject;
@@ -28,7 +28,7 @@ public class FirstAidKit : MonoBehaviour
         Health playerHealth = collider.GetComponent<Health>();
         if (playerHealth == null)
         {
-            Debug.Log("Player missing its Health script");
+            //Object painted by the radar
             return;
         }
         float recharge = Mathf.Min(playerHealth.MaxHealthPoint - playerHealth.HealthPoint, m_healthBoost);

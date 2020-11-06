@@ -62,7 +62,7 @@ public class ZombieRunToTarget : MonoBehaviour
 		if (currentTarget == null)
 		{
 			currentTarget = target;
-			Debug.Log("Engaging target " + currentTarget.name);
+			//Debug.Log("Engaging target " + currentTarget.name);
 			return;
 		}
 	}
@@ -79,7 +79,7 @@ public class ZombieRunToTarget : MonoBehaviour
 		//Yes I need to be this specific
 		if (target.GetInstanceID() == currentTarget.GetInstanceID())
 		{
-			Debug.Log(ToString() + "Removing target " + currentTarget.name);
+			//Debug.Log(ToString() + "Removing target " + currentTarget.name);
 			currentTarget = null;
 			if (animator) animator.SetBool("isRunning", false);
 		}

@@ -61,7 +61,7 @@ class ZombieWalkToTarget : MonoBehaviour
 	void SetTarget(GameObject target)
 	{
 		currentTarget = target;
-		Debug.Log(ToString() + "Switching target to " + currentTarget.name);
+		//Debug.Log(ToString() + "Switching target to " + currentTarget.name);
 	}
 
 	//Call this to deal with contacts from the colliders, or any other form of target detection
@@ -98,7 +98,7 @@ class ZombieWalkToTarget : MonoBehaviour
 		//Yes I need to be this specific
 		if (target.GetInstanceID() == currentTarget.GetInstanceID())
 		{
-			Debug.Log(ToString() + "Removing target " + currentTarget.name);
+			//Debug.Log(ToString() + "Removing target " + currentTarget.name);
 			currentTarget = null;
 		}
 	}

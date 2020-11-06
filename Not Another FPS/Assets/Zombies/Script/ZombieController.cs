@@ -51,10 +51,6 @@ public class ZombieController : MonoBehaviour
 		return health.HealthPoint < 1;
 	}
 
-	void Update()
-	{
-	}
-
 	void LateUpdate()
 	{
 		//no more state transition allowed
@@ -79,7 +75,7 @@ public class ZombieController : MonoBehaviour
 		{
 			if (!attackTarget.enabled)
 			{
-				Debug.Log("State transition to " + attackTarget.ToString());
+				//Debug.Log("State transition to " + attackTarget.ToString());
 				walkToTarget.enabled = false;
 				runToTarget.enabled = false;
 				randomWalk.enabled = false;
@@ -92,7 +88,7 @@ public class ZombieController : MonoBehaviour
 		{ 
 			if (!runToTarget.enabled)
 			{
-				Debug.Log("State transition to " + runToTarget.ToString());
+				//Debug.Log("State transition to " + runToTarget.ToString());
 				walkToTarget.enabled = false;
 				runToTarget.enabled = true;
 				randomWalk.enabled = false;
@@ -105,7 +101,7 @@ public class ZombieController : MonoBehaviour
 		{
 			if (!walkToTarget.enabled)
 			{
-				Debug.Log("State transition to " + walkToTarget.ToString());
+				//Debug.Log("State transition to " + walkToTarget.ToString());
 				walkToTarget.enabled = true;
 				runToTarget.enabled = false;
 				randomWalk.enabled = false;
@@ -116,7 +112,7 @@ public class ZombieController : MonoBehaviour
 		
 		if (!randomWalk.enabled)
 		{
-			Debug.Log("State transition to " + randomWalk.ToString());
+			//Debug.Log("State transition to " + randomWalk.ToString());
 			//Finally enable random walk
 			walkToTarget.enabled = false;
 			runToTarget.enabled = false;
