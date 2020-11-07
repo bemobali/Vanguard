@@ -3014,7 +3014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkingSpeed: 1
   runningSpeed: 3
-  jumpForce: 600
+  jumpForce: 275
   leftFoot: {fileID: 5000122285149120709}
   rightFoot: {fileID: 5000122283275773943}
   jumpingSound: {fileID: 1452884874742724867}

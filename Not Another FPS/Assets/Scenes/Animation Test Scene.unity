@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 409438cf814b7794b92625cb4d2ec4e9, type: 2}
+--- !u!114 &5998941 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1189063910477057765, guid: 3923dcddb3274404fbbfb61c2fe337fa, type: 3}
+  m_PrefabInstance: {fileID: 1681165525}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae385244734a434cb0dcec003be443d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &78044143
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7376854340780727045, guid: 80e82d630686b6d42988959cc80be21e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8065463453560020718, guid: 80e82d630686b6d42988959cc80be21e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -326,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6885901279187353226, guid: 5df1bd273398ca34bbb96722362cd87a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5df1bd273398ca34bbb96722362cd87a, type: 3}
@@ -1015,7 +1026,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 866187330509139142, guid: 3923dcddb3274404fbbfb61c2fe337fa, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4936686968494893938, guid: 3923dcddb3274404fbbfb61c2fe337fa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1121,6 +1132,10 @@ PrefabInstance:
       propertyPath: m_target
       value: 
       objectReference: {fileID: 2032745279}
+    - target: {fileID: 7185101048516092530, guid: 3923dcddb3274404fbbfb61c2fe337fa, type: 3}
+      propertyPath: m_healthIndicator
+      value: 
+      objectReference: {fileID: 5998941}
     - target: {fileID: 8516519639632112999, guid: 3923dcddb3274404fbbfb61c2fe337fa, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
@@ -1175,7 +1190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1278946790290958709, guid: 269c0503a2452ce4fac1c311859e471d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1942296056416662479, guid: 269c0503a2452ce4fac1c311859e471d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1487,6 +1502,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 658384330127053370, guid: 4abd821ab31928243943573896e33e09, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1516624141342406870, guid: 4abd821ab31928243943573896e33e09, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.3188
@@ -1660,10 +1679,6 @@ PrefabInstance:
       propertyPath: m_hud
       value: 
       objectReference: {fileID: 522733801}
-    - target: {fileID: 1543396202734884156, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
-      propertyPath: m_shotgunShellInventory
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 1543396203075982624, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -1784,6 +1799,10 @@ PrefabInstance:
       propertyPath: m_hud
       value: 
       objectReference: {fileID: 522733801}
+    - target: {fileID: 4685240109988388765, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
+      propertyPath: m_healthPoint
+      value: 23.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4788830797184483647, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
       propertyPath: m_radarScreen
       value: 

@@ -16,15 +16,20 @@ public class ScenePause : MonoBehaviour
 	void Pause()
 	{
 		Time.timeScale = 0;
+		AudioListener.pause = true;
+		Cursor.lockState = CursorLockMode.Confined;
+		Cursor.visible = true;
 		//note And more to add. There is music and menu interaction, at least
 	}
 
 	public void Resume()
 	{
 		Time.timeScale = 1;
+		AudioListener.pause = false;
 		//Practically reverse everything in Pause()
 		gameObject.SetActive(false);
 		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
 	}
 
 	void OnEnable()

@@ -8,16 +8,16 @@ public class ZombieAttackSensor : MonoBehaviour
 	//@todo add a public collider list
 	//Sensor target refresh rage in updates per second
 	[SerializeField, Range(0.25f, 120f)]
-	float refreshRate = 0.25f;
-	float refreshTimer;
+	//float refreshRate = 0.25f;
+	//float refreshTimer;
 	bool refreshTarget;
 	[SerializeField]
 	ZombieAttackTarget stateToModify = null;
     // Start is called before the first frame update
     void Start()
     {
-		refreshTimer = 0;
-		refreshTarget = false;
+		//refreshTimer = 0;
+		//refreshTarget = false;
     }
 
     // Update is called once per frame
@@ -54,7 +54,7 @@ public class ZombieAttackSensor : MonoBehaviour
 		{
 			//upload list to the responsible state manager
 			refreshTarget = false;
-			refreshTimer = 0;
+			//refreshTimer = 0;
 		}
 	}
 	

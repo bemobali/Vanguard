@@ -17,6 +17,9 @@ public class Dead : MonoBehaviour
     Animator animator;
     [SerializeField]
     GameObject HUD;
+    [SerializeField]
+    MainGUI m_mainGUI;
+
     const float killAfterTime = 5f;
     float deathTimer;
     bool startDeathTimer;
@@ -81,6 +84,7 @@ public class Dead : MonoBehaviour
         deathCamera.SetActive(true);
         //Enable physics
         EnableRagdollPhysics();
+        m_mainGUI.GameOver(killAfterTime);
     }
 
     public void DestroyPlayer()

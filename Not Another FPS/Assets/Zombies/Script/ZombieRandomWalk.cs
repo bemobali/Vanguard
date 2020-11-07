@@ -35,7 +35,7 @@ class ZombieRandomWalk: MonoBehaviour
 				result = hit.position;
 				return true;
 			}
-			Debug.Log(ToString() + " failed to sample navmesh at position " + randomPoint.ToString());
+			//Debug.Log(ToString() + " failed to sample navmesh at position " + randomPoint.ToString());
 		}
 		result = Vector3.zero;
 		//or not
