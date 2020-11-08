@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5179974345981457779}
   - component: {fileID: 8863012106552644258}
+  - component: {fileID: 6287387995737292377}
   m_Layer: 16
   m_Name: Radar Target
   m_TagString: Untagged
@@ -44,3 +45,15 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.00001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6287387995737292377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7234826546304292872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd74a2cdcc91f14dbaa5b10778a9289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

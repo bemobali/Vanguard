@@ -27,22 +27,28 @@ public class ZombieDead : MonoBehaviour
 	//Mini state within a state. Not worth a full state pattern implementation
 	bool animatedDeath;
 
-	void AssignGameComponents()
+	void UpdateGameComponenets()
 	{
 		if (animator == null) animator = gameObject.GetComponent<Animator>();
 		if (navMeshAgent == null) navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+		RadarTarget radarTarget = gameObject.GetComponentInChildren<RadarTarget>();
+		if (radarTarget)
+		{
+			//Makes the radar refresh more responsive so the radar objects won't track dead zombies
+			Destroy(radarTarget.gameObject);
+		}
 		animatedDeath = true;
 	}
 
 	void Start()
 	{
-		AssignGameComponents();
+		UpdateGameComponenets();
 	}
 
 	//I expect this to be done only once. So please have the script disabled initially
 	void OnEnable()
 	{
-		AssignGameComponents();
+		UpdateGameComponenets();
 		if (navMeshAgent) navMeshAgent.enabled = false;
 		Joint[] ragdollJoint = gameObject.GetComponents<Joint>();
 		if (ragdoll || ragdollJoint.Length > 0)

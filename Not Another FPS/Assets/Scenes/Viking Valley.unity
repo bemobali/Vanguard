@@ -12792,7 +12792,7 @@ PrefabInstance:
       objectReference: {fileID: 2096248723}
     - target: {fileID: 4685240109988388765, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
       propertyPath: m_healthPoint
-      value: 10.8
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4788830797184483647, guid: 7d10727470f26d94d82a9dddb9c298a5, type: 3}
       propertyPath: m_radarScreen

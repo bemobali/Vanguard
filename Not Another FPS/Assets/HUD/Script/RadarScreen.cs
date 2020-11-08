@@ -66,9 +66,9 @@ public class RadarScreen : MonoBehaviour
             }
             else
 			{
-                blip = Instantiate(m_radarBlip);
+                blip = Instantiate(m_radarBlip, m_radarScope.transform, false);
                 m_blipTable.Add(contactId, blip);
-                blip.transform.SetParent(m_radarScope.transform, false); ;
+                //blip.transform.SetParent(m_radarScope.transform, false); ;
 			}
             blip.transform.localPosition = vector;
 
@@ -83,6 +83,12 @@ public class RadarScreen : MonoBehaviour
 	{
         if (m_blipTable.ContainsKey(id))
 		{
+            Image blip = (Image)m_blipTable[id];
+            if (blip)
+			{
+                blip.transform.SetParent(null);
+                Destroy(blip);
+			}
             m_blipTable.Remove(id);
 		}
 	}

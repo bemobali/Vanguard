@@ -55,23 +55,20 @@ public class ZombieSink : MonoBehaviour
 		}
 	}
 
+	void RemoveAllColliders(Collider[] colliders)
+	{
+		if (colliders != null)
+		{
+			foreach (Collider col in parentCollider)
+			{
+				if (col) col.enabled = false;
+			}
+		}
+	}
+
 	void DisableAllColliders()
 	{
-		if (parentCollider != null)
-		{
-			foreach(Collider col in parentCollider)
-			{
-				col.enabled = false;
-			}
-		}
-		
-		if (childrenColliders != null)
-		{
-			foreach (Collider collider in childrenColliders)
-			{
-				//Kill the colliders so we can sink the object
-				collider.enabled = false;
-			}
-		}
+		RemoveAllColliders(parentCollider);
+		RemoveAllColliders(childrenColliders);
 	}
 }

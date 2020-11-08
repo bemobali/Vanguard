@@ -90,13 +90,15 @@ public class ZombieAttackTarget : MonoBehaviour
 
 	public void ProcessContact(GameObject target)
 	{
-		//Engage the first contact. Yeah the zombies are that hungry and dumb
+		//There is a suggestion in Unity forum to dissable collision detection when the target is dead, so it can trigger this object's OnTriggerExit
+		//Engage the first live contact. Yeah the zombies are that hungry and dumb
 		if (currentTarget == null)
 		{
 			currentTarget = target;
 			//Debug.Log(ToString() + "Engaging target " + currentTarget.name);
 			return;
 		}
+		//Remove dead target contact
 	}
 
 	public bool HasTarget()

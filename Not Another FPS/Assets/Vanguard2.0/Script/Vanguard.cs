@@ -132,7 +132,7 @@ public class Vanguard : MonoBehaviour
             if (m_shotgun.Fire()) animationContext.Firing();
 		}
 
-        //@todo resolve this with the ESCMEnu ScenePause script
+        //@This is now hanled in the ESCMEnu ScenePause script.
         /*if (controller.Esc())
 		{
             if ((Cursor.lockState != CursorLockMode.Locked) && (!EventSystem.current.IsPointerOverGameObject()))
