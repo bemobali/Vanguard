@@ -14,6 +14,9 @@ public class BattleDamage : MonoBehaviour
     float extraHealthDeduction = 0f;
     //Optional battle damage special effects, like blood gushing, or decapitation, or damage sprites/textures. Right now 1 battle damage collaborates with 1 fx only
     //BattleDamageFX fx;
+    //My first battle damage FX: blood spurt
+    [SerializeField]
+    GameObject m_bloodSpurt;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,14 @@ public class BattleDamage : MonoBehaviour
     {
         //if (fx != null) fx.Damage(hit, damagePoint);
         characterHealth.HealthPoint -= (damagePoint + extraHealthDeduction);
+        if (m_bloodSpurt)
+		{
+            GameObject bloodSpurt = Instantiate(m_bloodSpurt, hit.point, Quaternion.identity);
+            //More like rotate the Z axis and line it up with the normal at the hit point. Or not
+            //The headshots are not dramatic enough, but should be OK for now
+            //bloodSpurt.transform.forward = hit.normal;
+            Destroy(bloodSpurt, 0.5f);
+		}
     }
 
     //Takes a damage from a bitch slap

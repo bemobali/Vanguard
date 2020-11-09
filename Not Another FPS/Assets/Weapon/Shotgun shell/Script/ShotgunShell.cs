@@ -8,6 +8,7 @@ using UnityEngine;
 public class ShotgunShell : MonoBehaviour
 {
     //How many shell to add to the player. Yes, this types has only 1. A ShotgunShellBox will have 25
+    [SerializeField]
     uint m_numShell = 1;
     float m_selfDestructTimer = 0;
     [SerializeField, Range(1, 10)]
@@ -54,13 +55,6 @@ public class ShotgunShell : MonoBehaviour
         get { return m_numShell; }
         set { m_numShell = value; }
     }
-
-    /*void OnCollisionEnter(Collision collider)
-    {
-        //Magic numbers : 0 is default layer, 11 is resupply layer
-        if (m_useTimerSelfDestruct || (collider.gameObject.layer == 0) || (collider.gameObject.layer == 11)) return;
-        GrabAmmo(collider.gameObject.GetComponent<Vanguard>());
-    }*/
 
     public void GrabAmmo(Vanguard player)
 	{

@@ -450,6 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterHealth: {fileID: 6414805233389436705}
   extraHealthDeduction: 0
+  m_bloodSpurt: {fileID: 847748877951390569, guid: b126f1804a4952644b257e8d48641277, type: 3}
 --- !u!114 &6414805233389436707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,6 +1784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterHealth: {fileID: 6414805233389436705}
   extraHealthDeduction: 100
+  m_bloodSpurt: {fileID: 847748877951390569, guid: b126f1804a4952644b257e8d48641277, type: 3}
 --- !u!1 &6414805233389533583
 GameObject:
   m_ObjectHideFlags: 0
@@ -3270,6 +3272,18 @@ PrefabInstance:
     - target: {fileID: 6595576515870289943, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595576515870289943, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595576515870289943, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595576515870289943, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7866435656174296499, guid: 721ba99d8717cec4bb94ec42f6e0e485, type: 3}
       propertyPath: stateToModify

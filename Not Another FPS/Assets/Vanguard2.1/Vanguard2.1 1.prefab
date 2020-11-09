@@ -1895,7 +1895,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3645e603ec020c644b9a05779d4142d0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2115,7 +2115,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 329f191f56118e344938a4729d16b9c2, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3265,6 +3265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterHealth: {fileID: 4685240109988388765}
   extraHealthDeduction: 0
+  m_bloodSpurt: {fileID: 0}
 --- !u!114 &228518038504848703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3281,6 +3282,7 @@ MonoBehaviour:
   deathCamera: {fileID: 4685240108878625452}
   spine: {fileID: 2535585156232354963}
   HUD: {fileID: 0}
+  m_mainGUI: {fileID: 0}
 --- !u!135 &3254714245781450270
 SphereCollider:
   m_ObjectHideFlags: 0

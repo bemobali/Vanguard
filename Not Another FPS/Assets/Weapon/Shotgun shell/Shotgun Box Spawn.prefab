@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1975501538229705800}
   - component: {fileID: 1975501538229705801}
   m_Layer: 0
-  m_Name: ShotgunShellSpawn
+  m_Name: Shotgun Box Spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,4 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_radius: 0.5
   m_totalToSpawn: 1
-  m_spawnObject: {fileID: 0}
+  m_spawnObject: {fileID: 9067808153316731278, guid: c165b2c36ae791541baf4355d0209eb4, type: 3}
+  m_randomizeTotalToSpawn: 0

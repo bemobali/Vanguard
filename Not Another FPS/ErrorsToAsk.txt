@@ -1,0 +1,16 @@
+Error Message:
+NullReferenceException: Object reference not set to an instance of an object
+UnityEditor.Graphs.Edge.WakeUp () (at <ae70fd9ff3934b27ae8ca4cc88795828>:0)
+UnityEditor.Graphs.Graph.DoWakeUpEdges (System.Collections.Generic.List`1[T] inEdges, System.Collections.Generic.List`1[T] ok, System.Collections.Generic.List`1[T] error, System.Boolean inEdgesUsedToBeValid) (at <ae70fd9ff3934b27ae8ca4cc88795828>:0)
+UnityEditor.Graphs.Graph.WakeUpEdges (System.Boolean clearSlotEdges) (at <ae70fd9ff3934b27ae8ca4cc88795828>:0)
+UnityEditor.Graphs.Graph.WakeUp (System.Boolean force) (at <ae70fd9ff3934b27ae8ca4cc88795828>:0)
+UnityEditor.Graphs.Graph.WakeUp () (at <ae70fd9ff3934b27ae8ca4cc88795828>:0)
+UnityEditor.Graphs.Graph.OnEnable () (at <ae70fd9ff3934b27ae8ca4cc88795828>:0)
+
+Steps to repro:
+Get unity to rebuild the C# scripts. I only have MonoBehavior scripts. Visually, the mouse pointer will be stuck at a particular spot in the editor. Most often the pointer will be stuck at the center of the Game window
+
+Frequency:
+Intermittent
+
+Unity version : 2020.1.11f1

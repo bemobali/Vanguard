@@ -1540,6 +1540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterHealth: {fileID: 6965281779871540687}
   extraHealthDeduction: 0
+  m_bloodSpurt: {fileID: 847748877951390569, guid: b126f1804a4952644b257e8d48641277, type: 3}
 --- !u!114 &6965281779871540685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3297,6 +3298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterHealth: {fileID: 6965281779871540687}
   extraHealthDeduction: 100
+  m_bloodSpurt: {fileID: 847748877951390569, guid: b126f1804a4952644b257e8d48641277, type: 3}
 --- !u!1 &6393663406695465763
 GameObject:
   m_ObjectHideFlags: 0
