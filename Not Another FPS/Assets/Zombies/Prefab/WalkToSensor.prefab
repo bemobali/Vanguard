@@ -345,5 +345,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dac53b2ed2159645b4abaec15e056d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  refreshRate: 0.25
+  refreshTarget: 0
   stateToModify: {fileID: 0}

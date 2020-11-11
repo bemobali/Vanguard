@@ -1,0 +1,10 @@
+The zombies need to exhibit a herd mentality. To simulate that, I need to:
+1. Spawn them much closer to checkpoint woods
+2. Increase their walk sensor range so they can walk to the player ASAP
+3. Set zombies to idle if it cannot get coordinate to walk to
+
+For special effects:
+1. Add an artifact that the zombies are "guarding"
+2. Decrease the volume of the zombie crowd as zombies dies.
+
+Oh and pls fix the sensors. Use an empty gameobject with colliders. No mesh. Keep the scaling at 1,1,1 and scale the colliders instead.

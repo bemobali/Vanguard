@@ -16,7 +16,9 @@ public class ZombieDead : MonoBehaviour
 	NavMeshAgent navMeshAgent;
 	//Need to turn this off to prevent built-in ragdoll from resolving, and fling itself uncontrollably
 	CharacterController charController;
-
+	//Each zombies are actors for a check point subplot. When a zombie dies, the checkpoint needs to know that it is dead
+	//Use GameObject because the zombie will send a specific message before it dies to the check point object
+	public GameObject m_checkPoint;
 	#region Ragdoll Specific Variables
 	//Need to disable the colliders so we can sink the ragdoll
 	Collider[] ragdollColliders;
@@ -48,6 +50,7 @@ public class ZombieDead : MonoBehaviour
 	//I expect this to be done only once. So please have the script disabled initially
 	void OnEnable()
 	{
+		m_checkPoint.BroadcastMessage("KillOneZombie", SendMessageOptions.DontRequireReceiver);
 		UpdateGameComponenets();
 		if (navMeshAgent) navMeshAgent.enabled = false;
 		Joint[] ragdollJoint = gameObject.GetComponents<Joint>();
@@ -80,7 +83,7 @@ public class ZombieDead : MonoBehaviour
 			Destroy(gameObject);
 			return;
 		}
-		EnableRigidBodyPhysics();
+		EnableRagdollPhysics();
 	}
 
 	void Update()
@@ -94,7 +97,7 @@ public class ZombieDead : MonoBehaviour
 
 	//If the gameObject is a kinematic ragdoll, this can be called as an event from the animation to enable the ragdoll rigidbodies
 	//Another call 
-	void EnableRigidBodyPhysics()
+	void EnableRagdollPhysics()
 	{
 		if (ragdollRB != null) return;
 

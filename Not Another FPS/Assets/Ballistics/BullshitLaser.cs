@@ -30,7 +30,7 @@ public class BullshitLaser : MonoBehaviour
         // Check if our raycast has hit anything
         if (targetHit)
 		{
-            Debug.Log("Target hit at " + hitTarget.distance + "m at collider " + hitTarget.collider.ToString() + " belonging to " + hitTarget.collider.gameObject.name);
+            //Debug.Log("Target hit at " + hitTarget.distance + "m at collider " + hitTarget.collider.ToString() + " belonging to " + hitTarget.collider.gameObject.name);
             BattleDamage battleDamage = hitTarget.collider.gameObject.GetComponent<BattleDamage>();
             if (battleDamage)
             {

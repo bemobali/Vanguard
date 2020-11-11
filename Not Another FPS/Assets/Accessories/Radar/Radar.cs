@@ -84,7 +84,7 @@ public class Radar : MonoBehaviour
         //Remove id from the contact list.
         if (m_activeContacts.ContainsKey(id))
         {
-            Debug.Log("Radar removing contact " + contact.ToString());
+            //Debug.Log("Radar removing contact " + contact.ToString());
             m_activeContacts.Remove(id);
             m_radarScreen.RemoveRadarBlip(id);
         }

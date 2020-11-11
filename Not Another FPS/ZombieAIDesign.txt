@@ -66,3 +66,5 @@ Update():
 ----Destroy(zombieToKill)
 ----Destory(ragdoll)
 
+Need to increase the walking to sensor, and tighten the gap between the walking to sensor and the run-to sensor
+Also look into the male zombie collider.

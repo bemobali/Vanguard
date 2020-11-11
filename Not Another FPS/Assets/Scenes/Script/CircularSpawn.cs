@@ -19,6 +19,9 @@ public class CircularSpawn : MonoBehaviour
     //Allow the spawn point to randomize how many to spawn. It will be 1 to current m_totalToSpawn
     [SerializeField]
     bool m_randomizeTotalToSpawn = false;
+    //Need to pass this to the zombie instance.
+    [SerializeField]
+    GameObject m_checkPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +44,12 @@ public class CircularSpawn : MonoBehaviour
                 m_radius = Mathf.Clamp(newRadius, 1.0f, newRadius);
 			}
             //@todo Research into bunching up prevention
-            Instantiate(m_spawnObject, pos, Quaternion.identity); //Worst case scenario: spawn at spawn point position + 1.0f.
+            GameObject newInstance = Instantiate(m_spawnObject, pos, Quaternion.identity); //Worst case scenario: spawn at spawn point position + 1.0f.
+            if (newInstance)
+			{
+                ZombieDead deathScript = newInstance.GetComponent<ZombieDead>();
+                if (deathScript) deathScript.m_checkPoint = m_checkPoint; //Remember that I use CicularSpawn also to spawn shotgun shells
+			}
 	    }
     }
 
@@ -67,5 +75,10 @@ public class CircularSpawn : MonoBehaviour
     public GameObject SpawnObject
 	{
         get { return m_spawnObject; }
+	}
+
+    public int TotalSpawn
+	{
+        get { return m_totalToSpawn; }
 	}
 }

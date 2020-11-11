@@ -322,6 +322,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1951654799488946928, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
+      propertyPath: m_activeCamera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1951654799488946928, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
+      propertyPath: m_player
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2824946577460934526, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
       propertyPath: m_ammoInventoryDisplay
       value: 
@@ -382,6 +390,10 @@ PrefabInstance:
       propertyPath: m_radar
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4298102585940736443, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
+      propertyPath: m_radarBlip
+      value: 
+      objectReference: {fileID: 8096467989702199595, guid: dd978d2f90de2be459e92f437d902007, type: 3}
     - target: {fileID: 7000253166212787987, guid: 392a704a6fbf6f14b97716e2344866cd, type: 3}
       propertyPath: m_PreserveAspect
       value: 1

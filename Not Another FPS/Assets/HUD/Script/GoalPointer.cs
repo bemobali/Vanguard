@@ -20,11 +20,13 @@ public class GoalPointer : MonoBehaviour
     //Given the nature of the camera being constrained to a point, I think this is a LateUpdate call
     Vector3 m_currentEulerAngles = new Vector3(0f, 0f, 0f);
 
+    //Still risky. I have to initialize vanguard before HUD
     void Start()
 	{
         m_cameraToPlayerAngle = Vector3.SignedAngle(m_activeCamera.forward, m_player.forward, m_player.up);
     }
 
+    //The camera lookat property is a constraint.
     void LateUpdate()
     {
         Vector3 toTarget = m_target.position - m_activeCamera.position;

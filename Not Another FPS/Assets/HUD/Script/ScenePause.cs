@@ -23,13 +23,13 @@ public class ScenePause : MonoBehaviour
 	}
 
 	public void Resume()
-	{
-		Time.timeScale = 1;
+	{ 
 		AudioListener.pause = false;
 		//Practically reverse everything in Pause()
 		gameObject.SetActive(false);
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
+		Time.timeScale = 1;
 	}
 
 	void OnEnable()

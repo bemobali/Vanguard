@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//RadarScreen is responsible for drawing the contacts on the m_radarScope image. The radar blip image comes from the GameObject contacts.
+//RadarScreen is responsible for drawing the contacts on the RadarScreen image. The radar blip image comes from the GameObject contacts.
 //I know this puts a semantic burden on the radar contact object, but it is by far the cheapest in terms of processing overhead. 
 //RadarScreen is not responsible for instantiating the radar blips. Not responsible for matching the blips to an actual GameObject.
 //Update becomes cheaper because there is no need to nuke a blip list
+//The pivot point of the RadarScreen image must be in the center. All calculations depends on the pivot point in the middle of the RadarScreen image.
 public class RadarScreen : MonoBehaviour
 {
-    //prefab to draw the zombie radar contact. The image pivot point needs to be in the center
-    [SerializeField]
-    GameObject m_radarScope;
     //Contact source
     [SerializeField]
     Radar m_radar;
     [SerializeField]
-    Image m_radarBlip;
+    GameObject m_radarBlip;
     //Instead of deleting all m_radarBlip copies, we cache the blips. At every update we do a hash table lookup to Radar to see if the blips are still valid.
     //I think this is faster than reinstantiating the blip images. Registering this as a RadarTarget observer would be the fastest, but can be tricky to synchronize,
     //Especially if radar object pops dynamically.
@@ -25,7 +23,7 @@ public class RadarScreen : MonoBehaviour
     float m_radarScopeRadius;
     void Start()
     {
-        RectTransform radarRect = m_radarScope.GetComponent<RectTransform>();
+        RectTransform radarRect = gameObject.GetComponent<RectTransform>();
         m_radarScopeRadius = Mathf.Min(radarRect.rect.width, radarRect.rect.height) / 2f;
         m_blipTable = new Hashtable();
     }
@@ -40,11 +38,10 @@ public class RadarScreen : MonoBehaviour
         {
             DictionaryEntry entry = (DictionaryEntry)contacts.Current;
             GameObject contact = (GameObject)entry.Value;
+            //This should not happen. Just in case our radar code intentionally keep null contacts, lets not crash
             if (contact == null)
 			{
-                Image staleBlip = (Image)m_blipTable[entry.Key];
-                staleBlip.transform.SetParent(null);
-                m_blipTable.Remove(entry.Key);
+                RemoveRadarBlip((int)entry.Key);
                 continue;
 			}
             //YES! This code block works!
@@ -58,17 +55,16 @@ public class RadarScreen : MonoBehaviour
             vector = Quaternion.Euler(0f, 0f, -angle) * vector * distance;
             //Debug.Log("Vector " + vector.ToString());
 
-            Image blip;
+            GameObject blip;
             int contactId = contact.GetInstanceID();
             if (m_blipTable.ContainsKey(contactId))
             {
-                blip = (Image)m_blipTable[contactId];
+                blip = (GameObject)m_blipTable[contactId];
             }
             else
 			{
-                blip = Instantiate(m_radarBlip, m_radarScope.transform, false);
+                blip = Instantiate(m_radarBlip, gameObject.transform, false);
                 m_blipTable.Add(contactId, blip);
-                //blip.transform.SetParent(m_radarScope.transform, false); ;
 			}
             blip.transform.localPosition = vector;
 
@@ -78,18 +74,29 @@ public class RadarScreen : MonoBehaviour
             blip.transform.SetParent(m_radarScope.transform, false);*/
         }
     }
+
+    public void OnDestroy()
+    {
+        foreach(DictionaryEntry en in m_blipTable)
+		{
+            GameObject obj = (GameObject)en.Value;
+            Destroy(obj);
+		}
+        m_blipTable.Clear();
+	}
+
     //To be called by the HUD, since I have decided to make the HUD a facade
     public void RemoveRadarBlip(int id)
 	{
         if (m_blipTable.ContainsKey(id))
 		{
-            Image blip = (Image)m_blipTable[id];
+            GameObject blip = (GameObject)m_blipTable[id];
             if (blip)
 			{
                 blip.transform.SetParent(null);
                 Destroy(blip);
 			}
             m_blipTable.Remove(id);
-		}
+        }
 	}
 }

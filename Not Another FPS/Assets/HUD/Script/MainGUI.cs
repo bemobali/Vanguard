@@ -37,9 +37,9 @@ public class MainGUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
 		{
-            m_scenePauseScript.enabled = !m_pauseMenu.activeSelf;
             m_pauseMenu.SetActive(!m_pauseMenu.activeSelf);
-		}
+            m_scenePauseScript.enabled = m_pauseMenu.activeSelf;
+        }
     }
 
     public void GameOver(float delay)
