@@ -27,4 +27,9 @@ public class Health : MonoBehaviour
 	{
 		if (m_hud) m_hud.SetHealth(m_healthPoint);
 	}
+
+	public bool IsDead()
+	{
+		return m_healthPoint < 1f;
+	}
 }

@@ -44,6 +44,10 @@ public class M4Shotgun : MonoBehaviour
 
     bool CanShoot()
 	{
+        if (m_roundsRemaining == 0)    //click
+        {
+            click.Play();
+        }
         return (m_roundsRemaining > 0) && (shotTimer > shotPeriod) && shotgunBallistics.enabled;
     }
     public bool Fire()
@@ -57,10 +61,7 @@ public class M4Shotgun : MonoBehaviour
         m_hud.BulletCounter.Shoot();
         shotgunBallistics.Shoot();
         m_shellEjector.Eject();
-        if (m_roundsRemaining == 0)    //click
-		{
-            click.Play();
-		}
+       
         shotTimer = 0;  //restart the timer
         return true;
 	}

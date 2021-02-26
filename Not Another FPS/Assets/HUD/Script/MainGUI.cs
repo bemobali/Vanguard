@@ -12,6 +12,8 @@ public class MainGUI : MonoBehaviour
     ScenePause m_scenePauseScript; //See the script comment on why I need this. The script is initially disabled.
     [SerializeField]
     GameObject m_gameOver;
+    [SerializeField]
+    GameObject m_victory;
     //Show gameover for x seconds
     float m_maxGameOverTime = 5f;
     float m_currentGameOverTimer = 0f;
@@ -49,4 +51,12 @@ public class MainGUI : MonoBehaviour
         m_gameOverTimerOn = true;
         m_maxGameOverTime = delay;
 	}
+
+    public void Victory(float delay)
+	{
+        if (m_victory.activeSelf) return;
+        m_victory.SetActive(true);
+        m_gameOverTimerOn = true;
+        m_maxGameOverTime = delay;
+    }
 }

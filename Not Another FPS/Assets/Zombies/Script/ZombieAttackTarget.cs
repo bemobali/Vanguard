@@ -90,15 +90,21 @@ public class ZombieAttackTarget : MonoBehaviour
 
 	public void ProcessContact(GameObject target)
 	{
+		//Remove dead target contact
+		Health targetHealth = target.GetComponent<Health>();
+		if (targetHealth && targetHealth.IsDead())
+		{
+			RemoveContact(target);
+			return;
+		}
+
 		//There is a suggestion in Unity forum to dissable collision detection when the target is dead, so it can trigger this object's OnTriggerExit
 		//Engage the first live contact. Yeah the zombies are that hungry and dumb
 		if (currentTarget == null)
 		{
 			currentTarget = target;
 			//Debug.Log(ToString() + "Engaging target " + currentTarget.name);
-			return;
 		}
-		//Remove dead target contact
 	}
 
 	public bool HasTarget()
@@ -117,6 +123,15 @@ public class ZombieAttackTarget : MonoBehaviour
 			currentTarget = null;
 			if (animator) animator.SetBool("isAttacking", false);
 			//if (agent.enabled) agent.isStopped = false;	//does not work
+		}
+	}
+
+	public void SwitchHand()
+	{
+		bool switchHand = Random.Range(0f, 1f) > 0.5f;
+		if (switchHand)
+		{
+			animator.SetBool("SwitchHand", !animator.GetBool("SwitchHand"));
 		}
 	}
 }

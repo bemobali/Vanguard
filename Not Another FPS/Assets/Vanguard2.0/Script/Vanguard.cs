@@ -118,7 +118,7 @@ public class Vanguard : MonoBehaviour
     void Update()
     {
         //Vanguard is dead, so all bets are off
-        if (health.HealthPoint < 1f)
+        if (health.IsDead())
         {
             Debug.Log("Killing the player");
             this.enabled = false;

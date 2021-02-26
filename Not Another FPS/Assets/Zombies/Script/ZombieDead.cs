@@ -33,6 +33,14 @@ public class ZombieDead : MonoBehaviour
 	{
 		if (animator == null) animator = gameObject.GetComponent<Animator>();
 		if (navMeshAgent == null) navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+		if (charController == null) charController = gameObject.GetComponent<CharacterController>();
+		//Attack mode uses a collider to negate the character controller's push against the player
+		//And this to allow the collider to interact with terrain correctly
+		Rigidbody attackRb = gameObject.GetComponent<Rigidbody>();
+		if (attackRb) Destroy(attackRb);
+		CapsuleCollider attackCollider = gameObject.GetComponent<CapsuleCollider>();
+		if (attackCollider) Destroy(attackCollider);
+
 		RadarTarget radarTarget = gameObject.GetComponentInChildren<RadarTarget>();
 		if (radarTarget)
 		{
@@ -50,9 +58,16 @@ public class ZombieDead : MonoBehaviour
 	//I expect this to be done only once. So please have the script disabled initially
 	void OnEnable()
 	{
-		m_checkPoint.BroadcastMessage("KillOneZombie", SendMessageOptions.DontRequireReceiver);
+		if (m_checkPoint)
+		{
+			m_checkPoint.BroadcastMessage("KillOneZombie", SendMessageOptions.DontRequireReceiver);
+		}
+		
 		UpdateGameComponenets();
 		if (navMeshAgent) navMeshAgent.enabled = false;
+		//If the interpenetration is unacceptable, then don't do this for everyone
+		if (charController) charController.enabled = false;
+		
 		Joint[] ragdollJoint = gameObject.GetComponents<Joint>();
 		if (ragdoll || ragdollJoint.Length > 0)
 		{
@@ -102,15 +117,11 @@ public class ZombieDead : MonoBehaviour
 		if (ragdollRB != null) return;
 
 		//The collider here conflicts with the built-in ragdoll colliders.
-		if (charController == null)
+		if (charController)
 		{
-			charController = gameObject.GetComponent<CharacterController>();
-			if (charController)
-			{
-				charController.enabled = false;
-			}
+			charController.enabled = false;
 		}
-
+		
 		//Let the ragdoll physics takes over
 		animator.enabled = false;
 		ragdollRB = gameObject.GetComponentsInChildren<UnityEngine.Rigidbody>();

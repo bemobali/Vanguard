@@ -46,6 +46,12 @@ public class Dead : MonoBehaviour
         }
         animator = GetComponent<Animator>();
         animator.SetBool("Dead",true);
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb)
+		{
+            Destroy(rb);
+		}
+        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
     }
 
     void Update()

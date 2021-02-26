@@ -1,0 +1,6 @@
+Game oddities that needs to be addressed:
+-A zombie cannot get close to the player because the Vanguard unit has a collider on his pivot point to sweep away resupply
+-I can snipe a zombie using a 12GA!
+-Zombies can actually jump over each other when crowded.
+-A player can be flung to the sky if enough zombies collides with it. One of the solution is to not use a rigidbody on the player. Use a set of RayCast to bring the player as close as possible to the terrain. And calculate the jump trajectory ourselves.
+-Player run is awkward.

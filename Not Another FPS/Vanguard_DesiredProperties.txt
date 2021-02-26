@@ -1,0 +1,21 @@
+What I want Vanguard to be able to do:
+-Proper running. Shooting capability will be disabled.
+-Brisk walk while shooting
+-Inventory system
+-Multi-weapon capable : shotgun, AR16, Desert Eagle, Ka-Bar, and Katana.
+-Melee weapon capable: Katana and Ka-Bar. Semper Fi!
+-Grenade lobbing capable
+-Zoom aim capable, limited to slow walk
+-Supporting animations for running, brisk walk, slow walk, reloading, crouching, and grenade lobbing. I don't think lying prone seems practical for the armor suit. Then again, Gundam does that all the time.
+-Video feed from HQ
+-Sound bites
+-Damage pointers
+-Compass in the HUD
+-Movement slowdown while in critical damage
+-Post processing lens effect while in critical damage
+-Heart beat sound while in critical damage
+-HUD EKG that picks up speed as health decreases. For dramatic effect only
+-Night scope
+-Radar blips for ammo and health resupply
+-Soft turf sound effect for the footsteps.
+-Flashlight attachment to firearms.

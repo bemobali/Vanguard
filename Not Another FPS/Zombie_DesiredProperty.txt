@@ -1,0 +1,11 @@
+Zombie capability I want to see
+-Exploding heads
+-Back jerk after the fatal shot
+-Eating dead victims
+-Smooth animation transitions from walking, running, attacking, back to running, back to walking, eating, and dying.
+-Mirroring left-right punches at random
+-Random health points from 1-5 for the peon zombies
+
+For the Zombie Boss
+-Health bar on top of the head
+-Energy wave? I dunno, but with the boss not capable of running, I can run circles around him and keep shooting.

@@ -1,0 +1,12 @@
+I want to have these in my scenery
+-Point lights with halo
+-Fire
+-Ammo boxes with magazines and shotgun shells. Player takes only what it needs.
+-Health supply pickup sound effect
+-Zombie crowd sound in the background that gets softer as zombies are dying. Or maybe not
+-Ambient animal noise. Birds, woodpeckers, insects.
+-Animal decoys for the zombies to attack and eat
+-Villagers to rescue
+-Dead bodies, victims of zombie attacks.
+-Zombie rush scenario attacking the village.
+-Cut scenes in-between objectives

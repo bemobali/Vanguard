@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,68 +9,34 @@ using UnityEngine;
 //Each zombies is expected to know its checkpoint, and properly notify the checkpoint that it is dead.
 public class CheckPointWoodsMission : MonoBehaviour
 {
-    int m_totalZombiesToKill = 0;
-    int m_totalZombiesAlive = 0;
-    [SerializeField]
-    HUD m_hud;
-    [SerializeField]
-    Transform m_playerTransform;
     [SerializeField]
     Story m_story;
-    //If player is this close to the checkpoint, consider it has reached the checkpoint
+    //Supposed to be artifact to recover
     [SerializeField]
-    float m_completionDistance = 1.0f;
-    //Consider checkpoint secured if there are at most this number of zombies
+    GameObject m_artifact;
+    AudioSource m_sound;
+    CheckPointMission m_mission;
     [SerializeField]
-    int m_maxNumZombiesAllowed = 3;
-
-    const string m_missionStatement = "Reach and Secure Check Point Woods";
-    const string m_sideMissionStatement = "Kill All Zombies : ";
+    string m_checkPointName = "Forest";
     void Start()
     {
-        //The checkpoint should have a spawn points with a number of scripts
-        CircularSpawn[] zombieSpawns = gameObject.GetComponentsInChildren<CircularSpawn>();
-        foreach(CircularSpawn spawn in zombieSpawns)
-		{
-            m_totalZombiesToKill += spawn.TotalSpawn;
-		}
-        m_totalZombiesAlive = m_totalZombiesToKill;
+        m_mission = gameObject.GetComponent<CheckPointMission>();
+        m_mission.CheckPointName = m_checkPointName;
+        m_mission.ProgressUpdate();
+        m_sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (IsMissionCompleted())
+        if (m_mission.IsMissionCompleted())
 		{
+            m_artifact.SetActive(false);
+            m_sound.Play();
             m_story.ProceedToTheNextWaypoint();
-            //Should I destroy script or deactivate the checkpoint?
-            //gameObject.SetActive(false);  //This one deactivates everything, including leftover zombies and supplies
+            Destroy(m_mission);
             Destroy(this);  //This one should allow remaining gameobjects to stay alive. Just more zombie leftpver to kill
             return;
 		}
     }
-
-    //Completion condition
-    bool IsMissionCompleted()
-	{
-        return ((Vector3.Distance(m_playerTransform.position, transform.position) < m_completionDistance) && 
-                (m_totalZombiesAlive < m_maxNumZombiesAllowed));
-	}
-
-    //ProgressUpdate to be called only when a zombie dies
-    void ProgressUpdate()
-	{
-        string sideMissionStatement = m_sideMissionStatement;
-        sideMissionStatement += m_totalZombiesAlive + "/" + m_totalZombiesToKill;
-        //@todo update HUD
-        Debug.Log(m_missionStatement);
-        Debug.Log(sideMissionStatement);
-	}
-
-    //This is a message handler to respond to a checkpoint's message whenever a zombie dies.
-    public void KillOneZombie()
-	{
-        m_totalZombiesAlive -= 1;
-        ProgressUpdate();
-	}
 }

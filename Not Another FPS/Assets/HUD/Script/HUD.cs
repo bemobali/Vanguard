@@ -14,6 +14,8 @@ public class HUD : MonoBehaviour
     RawImage m_currentWeaponImage;
     [SerializeField]
     HealthIndicator m_healthIndicator;
+    [SerializeField]
+    Text m_missionStatement;
 
     RadarScreen m_radarScreen;
     // Start is called before the first frame update
@@ -55,5 +57,10 @@ public class HUD : MonoBehaviour
             return;
 		}
         goalPointer.ActiveCamera = activeCamera.transform;
+	}
+
+    public void UpdateMissionStatement(string statement)
+	{
+        m_missionStatement.text = statement;
 	}
 }

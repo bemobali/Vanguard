@@ -4,10 +4,10 @@ using UnityEngine;
 
 using MyZombieStuff = Assets.Zombies.Script;
 
-//ZombieController controls the movement of the zombies based on its current states
+//ZombieController controls the actions of the zombies based on its current states
 //ZombieContrtoller can be used for PeonZombies and BossZombies
 //@todo Get rid of ZombieStateContect. The ZombieController will directly transition Zombie states
-//@todo Make colliders update each zombie states.
+//@todo Rework the zombie state transition, knowing that a destroyed collider does not generate a OnTriggerExit or OnCollisionExit.
 public class ZombieController : MonoBehaviour
 {
 	//public ZombieLongRangeSensor longRangeSensor;
@@ -46,15 +46,10 @@ public class ZombieController : MonoBehaviour
 		zombieDied.enabled = false;
 	}
 
-	bool IsDead()
-	{
-		return health.HealthPoint < 1;
-	}
-
 	void LateUpdate()
 	{
 		//no more state transition allowed
-		if (IsDead())
+		if (health.IsDead())
 		{
 			if (!zombieDied.enabled)
 			{

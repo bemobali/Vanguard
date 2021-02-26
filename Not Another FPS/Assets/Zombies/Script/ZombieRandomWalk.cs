@@ -10,8 +10,8 @@ using UnityEngine.AI;
 //@todo What should the zombie do when it cannot decide where to go?
 class ZombieRandomWalk: MonoBehaviour
 {
-	[SerializeField, Range(10,50)]
-	float walkRange = 10f;
+	[SerializeField, Range(1,50)]
+	float walkRange = 2f;
 	//How many times should the zombie try to recalculate its next destination
 	[SerializeField, Range(1,100)]
 	int numAttempts = 30;

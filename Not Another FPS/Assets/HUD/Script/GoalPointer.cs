@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //GoalPointer manipulates the goal pointing Goal Pointer sprite to point to the goal. Up is pointing forward, 90 points left, -90 point right.
 //So the range is [-180, 180) with -180 pointing at the rear of the player
@@ -13,12 +14,16 @@ public class GoalPointer : MonoBehaviour
     //I need to compensate the camera pan angle from the player's forward vector. That's why I need this
     [SerializeField]
     Transform m_player; //Should this have its get-set?
+    //MAn I really abuse this SerializeField
+    [SerializeField]
+    Text m_distanceIndicator;
     //In degrees
     float m_cameraToPlayerAngle;
     //This must be modifyable by a god scenario/mission function. That's why it is public
     public Transform m_target;
     //Given the nature of the camera being constrained to a point, I think this is a LateUpdate call
     Vector3 m_currentEulerAngles = new Vector3(0f, 0f, 0f);
+    
 
     //Still risky. I have to initialize vanguard before HUD
     void Start()
@@ -39,6 +44,7 @@ public class GoalPointer : MonoBehaviour
         m_currentEulerAngles.Set(0f, 0f, angle);
         m_goalPointerSprite.eulerAngles = m_currentEulerAngles;
         //m_goalPointerSprite.Rotate(new Vector3(0, 0, angle)); //This is cumulative, make sense
+        m_distanceIndicator.text = ((int)toTarget.magnitude).ToString();
     }
 
     public Transform ActiveCamera
